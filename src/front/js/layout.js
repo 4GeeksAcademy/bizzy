@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
+import "../styles/layout.css";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -10,6 +11,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Sidebar } from "./component/sidebar";
 
 //create your first component
 const Layout = () => {
@@ -20,20 +22,26 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
-        <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
+                    <div style={{display: "flex", height: "100vh"}}>
+                            <Sidebar/>
+                        <div style={{width: "100%"}}>
+                            <Navbar />
+                            <div id="content">
+                                <Routes>
+                                    <Route element={<Home />} path="/" />
+                                    <Route element={<Demo />} path="/demo" />
+                                    <Route element={<Single />} path="/single/:theid" />
+                                    <Route element={<h1>Not found!</h1>} />
+                                </Routes>
+                                <Footer />
+                            </div>
+
+                        </div>
+                    </div>
                 </ScrollToTop>
             </BrowserRouter>
-        </div>
     );
 };
 
