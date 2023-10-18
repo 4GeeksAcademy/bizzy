@@ -1,0 +1,87 @@
+.background{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.modalsito{
+    background-color: white;
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    right: 25%;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    margin:auto;
+    padding: 3% 5%;
+}
+
+.modalsito button{
+    color: #7B57DF;
+    background-color: #E9E1FC;
+    border: none;
+    border-radius: 5px;
+    width: 170px;
+    height: 40px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    align-items: center;
+}
+
+.modalsito input{
+    border: none;
+    border-bottom: 2px solid #F1F3F4;
+    margin-bottom: 4%;
+    padding: 4px;
+    width: 100%;
+}
+
+.modalsito h2{
+    align-self:center;
+    font-weight: 600;
+    color: #2E2153;
+    margin-bottom: 5%;
+}
+
+.modalsito p{
+    margin: 0;
+    font-style: italic;
+    font-size: 13px;
+    color: #757575;
+}
+
+.input-holder label{
+    position: relative;
+    top: -70%;
+    padding-top: 0.3%;
+    pointer-events: none;
+    transition: 0.2s ease-in-out;
+
+}
+
+input:focus {
+    outline:none
+}
+
+.input-holder input:focus + label,
+.input-holder input:valid + label{
+    top:-90%;
+    font-size: 0.8em
+}
+
+.input-holder label span, .container-div p span{
+    color: #0d6efd;
+}
+
+.double-input{
+    display:flex;
+}

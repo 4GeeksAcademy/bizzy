@@ -1,8 +1,60 @@
+.table-header{
+    display:flex;
+    justify-content: space-between;
+}
+
+.table-header h2{
+    font-weight: 600;
+    color: #2E2153;
+}
+
+.table-header button {
+    color: #7B57DF;
+    background-color: #E9E1FC;
+    border: none;
+    border-radius: 5px;
+    width: 170px;
+    height: 40px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    align-items: center;
+}
+
 table{
     width:100%;
+    background-color: white;
 }
 
 table tr{
-    border-bottom: 1px gray solid;
-    height: 35px;
+    height: 45px;
 }
+
+table img{
+    height: 45px;
+    width: 45px;
+}
+
+thead tr{
+    background: #F9F9FC;
+    color: #909EB0;
+}
+
+thead tr th{
+    font-weight: normal;
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+table td{
+    color:#2E2153;
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+.table-product{
+    font-weight: bold;
+}
+
