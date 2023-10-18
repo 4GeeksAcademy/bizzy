@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/home.css";
+import "../../styles/dashboard.css";
 
-export const Home = () => {
+export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
 
 	return (<div style={{padding: "2%"}}>
@@ -13,7 +13,6 @@ export const Home = () => {
 			
 			<span style={{display: "flex"}}>	<h2 style={{textAlign: "center"}}>$1000</h2>		</span>
 		</div>
-
 
 		</div>
 	);

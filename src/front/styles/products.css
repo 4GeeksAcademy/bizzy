@@ -1,0 +1,8 @@
+table{
+    width:100%;
+}
+
+table tr{
+    border-bottom: 1px gray solid;
+    height: 35px;
+}

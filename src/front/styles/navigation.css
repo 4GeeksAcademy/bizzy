@@ -9,19 +9,8 @@
     align-items: center;
 }
 
-.menu-item{
-    display:flex;
-    align-items: center;
-    font-size: 14px;
-    padding: 12px 20px;
-    width: 100%;
-    align-self:flex-start;
-    color:#616161;
-}
-
-.menu-icon{
-    font-size: 24px;
-    margin-right: 12.5px;
+#sidebar a{
+    text-decoration: none;
 }
 
 .menu-title{
@@ -30,6 +19,28 @@
     font-size: 12px;
     padding-left: 20px;
     align-self: start;
+    margin-bottom: 5px;
+}
+
+.menu-item{
+    display:flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 12px 20px;
+    width: 200px;
+    align-self:flex-start;
+    color:#616161;
+}
+
+.menu-item-active{
+    color: #7B57DF;
+    background-color: #F9F9FC;
+    border-radius: 5px;
+}
+
+.menu-icon{
+    font-size: 24px;
+    margin-right: 12.5px;
 }
 
 .expand-item{
