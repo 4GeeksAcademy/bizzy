@@ -23,6 +23,20 @@
     align-items: center;
 }
 
+.delete-button{
+    color: #df5757;
+    background-color: #fce1e1;
+    border: none;
+    border-radius: 5px;
+    width: 70px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 13px;
+    align-items: center;
+}
+
 table{
     width:100%;
     background-color: white;
@@ -35,6 +49,7 @@ table tr{
 table img{
     height: 45px;
     width: 45px;
+    object-fit: cover;
 }
 
 thead tr{

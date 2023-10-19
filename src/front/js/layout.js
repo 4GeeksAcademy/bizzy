@@ -7,6 +7,8 @@ import "../styles/layout.css";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -42,6 +44,7 @@ const Layout = () => {
 
                         </div>
                     </div>
+                    <ToastContainer autoClose={2000} />
                 </ScrollToTop>
             </BrowserRouter>
     );

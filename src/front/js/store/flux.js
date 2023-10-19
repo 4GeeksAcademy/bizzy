@@ -19,6 +19,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			postProduct: async (product) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/product",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(product)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getProducts()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+
+			deleteProduct: async (id) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/product/${id}`, {
+						method: "DELETE"})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getProducts()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
