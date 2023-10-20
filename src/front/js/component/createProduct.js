@@ -25,6 +25,7 @@ export const CreateProduct = (modal) => {
 			toast.error("Ya existe un producto con este nombre",{
 				position: "bottom-center"
 			})
+			return
 		}
 
 		for (let values in product){
@@ -79,17 +80,17 @@ export const CreateProduct = (modal) => {
                 <label>SKU</label>
             </div>
             <div className="input-holder">
-                <input required onChange={(e)=> setProduct({...product, "quantity":e.target.value })}></input>
+                <input type="number" required onChange={(e)=> setProduct({...product, "quantity":e.target.value })}></input>
                 <label>Cantidad</label>
             </div>
         </div>
 		<div className="double-input">
             <div className="input-holder">
-                <input required onChange={(e)=> setProduct({...product, "unit_cost":e.target.value })}></input>
+                <input type="number" required onChange={(e)=> setProduct({...product, "unit_cost":e.target.value })}></input>
                 <label>Costo unidad</label>
             </div>
             <div className="input-holder">
-                <input required onChange={(e)=> setProduct({...product, "unit_price":e.target.value })}></input>
+                <input type="number" required onChange={(e)=> setProduct({...product, "unit_price":e.target.value })}></input>
                 <label>Precio unidad</label>
             </div>
         </div>

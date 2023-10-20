@@ -5,12 +5,21 @@ import { CreateProduct } from "../component/createProduct";
 import { toast } from "react-toastify";
 
 export const Products = () => {
+  const [ loading, setLoading ] = useState();
   const [ createModal, setCreateModal ] = useState(false);
   const [ checklist, setChecklist ] = useState([]);
 	const { store, actions } = useContext(Context);
+
+  async function loadProducts(){
+    const load = await actions.getProducts()
+    if (load) setLoading(false)
+    else toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
+  }
   useEffect(() => {
+    if(store.products.length == 0)setLoading(true)
+
+    loadProducts()
     actions.changeTab("products")
-    actions.getProducts()
     actions.getCategories()
   }, []);
 
@@ -86,16 +95,15 @@ export const Products = () => {
             <td>profit</td>
         </tr>)
         )}
-
-        {store.products.length == 0 && <tr>
+        {!loading && store.products.length == 0 && <tr>
           <td colSpan={11} style={{textAlign:"center"}}>
             No hay productos en el inventario
           </td>
         </tr>
         }
-
         </tbody>
       </table>
+      {loading && <div class="spinner"></div>}
     </div>
     { createModal && <CreateProduct click={()=>setCreateModal(false)}/>}
       </>
