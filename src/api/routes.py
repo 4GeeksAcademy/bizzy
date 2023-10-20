@@ -58,7 +58,7 @@ def delete_people(product_id):
         else:
             db.session.delete(selected_product)
             db.session.commit()
-            return {"message": f"{selected_product.serialize()['name']} has been deleted"}, 200
+            return {"message": f"Product has been deleted"}, 200
         
     except ValueError as err:
         return {"message": "failed to retrieve people " + err}, 500
