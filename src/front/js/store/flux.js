@@ -1,21 +1,21 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			products: []
+			active:"",
+			products: [],
+			categories: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			getProducts: async () => {
 				try {
-					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/products")
 					const data = await resp.json()
 
 					setStore({ products: data })
-					// don't forget to return something, that is how the async resolves
-					return data;
+					return true;
 				} catch (error) {
-					showError()
+					return false
 				}
 			},
 
@@ -58,32 +58,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+			getCategories: async () => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/categories")
 					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+
+					setStore({ categories: data })
+					return true
+				} catch (error) {
+					return false
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			changeTab: (tab) => {
+				setStore({active: tab})
+				}
 		}
 	};
 };

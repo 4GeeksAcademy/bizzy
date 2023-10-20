@@ -62,15 +62,17 @@ export const CreateProduct = (modal) => {
 				<input required onChange={(e)=> setProduct({...product, "image":e.target.value })}></input>
 				<label>Image URL</label>
 			</div>
-            <div className="input-holder">
-				<select required onChange={(e)=> setProduct({...product, "category":e.target.value })}>
-					<option></option>
-					<option>Peluche</option>
-					<option>Yesquero</option>
-				</select>
-				<label className="select-label">Category</label>
-			</div>
-        </div>
+			<div style={{display:"flex"}}>
+				<div className="input-holder">
+					<select required onChange={(e)=> setProduct({...product, "category":e.target.value })}>
+						<option></option>
+						{store.categories.map((category)=> <option>{category.name}</option>)}
+					</select>
+					<label className="select-label">Category</label>
+				</div>
+				<button className="category-btn">+</button>
+        	</div>
+		</div>
 		<div className="double-input">
             <div className="input-holder">
                 <input required onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>

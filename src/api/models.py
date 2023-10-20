@@ -24,13 +24,14 @@ class User(db.Model):
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), unique=True, nullable=False)
-    category = db.Column(db.String(15), unique=False, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    category = db.relationship("Category")
     unit_price = db.Column(db.Integer, nullable=False)
     unit_cost = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
-    sku = db.Column(db.String(15), unique=False, nullable=False)
-    image = db.Column(db.String(200), unique=False, nullable=True)
+    sku = db.Column(db.String(15), nullable=False)
+    image = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
         return f'<Product {self.name}>'
@@ -38,7 +39,7 @@ class Product(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "category": self.category,
+            "category": self.category.name,
             "name": self.name,
             "unit_price": self.unit_price,
             "unit_cost": self.unit_cost,
@@ -46,4 +47,17 @@ class Product(db.Model):
             "stock": self.stock,
             "sku": self.sku,
             "image": self.image,
+        }
+    
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'{self.name}'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
         }

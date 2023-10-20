@@ -99,3 +99,12 @@ input:focus {
     display:flex;
     justify-content:space-between;
 }
+
+.modalsito .category-btn{
+    background-color: #7B57DF;
+    color: #E9E1FC;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 20px;
+}

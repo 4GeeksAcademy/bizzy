@@ -9,7 +9,9 @@ export const Products = () => {
   const [ checklist, setChecklist ] = useState([]);
 	const { store, actions } = useContext(Context);
   useEffect(() => {
+    actions.changeTab("products")
     actions.getProducts()
+    actions.getCategories()
   }, []);
 
   async function eliminateProduct(list){
@@ -64,6 +66,7 @@ export const Products = () => {
         </tr>
         </thead>
         <tbody>
+          
         {store.products.map((product)=>(
           <tr key={product.id}>
             <td>
@@ -83,7 +86,14 @@ export const Products = () => {
             <td>profit</td>
         </tr>)
         )}
-        <tr></tr>
+
+        {store.products.length == 0 && <tr>
+          <td colSpan={11} style={{textAlign:"center"}}>
+            No hay productos en el inventario
+          </td>
+        </tr>
+        }
+
         </tbody>
       </table>
     </div>

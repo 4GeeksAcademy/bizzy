@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/dashboard.css";
 
 export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
+	useEffect(() => {
+		actions.changeTab("dashboard")
+	  }, []);
 
 	return (<div style={{padding: "2%"}}>
 		<h1>Overview</h1>

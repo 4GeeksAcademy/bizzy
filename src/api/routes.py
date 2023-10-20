@@ -2,21 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product
+from api.models import db, User, Product, Category
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
+# PRODUCTS
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
-
+# [GET] ALL PRODUCTS
 @api.route('/products', methods=['GET'])
 def get_products():
     try:
@@ -26,6 +19,7 @@ def get_products():
     except ValueError as err:
         return {"message": "failed to retrieve planet " + err}, 500
 
+# [POST] ONE PRODUCT
 @api.route('/product', methods=['POST'])
 def post_product():
     try:
@@ -42,6 +36,8 @@ def post_product():
         info = (name, category, unit_price, unit_cost, quantity, sku, image)
         for key in info:
             if key == None: return {"message": "Some field is missing in request body"}, 400
+
+        category = Category.query.filter_by(name=category).one_or_none()
         
         new_product = Product( name=name, category=category, unit_price=unit_price, unit_cost=unit_cost,
                               quantity=quantity, stock=quantity, sku=sku, image=image)
@@ -51,7 +47,8 @@ def post_product():
     
     except ValueError as err:
         return {"message": "failed to retrieve planet " + err}, 500
-    
+
+# [DELETE] ONE PRODUCT    
 @api.route("/product/<int:product_id>", methods=["DELETE"])
 def delete_people(product_id):
     try:
@@ -65,3 +62,33 @@ def delete_people(product_id):
         
     except ValueError as err:
         return {"message": "failed to retrieve people " + err}, 500
+
+# CATEGORIES
+
+# [GET] ALL CATEGORIES
+@api.route('/categories', methods=['GET'])
+def get_categories():
+    try:
+        all_categories = Category.query.all()
+        return [category.serialize() for category in all_categories]
+    
+    except ValueError as err:
+        return {"message": "failed to retrieve planet " + err}, 500
+
+# [POST] ONE CATEGORY
+@api.route('/category', methods=['POST'])
+def post_category():
+    try:
+        body = request.get_json()
+
+        name = body.get("name", None)
+
+        if name == None: return {"message": "Some field is missing in request body"}, 400
+        
+        new_category = Category( name=name )
+        db.session.add(new_category)
+        db.session.commit()
+        return new_category.serialize(), 200
+    
+    except ValueError as err:
+        return {"message": "failed to retrieve planet " + err}, 500
