@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/products.css";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const Products = () => {
-  const navigate = useNavigate();
+export const Orders = () => {
   const [ loading, setLoading ] = useState();
   const [ checklist, setChecklist ] = useState([]);
 	const { store, actions } = useContext(Context);
@@ -19,7 +17,7 @@ export const Products = () => {
     if(store.products.length == 0)setLoading(true)
 
     loadProducts()
-    actions.changeTab("products")
+    actions.changeTab("orders")
     actions.getCategories()
   }, []);
 
@@ -48,7 +46,7 @@ export const Products = () => {
       <div style={{margin: "50px 6vw"}}>
         <div className="table-header">
           <h2>Productos</h2>
-          <button onClick={()=>navigate("/create-product")}>+ Crear producto</button>
+          <button onClick={()=>console.log("dont forget me")}>+ Crear producto</button>
         </div>
         <button 
         className="delete-button" 
@@ -62,16 +60,12 @@ export const Products = () => {
           <th>
             <input type="checkbox" style={{visibility: "hidden"}}/>
           </th>
-          <th>SKU</th>
-          <th style={{width: "50px"}}>Image</th>
-          <th>Category</th>
-          <th>Product</th>
-          <th>Cost</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Stock</th>
-          <th>Gross</th>
-          <th>Profit</th>
+          <th>Fecha</th>
+          <th style={{width: "50px"}}>ID</th>
+          <th>Cliente</th>
+          <th>Cantidad</th>
+          <th>Monto</th>
+          <th>Pago</th>
         </tr>
         </thead>
         <tbody>
@@ -81,18 +75,12 @@ export const Products = () => {
             <td>
             <input type="checkbox" onChange={()=>checkboxes(product.id)}/>
               </td>
-            <td>{product.sku}</td>
-            <td>
-              <img src="https://i1.sndcdn.com/artworks-3Db66zd6zOXyYP9f-8VAOXg-t500x500.jpg"/>
-            </td>
-            <td>{product.category}</td>
-            <td className="table-product">{product.name}</td>
-            <td>${product.unit_cost}</td>
-            <td>${product.unit_price}</td>
-            <td>{product.quantity}</td>
-            <td>{product.stock}</td>
-            <td>${Math.floor(Math.random()*100)}</td>
-            <td>${Math.floor(Math.random()*50)}</td>
+            <td>01/10/23</td>
+            <td>1</td>
+            <td>Pedrito Paez</td>
+            <td className="table-product">1</td>
+            <td>$55</td>
+            <td>PayPal</td>
         </tr>)
         )}
         {!loading && store.products.length == 0 && <tr>

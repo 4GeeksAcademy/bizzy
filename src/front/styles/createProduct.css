@@ -1,29 +1,13 @@
-.background{
+.form-container{
     width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 50%;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.modalsito{
-    background-color: white;
-    width: 50%;
     height: 80%;
-    position: absolute;
-    top: 10%;
-    right: 25%;
     border-radius: 10px;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    margin:auto;
-    padding: 4% 6%;
     justify-content: space-around;
 }
 
-.modalsito button{
+.form-container button{
     color: #7B57DF;
     background-color: #E9E1FC;
     border: none;
@@ -39,72 +23,103 @@
     align-self: center;
 }
 
-.modalsito input{
-    border: none;
-    border-bottom: 2px solid #F1F3F4;
-    margin-bottom: 4%;
-    padding: 4px;
-    width: 100%;
+label{
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
-.modalsito select{
+.form-container input, .form-container textarea{
+    height:40px;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
+    margin-bottom: 4%;
+    padding: 6px;
+    width: 100%;
+    font-size:14px;
+}
+
+.form-container textarea{
+    resize:none;
+    height:150px
+}
+
+input:focus, textarea:focus {
+    outline:none
+}
+
+.form-container select{
     outline: none;
-    border: none;
-    border-radius: 1px;
-    border-bottom: 2px solid #F1F3F4;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
     margin-bottom: 4%;
     padding: 4px;
     width: 100%;
+    height: 40px;
+    font-size:14px;
 }
 
-.input-holder label.select-label{
-    top: -100%;
-    font-size: 0.8em
-}
+.form-container select:required:invalid {
+    color: #666;
+  }
 
-.modalsito h2{
+.form-container h2{
     align-self:center;
     font-weight: 600;
     color: #2E2153;
     margin-bottom: 5%;
 }
 
-.modalsito p{
+.form-container p{
     margin: 0;
     font-style: italic;
     font-size: 13px;
     color: #757575;
 }
 
-.input-holder label{
-    position: relative;
-    top: -70%;
-    padding-top: 0.3%;
-    pointer-events: none;
-    transition: 0.2s ease-in-out;
-
+.input-holder{
+    width: 100%;
 }
 
-input:focus {
-    outline:none
+.two-columns{
+    display: flex;
+    justify-content: space-between;
 }
 
-.input-holder input:focus + label,
-.input-holder input:valid + label{
-    top:-90%;
-    font-size: 0.8em
+.column-input{
+    width:45%;
 }
 
-.double-input{
-    display:flex;
-    justify-content:space-between;
-}
-
-.modalsito .category-btn{
-    background-color: #7B57DF;
-    color: #E9E1FC;
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
+.form-container .category-btn{
+    border: 1px solid #7b57DF;
+    color: #7b57DF;
+    width: 110px;
+    height: 20px;
+    font-size: 12px;
     border-radius: 20px;
+    background: rgba(0,0,0,0);
+    margin-bottom: 0;
+}
+
+.imagensita{
+    background: white;
+    width: 100%;
+    border-radius: 20px;
+    height: 250px;
+    margin-bottom:2%;
+}
+
+.imagen-subida{
+    background: white;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+/* ARROWS IN INPUTS TYPE NUMBER */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

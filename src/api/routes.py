@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Category
+from api.models import db, User, Product, Category, Customer, Order
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -92,3 +92,48 @@ def post_category():
     
     except ValueError as err:
         return {"message": "failed to retrieve planet " + err}, 500
+    
+# ORDERS
+
+# [GET] ALL ORDERS
+@api.route('/orders', methods=['GET'])
+def get_orders():
+    try:
+        all_orders = Order.query.all()
+        return [order.serialize() for order in all_orders]
+    
+    except ValueError as err:
+        return {"message": "failed to retrieve planet " + err}, 500
+    
+# [POST] ONE ORDER
+@api.route('/orders', methods=['POST'])
+def post_order():
+
+    body = request.get_json()
+    customer = body.get("customer", None)
+    payment =  body.get("payment", None)
+
+    if customer != None and payment != None:
+
+        customer = Customer.query.filter_by(id=customer).one_or_none()
+        payment = Customer.query.filter_by(id=payment).one_or_none()
+        items = body.get("products", [])
+        products = []
+
+        for i in items:
+            products.append( Product.query.get(i) )    
+
+        new_order = Order(customer=customer, payment=payment)
+        new_order.products = products
+        
+        try:
+            db.session.add(new_order)
+            db.session.commit()
+
+            return new_order.serialize(), 200
+            
+        except ValueError as err:
+            return { "message" : "Something went wrong" }, 500
+        
+    else:
+        return { "Something is missing or incorrect" }, 500

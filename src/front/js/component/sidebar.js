@@ -18,8 +18,8 @@ export const Sidebar = () => {
                     <MdSpaceDashboard className="menu-icon"/>Dashboard
                 </div>
             </Link> 
-            <Link to={"/"}>
-                <div className="menu-item">
+            <Link to={"/orders"}>
+                <div className={store.active == "orders"? "menu-item menu-item-active": "menu-item"}>
                     <MdShoppingBasket className="menu-icon"/>Pedidos<MdArrowForwardIos className="expand-item"/>
                 </div>
             </Link>

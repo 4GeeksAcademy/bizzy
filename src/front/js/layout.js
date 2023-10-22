@@ -15,6 +15,8 @@ import { Footer } from "./component/footer";
 import { Sidebar } from "./component/sidebar";
 import { Dashboard } from "./pages/dashboard";
 import { Products } from "./pages/products";
+import { Orders } from "./pages/orders";
+import { CreateProduct } from "./pages/createProduct";
 
 //create your first component
 const Layout = () => {
@@ -34,7 +36,9 @@ const Layout = () => {
                             <div id="content">
                                 <Routes>
                                     <Route element={<Dashboard />} path="/" />
+                                    <Route element={<Orders />} path="/orders" />
                                     <Route element={<Products />} path="/products" />
+                                    <Route element={<CreateProduct />} path="/create-product" />
                                     <Route element={<Demo />} path="/demo" />
                                     <Route element={<Single />} path="/single/:theid" />
                                     <Route element={<h1>Not found!</h1>} />
