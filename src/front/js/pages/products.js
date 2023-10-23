@@ -66,7 +66,6 @@ export const Products = () => {
           <th style={{width: "50px"}}>Image</th>
           <th>Category</th>
           <th>Product</th>
-          <th>Cost</th>
           <th>Price</th>
           <th>Quantity</th>
           <th>Stock</th>
@@ -83,11 +82,10 @@ export const Products = () => {
               </td>
             <td>{product.sku}</td>
             <td>
-              <img src="https://i1.sndcdn.com/artworks-3Db66zd6zOXyYP9f-8VAOXg-t500x500.jpg"/>
+              <img src={product.image}/>
             </td>
             <td>{product.category}</td>
             <td className="table-product">{product.name}</td>
-            <td>${product.unit_cost}</td>
             <td>${product.unit_price}</td>
             <td>{product.quantity}</td>
             <td>{product.stock}</td>

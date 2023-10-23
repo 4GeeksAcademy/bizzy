@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Category, Customer, Order
+from api.models import db, User, Product, Category, Subcategory, Customer, Order
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -27,20 +27,22 @@ def post_product():
 
         name = body.get("name", None)
         category = body.get ("category", None)
+        subcategory = body.get ("subcategory", None)
         unit_price = body.get ("unit_price", None)
-        unit_cost = body.get ("unit_cost", None)
         quantity = body.get ("quantity", None)
         sku = body.get ("sku", None)
         image = body.get ("image", None)
+        description = body.get ("description", None)
         
-        info = (name, category, unit_price, unit_cost, quantity, sku, image)
+        info = (name, category, unit_price, quantity, sku, image, description)
         for key in info:
             if key == None: return {"message": "Some field is missing in request body"}, 400
 
         category = Category.query.filter_by(name=category).one_or_none()
+        subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
         
-        new_product = Product( name=name, category=category, unit_price=unit_price, unit_cost=unit_cost,
-                              quantity=quantity, stock=quantity, sku=sku, image=image)
+        new_product = Product( name=name, category=category, subcategory=subcategory, unit_price=unit_price, quantity=quantity, 
+                                sku=sku, image=image, description=description)
         db.session.add(new_product)
         db.session.commit()
         return new_product.serialize(), 200
@@ -69,8 +71,28 @@ def delete_people(product_id):
 @api.route('/categories', methods=['GET'])
 def get_categories():
     try:
+        new_categories = []
         all_categories = Category.query.all()
-        return [category.serialize() for category in all_categories]
+        all_subcategories = Subcategory.query.all()
+        for category in all_categories:
+            cat = category.serialize()
+            for subcategory in all_subcategories:
+                subcat = subcategory.serialize()
+                if cat["name"] == subcat["category"]:
+                    cat["subcategories"].append(subcat)
+            new_categories.append(cat)
+
+        return new_categories
+    
+    except ValueError as err:
+        return {"message": "failed to retrieve planet " + err}, 500
+
+# [GET] ALL SUBCATEGORIES
+@api.route('/subcategories', methods=['GET'])
+def get_subcategories():
+    try:
+        all_subcategories = Subcategory.query.all()
+        return [subcategory.serialize() for subcategory in all_subcategories]
     
     except ValueError as err:
         return {"message": "failed to retrieve planet " + err}, 500

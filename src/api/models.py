@@ -26,12 +26,13 @@ class Product(db.Model):
     name = db.Column(db.String(40), unique=True, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     category = db.relationship("Category")
+    subcategory_id = db.Column(db.Integer, db.ForeignKey("subcategory.id"))
+    subcategory = db.relationship("Subcategory")
     unit_price = db.Column(db.Integer, nullable=False)
-    unit_cost = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    stock = db.Column(db.Integer, nullable=False)
     sku = db.Column(db.String(15), nullable=False)
-    image = db.Column(db.String(200), nullable=True)
+    image = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
         return f'<Product {self.name}>'
@@ -40,13 +41,13 @@ class Product(db.Model):
         return {
             "id": self.id,
             "category": self.category.name,
+            "subcategory": self.subcategory.name if self.subcategory else None,
             "name": self.name,
             "unit_price": self.unit_price,
-            "unit_cost": self.unit_cost,
             "quantity": self.quantity,
-            "stock": self.stock,
             "sku": self.sku,
             "image": self.image,
+            "description": self.description
         }
     
 class Category(db.Model):
@@ -60,6 +61,23 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "subcategories": []
+        }
+
+class Subcategory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    category = db.relationship("Category")
+    name = db.Column(db.String(40), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'{self.name}'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "category": self.category.name,
+            "name": self.name
         }
 
 class Payment(db.Model):
