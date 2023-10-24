@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/products.css";
+import "../../styles/orders.css";
 import { toast } from "react-toastify";
 
 export const Orders = () => {
@@ -18,7 +18,7 @@ export const Orders = () => {
 
     loadProducts()
     actions.changeTab("orders")
-    actions.getCategories()
+    actions.getOrders()
   }, []);
 
   async function eliminateProduct(list){
@@ -45,7 +45,7 @@ export const Orders = () => {
 	return (<>
       <div style={{margin: "50px 6vw"}}>
         <div className="table-header">
-          <h2>Productos</h2>
+          <h2>Pedidos</h2>
           <button onClick={()=>console.log("dont forget me")}>+ Crear producto</button>
         </div>
         <button 
@@ -60,27 +60,27 @@ export const Orders = () => {
           <th>
             <input type="checkbox" style={{visibility: "hidden"}}/>
           </th>
-          <th>Fecha</th>
           <th style={{width: "50px"}}>ID</th>
-          <th>Cliente</th>
-          <th>Cantidad</th>
-          <th>Monto</th>
           <th>Pago</th>
+          <th>Productos</th>
+          <th>Valor</th>
+          <th>Fecha</th>
+          <th>Estado</th>
         </tr>
         </thead>
         <tbody>
           
-        {store.products.map((product)=>(
-          <tr key={product.id}>
+        {store.orders.map((order)=>(
+          <tr key={order.id}>
             <td>
-            <input type="checkbox" onChange={()=>checkboxes(product.id)}/>
+            <input type="checkbox" onChange={()=>checkboxes(order.id)}/>
               </td>
-            <td>01/10/23</td>
             <td>1</td>
-            <td>Pedrito Paez</td>
-            <td className="table-product">1</td>
-            <td>$55</td>
             <td>PayPal</td>
+            <td>1 Rei Chikita</td>
+            <td className="table-product">$20</td>
+            <td>{Date()}</td>
+            <td>Pagado</td>
         </tr>)
         )}
         {!loading && store.products.length == 0 && <tr>

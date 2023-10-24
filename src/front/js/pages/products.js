@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/products.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ProductCard } from "../component/productCard";
 
 export const Products = () => {
   const navigate = useNavigate();
@@ -23,85 +24,19 @@ export const Products = () => {
     actions.getCategories()
   }, []);
 
-  async function eliminateProduct(list){
-    for (let id of list){
-      let deleted = await actions.deleteProduct(id)
-      if (deleted == false){
-        toast.error("Ocurrio un error inesperado")
-        return 
-      }
-    }
-    setChecklist([])
-  }
-  
-  function checkboxes(id){
-    if( checklist.includes(id) ){
-      let new_list = checklist.filter((list_id) => list_id != id)
-      setChecklist(new_list)
-    }
-    else{
-      setChecklist([...checklist, id])
-    }
-  }
-
 	return (<>
       <div style={{margin: "50px 6vw"}}>
         <div className="table-header">
           <h2>Productos</h2>
           <button onClick={()=>navigate("/create-product")}>+ Crear producto</button>
         </div>
-        <button 
-        className="delete-button" 
-        style={{visibility:checklist.length == 0 && "hidden"}}
-        onClick={()=>eliminateProduct(checklist)}>
-          Eliminar
-        </button>
-        <table>
-          <thead>
-        <tr>
-          <th>
-            <input type="checkbox" style={{visibility: "hidden"}}/>
-          </th>
-          <th>SKU</th>
-          <th style={{width: "50px"}}>Image</th>
-          <th>Category</th>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Stock</th>
-          <th>Gross</th>
-          <th>Profit</th>
-        </tr>
-        </thead>
-        <tbody>
-          
-        {store.products.map((product)=>(
-          <tr key={product.id}>
-            <td>
-            <input type="checkbox" onChange={()=>checkboxes(product.id)}/>
-              </td>
-            <td>{product.sku}</td>
-            <td>
-              <img src={product.image}/>
-            </td>
-            <td>{product.category}</td>
-            <td className="table-product">{product.name}</td>
-            <td>${product.unit_price}</td>
-            <td>{product.quantity}</td>
-            <td>{product.stock}</td>
-            <td>${Math.floor(Math.random()*100)}</td>
-            <td>${Math.floor(Math.random()*50)}</td>
-        </tr>)
-        )}
-        {!loading && store.products.length == 0 && <tr>
-          <td colSpan={11} style={{textAlign:"center"}}>
-            No hay productos en el inventario
-          </td>
-        </tr>
-        }
-        </tbody>
-      </table>
-      {loading && <div class="spinner"></div>}
+        <div className="products-container">
+          {store.products.map((product)=>(
+            <ProductCard name={product.name} image={product.image} price={product.unit_price}
+            stock={product.quantity} />)
+          )}
+          {loading && <div class="spinner"></div>}
+        </div>
     </div>
     </>
 	);

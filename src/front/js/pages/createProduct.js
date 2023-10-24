@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { BsFillCloudUploadFill } from "react-icons/bs"
+import { BsFillCloudUploadFill, BsChevronLeft } from "react-icons/bs"
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 import { useRef } from 'react';
@@ -9,6 +9,7 @@ import { Context } from "../store/appContext";
 import { storage } from "../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../styles/createProduct.css";
+import { CreateCategory } from "../component/createCategory";
 
 export const CreateProduct = (modal) => {
 	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."
@@ -30,10 +31,18 @@ export const CreateProduct = (modal) => {
 		}
 	)
 	
+	async function loadInfo(){
+		const pLoad = await actions.getProducts()
+		const cLoad = await actions.getCategories()
+	
+		if (!pLoad) toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
+		if (!cLoad) toast.error("Ocurrio un error al cargar las categorias", {autoClose: false})
+	  }
+
 	useEffect(() => {
-		actions.getProducts()
 		actions.changeTab("products")
-		actions.getCategories()
+
+		loadInfo()
 	}, []);
 
 	function handleImage(e){
@@ -100,9 +109,10 @@ export const CreateProduct = (modal) => {
 
 	return (<>
 		<div style={{margin: "50px 6vw", width:"65%"}}>
+			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Productos</button>
 			<h2>Añadir producto</h2>
 			<div>
-			<div className="imagensita">
+			<div className="upload-image">
 				<BsFillCloudUploadFill className="upload-icon"/>
 				<button onClick={()=>ref.current.click()}>Selecciona las imagenes</button>
 				<p>o</p>
@@ -204,6 +214,7 @@ export const CreateProduct = (modal) => {
 				<button onClick={()=> createProduct()}>Crear</button>
 			</div>
 		</div>
+		<CreateCategory/>
         </>
 	);
 };	

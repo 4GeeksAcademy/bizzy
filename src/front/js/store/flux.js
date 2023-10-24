@@ -71,6 +71,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			getOrders: async () => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/orders")
+					const data = await resp.json()
+
+					setStore({ orders: data })
+					return true
+				} catch (error) {
+					return false
+				}
+			},
+
 			changeTab: (tab) => {
 				setStore({active: tab})
 				}

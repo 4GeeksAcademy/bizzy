@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Category, Subcategory, Customer, Order
+from api.models import db, User, Product, Category, Subcategory, Customer, Order, Payment, Item
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -85,17 +85,7 @@ def get_categories():
         return new_categories
     
     except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
-
-# [GET] ALL SUBCATEGORIES
-@api.route('/subcategories', methods=['GET'])
-def get_subcategories():
-    try:
-        all_subcategories = Subcategory.query.all()
-        return [subcategory.serialize() for subcategory in all_subcategories]
-    
-    except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
+        return {"message": "Failed to retrieve categories " + err}, 500
 
 # [POST] ONE CATEGORY
 @api.route('/category', methods=['POST'])
@@ -125,7 +115,7 @@ def get_orders():
         return [order.serialize() for order in all_orders]
     
     except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
+        return {"message": "Failed to retrieve orders" + err}, 500
     
 # [POST] ONE ORDER
 @api.route('/orders', methods=['POST'])
@@ -134,28 +124,28 @@ def post_order():
     body = request.get_json()
     customer = body.get("customer", None)
     payment =  body.get("payment", None)
+    items = body.get("products", [])
 
     if customer != None and payment != None:
 
         customer = Customer.query.filter_by(id=customer).one_or_none()
-        payment = Customer.query.filter_by(id=payment).one_or_none()
-        items = body.get("products", [])
-        products = []
-
-        for i in items:
-            products.append( Product.query.get(i) )    
+        payment = Payment.query.filter_by(id=payment).one_or_none()
 
         new_order = Order(customer=customer, payment=payment)
-        new_order.products = products
-        
         try:
             db.session.add(new_order)
             db.session.commit()
 
-            return new_order.serialize(), 200
+            for i in items:
+                new_product = Product.query.filter_by(id=i).one_or_none()  
+                new_item = Item(product=new_product, order=new_order)
+                db.session.add(new_item)
+                db.session.commit()
+
+            return new_order.serialize()   , 200
             
         except ValueError as err:
-            return { "message" : "Something went wrong" }, 500
+            return { "message" : f"Something went wrong, {err}" }, 500
         
     else:
         return { "Something is missing or incorrect" }, 500
