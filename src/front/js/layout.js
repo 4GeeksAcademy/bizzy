@@ -11,7 +11,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import { Sidebar } from "./component/sidebar";
 import { Dashboard } from "./pages/dashboard";
 import { Products } from "./pages/products";
@@ -43,7 +42,6 @@ const Layout = () => {
                                     <Route element={<Single />} path="/single/:theid" />
                                     <Route element={<h1>Not found!</h1>} />
                                 </Routes>
-                                <Footer />
                             </div>
 
                         </div>

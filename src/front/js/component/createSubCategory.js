@@ -60,7 +60,7 @@ export const CreateSubCategory = (create) => {
 					<p>Categoria: <b>{create.category}</b></p>
                     <div className="input-holder">
 						<label>Nombre</label>
-						<input required placeholder="Ingresa el nombre de la Sub-categoria"
+						<input required placeholder="Ingresa el nombre de la Sub-Categoria"
 						onChange={(e)=> setSubcategory({...subcategory, "name":e.target.value })}></input>
 					</div>
                     <div className="button-container">

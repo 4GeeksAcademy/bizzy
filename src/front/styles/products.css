@@ -1,12 +1,12 @@
 .filters{
   display:flex;
+  margin-bottom: 20px;
 }
 
 .filters select{
   outline: none;
   border-radius: 5px;
   border: 2px solid #F1F3F4;
-  margin-bottom: 4%;
   padding: 4px;
   width: 100%;
   height: 40px;
@@ -30,24 +30,30 @@
   outline:none
 }
 
-.table-header{
+.filter-box{
+  margin-right: 5px;
+}
+
+.products-header{
     display:flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.table-header h2{
+.products-header h2{
     font-weight: 600;
     color: #2E2153;
+    margin: 0;
 }
 
-.table-header button {
+.products-header button {
     color: #7B57DF;
     background-color: #E9E1FC;
     border: none;
     border-radius: 5px;
     width: 170px;
     height: 40px;
-    margin-bottom: 35px;
+    margin: 0;
     display: flex;
     justify-content: center;
     font-weight: 500;
@@ -69,8 +75,22 @@
     border-left-color: rgb(194, 194, 194);
   
     animation: spin 1s ease infinite;
-  }
+}
   
+  .no-products{
+    display: flex;
+    color: #d7d7d7;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.no-products-icon{
+  font-size: 60px;
+  margin-bottom: 5px;
+}
+
   @keyframes spin {
     0% {
       transform: rotate(0deg);
