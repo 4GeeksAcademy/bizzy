@@ -165,7 +165,7 @@ export const CreateProduct = (modal) => {
 							
 							<select required 
 							onChange={(e)=> setProduct({...product, "subcategory":e.target.value })}>
-								<option value="null" disabled selected hidden>Elige una opción</option>
+								<option value="" disabled selected hidden>Elige una opción</option>
 								<option value="" >No aplica</option>
 								{ product.category && store.categories.filter((cat)=> cat.name == product.category)[0].subcategories
 								.map((subcategory)=> <option>{subcategory.name}</option>)}
