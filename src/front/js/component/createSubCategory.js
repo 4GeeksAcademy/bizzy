@@ -6,37 +6,39 @@ import { toast } from 'react-toastify';
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import "../../styles/createCategory.css";
 
-export const CreateCategory = (create) => {
+export const CreateSubCategory = (create) => {
     const { store, actions } = useContext(Context);
     const background = useRef(null);
-    const [ category, setCategory ] = useState(
+    const [ subcategory, setSubcategory ] = useState(
         {
+			"category":create.category,
             "name":""
         }
     )
     
-    async function createNewCategory(){
-		// SEARCH FOR EXISTENT CATEGORY
-		const repeated = store.categories.filter((item) => item.name == category.name)
-		if (repeated.length > 0){
-			toast.error("Ya existe una categoria con este nombre",{
-				position: "bottom-center"})
-			return
-		}
-
-        // SEARCH FOR UNFILLED FIELDS
-        for (let value in category){
-			if (!category[value]){
+    async function createNewSubCategory(){
+		// SEARCH FOR UNFILLED FIELDS
+        for (let value in subcategory){
+			if (!subcategory[value]){
 				toast.error("Rellena todos los campos",{
+					position: "bottom-center"})
+					return
+				}
+			}
+			
+			// SEARCH FOR EXISTENT SUBCATEGORY
+			const filteredCategory = store.categories.filter((item) => item.name == create.category)[0]
+			const repeated = filteredCategory.subcategories.filter((subitem) => subitem.name == subcategory.name)
+			if (repeated.length > 0){
+				toast.error("Ya existe una subcategoria con este nombre",{
 					position: "bottom-center"})
 				return
 			}
-		}
 
-		// POST CATEGORY
-		let info = await actions.postCategory(category)
+		// POST SUBCATEGORY
+		let info = await actions.postSubCategory(subcategory)
 		if(info){
-			toast.success("Categoria creada con exito!")
+			toast.success("Sub-categoria creada con exito!")
             background.current.click()
 			return
 		}
@@ -52,17 +54,17 @@ export const CreateCategory = (create) => {
             <div className="create-popup">
                 <div className="create-container">
                     <div className="create-header">
-                        <h2> Crear categoria </h2>
+                        <h2> Crear sub-categoria </h2>
                         <AiOutlineCloseCircle className="create-close" onClick={create.close} />
                     </div>
-                    
+					<p>Categoria: <b>{create.category}</b></p>
                     <div className="input-holder">
 						<label>Nombre</label>
-						<input required placeholder="Ingresa el nombre de la categoria"
-						onChange={(e)=> setCategory({...category, "name":e.target.value })}></input>
+						<input required placeholder="Ingresa el nombre de la Sub-categoria"
+						onChange={(e)=> setSubcategory({...subcategory, "name":e.target.value })}></input>
 					</div>
                     <div className="button-container">
-                    <button onClick={()=> createNewCategory()}>Crear</button>
+                    <button onClick={()=> createNewSubCategory()}>Crear</button>
                     </div>
                 </div>
             </div>

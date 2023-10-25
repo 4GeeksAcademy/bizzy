@@ -71,18 +71,9 @@ def delete_people(product_id):
 @api.route('/categories', methods=['GET'])
 def get_categories():
     try:
-        new_categories = []
         all_categories = Category.query.all()
-        all_subcategories = Subcategory.query.all()
-        for category in all_categories:
-            cat = category.serialize()
-            for subcategory in all_subcategories:
-                subcat = subcategory.serialize()
-                if cat["name"] == subcat["category"]:
-                    cat["subcategories"].append(subcat)
-            new_categories.append(cat)
 
-        return new_categories
+        return [category.serialize() for category in all_categories]
     
     except ValueError as err:
         return {"message": "Failed to retrieve categories " + err}, 500
@@ -95,7 +86,7 @@ def post_category():
 
         name = body.get("name", None)
 
-        if name == None: return {"message": "Some field is missing in request body"}, 400
+        if name == None: return {"message": "Category name is missing"}, 400
         
         new_category = Category( name=name )
         db.session.add(new_category)
@@ -103,7 +94,31 @@ def post_category():
         return new_category.serialize(), 200
     
     except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
+        return {"message": "Failed to create cateogory " + err}, 500
+    
+
+# SUBCATEGORIES
+
+# [POST] ONE SUBCATEGORY
+@api.route('/subcategory', methods=['POST'])
+def post_subcategory():
+    try:
+        body = request.get_json()
+        category = body.get("category", None)
+        name = body.get("name", None)
+
+        if name == None: return {"message": "Sub-category name is missing"}, 400
+        if category == None: return {"message": "Category is missing"}, 400
+        
+        category = Category.query.filter_by(name=category).one_or_none()  
+        
+        new_subcategory = Subcategory( name=name, category=category )
+        db.session.add(new_subcategory)
+        db.session.commit()
+        return new_subcategory.serialize(), 200
+    
+    except ValueError as err:
+        return {"message": "Failed to create cateogory " + err}, 500
     
 # ORDERS
 

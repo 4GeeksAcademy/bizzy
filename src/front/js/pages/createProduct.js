@@ -10,12 +10,15 @@ import { storage } from "../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../styles/createProduct.css";
 import { CreateCategory } from "../component/createCategory";
+import { CreateSubCategory } from "../component/createSubCategory";
 
 export const CreateProduct = (modal) => {
 	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
 	const ref = useRef(null);
+	const [ categoryPopUp, setCategoryPopUp] = useState(false) 
+	const [ subCategoryPopUp, setSubCategoryPopUp] = useState(false) 
 	const [ fileName, setFileName ] = useState("")
 	const [ tempImage, setTempImage ] = useState("")
     const [ product, setProduct ] = useState(
@@ -50,7 +53,7 @@ export const CreateProduct = (modal) => {
 		setFileName(e.target.value)
 	}
 
-	async function createProduct(){
+	async function createNewProduct(){
 		// SEARCH FOR EXISTENT PRODUCT
 		const repeated = store.products.filter((item) => item.name == product.name)
 		if (repeated.length > 0){
@@ -155,7 +158,9 @@ export const CreateProduct = (modal) => {
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label className="select-label">Sub-Categoria</label>
-								<button className="category-btn">Añadir nueva</button>
+								<button 
+								onClick={()=> product.category? setSubCategoryPopUp(true): toast.warn('Selecciona una categoria', {position: "bottom-center",})} 
+								className="category-btn">Añadir nueva</button>
 							</div>
 							
 							<select required 
@@ -181,7 +186,7 @@ export const CreateProduct = (modal) => {
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label className="select-label">Categoria</label>
-								<button className="category-btn">Añadir nueva</button>
+								<button onClick={()=>setCategoryPopUp(true)} className="category-btn">Añadir nueva</button>
 							</div>
 
 							<select required 
@@ -211,10 +216,11 @@ export const CreateProduct = (modal) => {
 						<textarea required placeholder="Inserta la descripción de tu producto aqui..."
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>
-				<button onClick={()=> createProduct()}>Crear</button>
+				<button onClick={()=> createNewProduct()}>Crear</button>
 			</div>
 		</div>
-		<CreateCategory/>
+		{ categoryPopUp && <CreateCategory close={()=>setCategoryPopUp(false)} />}
+		{ subCategoryPopUp && <CreateSubCategory close={()=>setSubCategoryPopUp(false)} category={product.category} />}
         </>
 	);
 };	

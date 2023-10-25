@@ -1,5 +1,6 @@
 .button-back{
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     background: none;
     border: none;
@@ -41,6 +42,7 @@ input::file-selector-button {
     top: -280px;
     left: -50px;
     color: rgba(0,0,0,0);
+    border: 0;
 }
 
 .upload-image button{
@@ -117,7 +119,7 @@ input::file-selector-button {
 }
 
 
-label{
+.form-container label{
     font-size: 0.9em;
     font-weight: 500;
     margin-bottom: 5px;
@@ -138,7 +140,7 @@ label{
     height:150px
 }
 
-input:focus, textarea:focus {
+.form-container input:focus, .form-container textarea:focus {
     outline:none
 }
 

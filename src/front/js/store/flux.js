@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+
+			//PRODUCTS
 			getProducts: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/products")
@@ -58,7 +60,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-
+			
+			// CATEGORIES
 			getCategories: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/categories")
@@ -71,6 +74,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			postCategory: async (category) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/category",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(category)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getCategories()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+
+			// SUBCATEGORIES
+			postSubCategory: async (subcategory) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/subcategory",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(subcategory)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getCategories()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+
+			// ORDERS
 			getOrders: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/orders")
@@ -83,6 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//TABS
 			changeTab: (tab) => {
 				setStore({active: tab})
 				}

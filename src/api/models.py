@@ -61,13 +61,13 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "subcategories": []
+            "subcategories": [subcat.serialize() for subcat in self.subcategories]
         }
 
 class Subcategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
-    category = db.relationship("Category")
+    category = db.relationship("Category", backref="subcategories")
     name = db.Column(db.String(40), unique=True, nullable=False)
 
     def __repr__(self):
@@ -127,7 +127,7 @@ class Order(db.Model):
             "id": self.id,
             "customer": self.customer.serialize(),
             "payment": self.payment.serialize(),
-            "items": [pro.serialize() for pro in self.items]
+            "items": [itm.serialize() for itm in self.items]
         }
     
 class Item(db.Model):
