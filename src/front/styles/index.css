@@ -58,6 +58,13 @@
     justify-content: space-between;
 }
 
+.popup-header h2{
+    align-self:center;
+    font-weight: 600;
+    color: #2E2153;
+    margin-bottom: 5%;
+}
+
 .popup-close{
     margin-left: auto;
     margin-right: 15px;
@@ -67,4 +74,27 @@
 
 .popup-close:hover{
     color: #8a8a8a;
+}
+
+/* SPINNER */
+.spinner {
+    margin: auto;
+    margin-top: 5%;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: rgb(194, 194, 194);
+  
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
 }

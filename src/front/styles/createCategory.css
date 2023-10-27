@@ -2,13 +2,6 @@
     padding: 50px;
 }
 
-.create-container h2{
-    align-self:center;
-    font-weight: 600;
-    color: #2E2153;
-    margin-bottom: 5%;
-}
-
 .create-container label{
     font-size: 0.9em;
     font-weight: 500;
