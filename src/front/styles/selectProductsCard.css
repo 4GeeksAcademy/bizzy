@@ -1,0 +1,99 @@
+.select-product-card-container{
+    background: white;
+    width: 160px;
+    height: 200px;
+    border: 0.5px solid #F1F3F4;
+    border-radius: 20px;
+    display: flex;
+    padding: 16px 12px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.select-product-card-container img{
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.select-product-card-container span{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select-product-card-container p{
+    margin: 0;
+    text-align: center;
+}
+
+.select-product-card-container .select-item-price{
+    font-size: 14px;
+    font-weight: 500;
+    color: #2E2153;
+    margin-bottom: 2px;
+
+}
+
+.select-product-card-container .select-item-name{
+    font-weight: 600;
+    color: #2E2153;
+    font-size: 15px;
+    line-height: 15px;
+    margin-bottom: 2px;
+}
+
+.select-product-count{
+    display: flex;
+    width: 35px;
+    height: 25px;
+    border-radius: 13px;
+    background-color: #FF7171;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 33px;
+    margin-top: -25px;
+}
+
+.count-togglers{
+    display: flex;
+    width: 95px;
+    height: 23px;
+    background-color: #F2F4F5;
+    border-radius: 12px;
+    justify-content: space-between;
+    padding: 0px 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #A8A8A8;
+    align-items: center;
+    margin-top: -23px;
+    position: relative;
+    top: 32px;
+}
+
+.count-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.count-togglers button{
+    font-size: 18px;
+    font-weight: 600;
+    color: #A8A8A8;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+}

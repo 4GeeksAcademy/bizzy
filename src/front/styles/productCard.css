@@ -2,7 +2,7 @@
     background: white;
     width: 175px;
     height: 210px;
-    border: 0.5px solid rgb(195, 204, 213);
+    border: 0.5px solid #F1F3F4;
     border-radius: 20px;
     display: flex;
     padding: 16px 12px;
@@ -14,8 +14,8 @@
 }
 
 .product-container img{
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -28,22 +28,26 @@
 
 .product-container p{
     margin: 0;
-    margin-top: 1px;
+    text-align: center;
 }
 
-.item-price{
+.product-container .item-price{
     font-size: 14px;
     font-weight: 500;
     color: #2E2153;
+    margin-bottom: 2px;
+
 }
 
-.item-name{
+.product-container .item-name{
     font-weight: 600;
     color: #2E2153;
     font-size: 15px;
+    line-height: 15px;
+    margin-bottom: 2px;
 }
 
-.item-stock{
+.product-container .item-stock{
     font-size: 12px;
     color: #6f7a89;
 }

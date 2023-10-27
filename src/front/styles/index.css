@@ -4,3 +4,67 @@
 *{
     font-family: 'Poppins', sans-serif;
 }
+
+.create-views-container{
+    margin: 50px 6vw;
+    width:65%;
+}
+
+@media screen and (max-width: 1500px) {
+    .create-views-container{
+        width:auto!important;
+    }
+}
+
+
+/* CSS FOR POPUPS*/
+.background{
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    animation: modalsito-bg .3s linear;
+}
+
+@keyframes modalsito-bg {
+	from {
+		opacity: 0;
+	}
+}
+
+.popup-body{
+    background: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 500px;
+    z-index: 3;
+    animation: popup-animate .2s linear;
+}
+
+@keyframes popup-animate {
+	from {
+		right: -500px;
+	}
+}
+
+.popup-header{
+    display:flex;
+    justify-content: space-between;
+}
+
+.popup-close{
+    margin-left: auto;
+    margin-right: 15px;
+    font-size: 30px;
+    color: #9b9b9b;
+}
+
+.popup-close:hover{
+    color: #8a8a8a;
+}

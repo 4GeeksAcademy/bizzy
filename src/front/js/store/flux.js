@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			active:"",
 			products: [],
 			categories: [],
-			orders: []
+			orders: [],
+			selectedProducts:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -135,7 +136,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//TABS
 			changeTab: (tab) => {
 				setStore({active: tab})
-				}
+				},
+
+			addSelectedProducts: (products) => {
+				setStore({selectedProducts: products})
+				},
 		}
 	};
 };

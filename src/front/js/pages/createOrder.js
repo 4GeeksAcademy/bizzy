@@ -1,24 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import { BsFillCloudUploadFill, BsChevronLeft } from "react-icons/bs"
+import { BsChevronLeft } from "react-icons/bs"
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-import { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Context } from "../store/appContext";
 import { storage } from "../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../styles/createProduct.css";
-import { CreateCategory } from "../component/createCategory";
-import { CreateSubCategory } from "../component/createSubCategory";
+import { SelectProducts } from "../component/selectProducts";
 
-export const CreateProduct = (modal) => {
+
+export const CreateOrder = () => {
 	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
-	const ref = useRef(null);
-	const [ categoryPopUp, setCategoryPopUp] = useState(false) 
-	const [ subCategoryPopUp, setSubCategoryPopUp] = useState(false) 
+	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false) 
 	const [ fileName, setFileName ] = useState("")
 	const [ tempImage, setTempImage ] = useState("")
     const [ product, setProduct ] = useState(
@@ -43,7 +40,7 @@ export const CreateProduct = (modal) => {
 	  }
 
 	useEffect(() => {
-		actions.changeTab("products")
+		actions.changeTab("orders")
 
 		loadInfo()
 	}, []);
@@ -112,25 +109,10 @@ export const CreateProduct = (modal) => {
 
 	return (<>
 		<div className="create-views-container">
-			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Productos</button>
-			<h2>Añadir producto</h2>
-			<div>
-			<div className="upload-image">
-				<BsFillCloudUploadFill className="upload-icon"/>
-				<button onClick={()=>ref.current.click()}>Selecciona las imagenes</button>
-				<p>o</p>
-				<p>Sueltalas acá</p>
-				
-			</div>
-			<input
-				className="image-input"
-				ref={ref}
-				onChange={(e) => handleImage(e)}
-				type="file"
-				accept="image/png, image/jpeg"/>
-			</div>
+			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Ordenes</button>
+			<h2>Crear orden</h2>
 
-			<p>Imagen subida</p>
+			<p>Productos</p>
 			<div className="imagen-subida">
 				{!tempImage && <>
 								<img src={placeholderImage} width={"300px"}/>
@@ -144,12 +126,13 @@ export const CreateProduct = (modal) => {
 				onClick={()=> setTempImage()}
 				className="delete-image"/>
 			</div>
+
 			<div className="form-container">
 
 			<div className="two-columns">
 				<div className="column-input">
 					<div className="input-holder">
-						<label>Nombre</label>
+						<label>Cliente</label>
 						<input required placeholder="Camiseta Roja"
 						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
 					</div>
@@ -157,9 +140,9 @@ export const CreateProduct = (modal) => {
 					<div style={{display:"flex"}}>
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label className="select-label">Sub-Categoria</label>
+								<label className="select-label">Metodo de Pago</label>
 								<button 
-								onClick={()=> product.category? setSubCategoryPopUp(true): toast.warn('Selecciona una categoria', {position: "bottom-center",})} 
+								onClick={ ()=> setSelectProductsPopUp(true) } 
 								className="category-btn">Añadir nueva</button>
 							</div>
 							
@@ -173,12 +156,6 @@ export const CreateProduct = (modal) => {
 
 						</div>
 					</div>
-
-					<div className="input-holder">
-						<label>Precio unidad</label>
-						<input type="number" required placeholder="15"
-						onChange={(e)=> setProduct({...product, "unit_price": parseInt(e.target.value) })}></input>
-					</div>
 				</div>
 
 				<div className="column-input">
@@ -186,7 +163,7 @@ export const CreateProduct = (modal) => {
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label className="select-label">Categoria</label>
-								<button onClick={()=>setCategoryPopUp(true)} className="category-btn">Añadir nueva</button>
+								<button onClick={()=> setSelectProductsPopUp(true) } className="category-btn">Añadir nueva</button>
 							</div>
 
 							<select required 
@@ -203,24 +180,17 @@ export const CreateProduct = (modal) => {
 						<input required placeholder="SQ-973"
 						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
 					</div>
-
-					<div className="input-holder">
-						<label>Cantidad</label>
-						<input type="number" required placeholder="100"
-						onChange={(e)=> setProduct({...product, "quantity": parseInt(e.target.value) })}></input>
-					</div>
 				</div>
 			</div>
 			<div className="input-holder">
-						<label>Descripción</label>
-						<textarea required placeholder="Inserta la descripción de tu producto aqui..."
+						<label>Notas</label>
+						<textarea required placeholder="Inserta una nota..."
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewProduct()}>Crear</button>
 			</div>
 		</div>
-		{ categoryPopUp && <CreateCategory close={()=>setCategoryPopUp(false)} />}
-		{ subCategoryPopUp && <CreateSubCategory close={()=>setSubCategoryPopUp(false)} category={product.category} />}
+        { selectProductsPopUp && <SelectProducts close={()=> setSelectProductsPopUp(false)}/>}
         </>
 	);
 };	

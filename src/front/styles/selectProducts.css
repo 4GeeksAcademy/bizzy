@@ -1,0 +1,88 @@
+.select-products-container{
+    padding: 50px;
+    height:100%;
+    overflow-y: scroll;
+}
+
+.filters-select-products{
+    margin-bottom: 20px;
+    margin-top:20px;
+}
+
+.filters-select-products select{
+    background-color:#f8f8f8;
+    outline: none;
+    border-radius: 8px;
+    border:none;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 190px;
+    height: 40px;
+    font-size:15px;
+    color: #2E2153;
+    font-weight: 500;
+}
+  
+.filters-select-products input{
+    background-color:#f8f8f8;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+    font-size: 13px;
+}
+  
+.filters-select-products input:focus{
+    outline:none;
+}
+
+.select-products-categories{
+    display:flex;
+    margin-top: 10px;
+}
+
+.select-products-categories .subcat-filter{
+    background-color: #F0EEFA;
+    color: #7B57DF;
+  }
+
+.select-products-categories .filter-box{
+    width: 100%;
+}
+
+.select-products-container .products-container{
+    display:flex;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
+.add-selected-products{
+    box-shadow: 16px -30px 40px 0px #ffffffbf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    width: 500px;
+    height: 70px;
+}
+
+.add-selected-products button{
+    
+    color: #FF7171;
+    background-color: #ffe9e9;
+    border: none;
+    border-radius: 5px;
+    width: 170px;
+    height: 40px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    align-items: center;
+}

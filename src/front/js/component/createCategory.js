@@ -49,11 +49,11 @@ export const CreateCategory = (create) => {
 
 	return (<>
 		<div ref={background} onClick={create.close} className="background"/>
-            <div className="create-popup">
+            <div className="popup-body">
                 <div className="create-container">
-                    <div className="create-header">
+                    <div className="popup-header">
                         <h2> Crear categoria </h2>
-                        <AiOutlineCloseCircle className="create-close" onClick={create.close} />
+                        <AiOutlineCloseCircle className="popup-close" onClick={create.close} />
                     </div>
                     
                     <div className="input-holder">

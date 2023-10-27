@@ -16,6 +16,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Products } from "./pages/products";
 import { Orders } from "./pages/orders";
 import { CreateProduct } from "./pages/createProduct";
+import { CreateOrder } from "./pages/createOrder";
 
 //create your first component
 const Layout = () => {
@@ -36,6 +37,7 @@ const Layout = () => {
                                 <Routes>
                                     <Route element={<Dashboard />} path="/" />
                                     <Route element={<Orders />} path="/orders" />
+                                    <Route element={<CreateOrder />} path="/create-order" />
                                     <Route element={<Products />} path="/products" />
                                     <Route element={<CreateProduct />} path="/create-product" />
                                     <Route element={<Demo />} path="/demo" />
