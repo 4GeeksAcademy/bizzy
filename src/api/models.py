@@ -29,13 +29,15 @@ class Product(db.Model):
     subcategory_id = db.Column(db.Integer, db.ForeignKey("subcategory.id"))
     subcategory = db.relationship("Subcategory")
     unit_price = db.Column(db.Integer, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
+    stock = db.Column(db.Integer, nullable=False)
+    sold = db.Column(db.Integer, nullable=False)
     sku = db.Column(db.String(15), nullable=False)
     image = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(500), nullable=False)
+    for_sale = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'<Product {self.name}>'
 
     def serialize(self):
         return {
@@ -44,10 +46,12 @@ class Product(db.Model):
             "subcategory": self.subcategory.name if self.subcategory else None,
             "name": self.name,
             "unit_price": self.unit_price,
-            "quantity": self.quantity,
+            "stock": self.stock,
+            "sold": self.sold,
             "sku": self.sku,
             "image": self.image,
-            "description": self.description
+            "description": self.description,
+            "for_sale": self.for_sale,
         }
     
 class Category(db.Model):
@@ -55,7 +59,7 @@ class Category(db.Model):
     name = db.Column(db.String(40), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'<Category {self.name}>'
 
     def serialize(self):
         return {
@@ -71,7 +75,7 @@ class Subcategory(db.Model):
     name = db.Column(db.String(40), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'<Subcategory {self.name}>'
 
     def serialize(self):
         return {
@@ -85,7 +89,7 @@ class Payment(db.Model):
     name = db.Column(db.String(40), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'<Payment {self.name}>'
 
     def serialize(self):
         return {
@@ -101,7 +105,7 @@ class Customer(db.Model):
     phone = db.Column(db.String(40), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'<Customer {self.name}>'
 
     def serialize(self):
         return {
@@ -120,7 +124,7 @@ class Order(db.Model):
     payment = db.relationship("Payment")
 
     def __repr__(self):
-        return f'{self.id}'
+        return f'<Order {self.id}>'
 
     def serialize(self):
         return {
@@ -136,16 +140,14 @@ class Item(db.Model):
     order = db.relationship("Order", backref="items")
     product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
     product = db.relationship("Product")
+    quantity = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f'{self.id}'
-
-    def __init__(self, order, product):
-        self.order = order
-        self.product = product
+        return f'<Item {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "product": self.product.serialize()
+            "product": self.product.serialize(),
+            "quantity": self.quantity,
         }

@@ -95,8 +95,8 @@ export const SelectProducts = (select) => {
 
         <div className="products-container">
           {filteredByCategory && filteredByName.map((product)=>(
-            <SelectProductsCard key={product.id} name={product.name} image={product.image} price={product.unit_price}
-            stock={product.quantity} set={setProductList} plist={productList} />))}
+            <SelectProductsCard key={product.id} product={product} i
+            set={setProductList} plist={productList} />))}
           {!loading && filteredBySubCategory.length == 0 && <div className="no-products" >
             <RiEmotionSadLine className="no-products-icon"/>
             <p>No se encontraron productos</p>

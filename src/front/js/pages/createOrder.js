@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BsChevronLeft } from "react-icons/bs"
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { FaBasketShopping } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -8,11 +8,11 @@ import { Context } from "../store/appContext";
 import { storage } from "../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../styles/createProduct.css";
+import "../../styles/createOrder.css";
 import { SelectProducts } from "../component/selectProducts";
 
 
 export const CreateOrder = () => {
-	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
 	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false) 
@@ -24,7 +24,7 @@ export const CreateOrder = () => {
 			"category":"",
 			"subcategory":null,
 			"unit_price":"",
-			"quantity":"",
+			"stock":"",
 			"sku":"",
 			"image":"",
 			"description":""
@@ -45,9 +45,9 @@ export const CreateOrder = () => {
 		loadInfo()
 	}, []);
 
-	function handleImage(e){
-		setTempImage(e.target.files[0])
-		setFileName(e.target.value)
+	function deleteFromSelected(p){
+	const newSelects = store.selectedProducts.filter((item)=> item.name != p.name)
+	actions.addSelectedProducts(newSelects)
 	}
 
 	async function createNewProduct(){
@@ -109,22 +109,23 @@ export const CreateOrder = () => {
 
 	return (<>
 		<div className="create-views-container">
-			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Ordenes</button>
+			<button className="button-back" onClick={()=>navigate("/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
 			<h2>Crear orden</h2>
 
-			<p>Productos</p>
-			<div className="imagen-subida">
-				{!tempImage && <>
-								<img src={placeholderImage} width={"300px"}/>
-								<span style={{color: "#9b9b9b"}}>No has seleccionado una imagen aun...</span>
-							</>}
-				{tempImage && <>
-								<img src={URL.createObjectURL(tempImage)} width={"300px"}/>
-								<span>{fileName.substring(12)}</span>
-							</>}
-				<AiOutlineCloseCircle 
-				onClick={()=> setTempImage()}
-				className="delete-image"/>
+			<span className="create-order-header">
+				<p>Pedido</p>
+				{store.selectedProducts.length > 0 && <button onClick={()=> setSelectProductsPopUp(true) } className="category-btn">Editar</button>}
+			</span>
+			<div className={store.selectedProducts.length > 0 ? "order-selected-products" : "order-no-selected-products"}>
+				{store.selectedProducts.length > 0 && store.selectedProducts.map((prod)=> (
+				<div key={prod.id} className="selected-minicard" onClick={()=>deleteFromSelected(prod)}>
+				<div>{prod.quantity}</div>
+				<img src={prod.image}/>
+				</div>
+				))}
+				{!store.selectedProducts.length > 0 && <button onClick={ ()=> setSelectProductsPopUp(true) }>
+					<FaBasketShopping style={{fontSize: "25px"}}/>Haz click para añadir productos
+					</button>}
 			</div>
 
 			<div className="form-container">
@@ -141,9 +142,6 @@ export const CreateOrder = () => {
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label className="select-label">Metodo de Pago</label>
-								<button 
-								onClick={ ()=> setSelectProductsPopUp(true) } 
-								className="category-btn">Añadir nueva</button>
 							</div>
 							
 							<select required 
@@ -151,7 +149,7 @@ export const CreateOrder = () => {
 								<option value="" disabled selected hidden>Elige una opción</option>
 								<option value="" >No aplica</option>
 								{ product.category && store.categories.filter((cat)=> cat.name == product.category)[0].subcategories
-								.map((subcategory)=> <option>{subcategory.name}</option>)}
+								.map((subcategory)=> <option key={subcategory.id}>{subcategory.name}</option>)}
 							</select>
 
 						</div>
@@ -163,13 +161,12 @@ export const CreateOrder = () => {
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label className="select-label">Categoria</label>
-								<button onClick={()=> setSelectProductsPopUp(true) } className="category-btn">Añadir nueva</button>
 							</div>
 
 							<select required 
 							onChange={(e)=> setProduct({...product, "category":e.target.value })}>
 								<option value="" disabled selected hidden>Elige una opción</option>
-								{store.categories.map((category)=> <option>{category.name}</option>)}
+								{store.categories.map((category)=> <option key={category.id}>{category.name}</option>)}
 							</select>	
 
 						</div>

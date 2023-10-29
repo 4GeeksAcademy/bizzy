@@ -10,6 +10,13 @@
     width:65%;
 }
 
+.create-views-container h2{
+    font-weight: 600;
+    color: #2E2153;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
 @media screen and (max-width: 1500px) {
     .create-views-container{
         width:auto!important;

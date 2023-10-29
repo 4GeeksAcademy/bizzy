@@ -27,7 +27,7 @@ export const CreateProduct = (modal) => {
 			"category":"",
 			"subcategory":null,
 			"unit_price":"",
-			"quantity":"",
+			"stock":"",
 			"sku":"",
 			"image":"",
 			"description":""
@@ -168,7 +168,7 @@ export const CreateProduct = (modal) => {
 								<option value="" disabled selected hidden>Elige una opción</option>
 								<option value="" >No aplica</option>
 								{ product.category && store.categories.filter((cat)=> cat.name == product.category)[0].subcategories
-								.map((subcategory)=> <option>{subcategory.name}</option>)}
+								.map((subcategory)=> <option key={subcategory.id}>{subcategory.name}</option>)}
 							</select>
 
 						</div>
@@ -192,7 +192,7 @@ export const CreateProduct = (modal) => {
 							<select required 
 							onChange={(e)=> setProduct({...product, "category":e.target.value })}>
 								<option value="" disabled selected hidden>Elige una opción</option>
-								{store.categories.map((category)=> <option>{category.name}</option>)}
+								{store.categories.map((category)=> <option key={category.id}>{category.name}</option>)}
 							</select>	
 
 						</div>
@@ -207,7 +207,7 @@ export const CreateProduct = (modal) => {
 					<div className="input-holder">
 						<label>Cantidad</label>
 						<input type="number" required placeholder="100"
-						onChange={(e)=> setProduct({...product, "quantity": parseInt(e.target.value) })}></input>
+						onChange={(e)=> setProduct({...product, "stock": parseInt(e.target.value) })}></input>
 					</div>
 				</div>
 			</div>

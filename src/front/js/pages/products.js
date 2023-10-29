@@ -74,7 +74,7 @@ export const Products = () => {
         <div className="products-container">
           {filteredByCategory && filteredByName.map((product)=>(
             <ProductCard key={product.id} name={product.name} image={product.image} price={product.unit_price}
-            stock={product.quantity} />))}
+            stock={product.stock} />))}
 
           {!loading && filteredBySubCategory.length == 0 && <div className="no-products" >
             <RiEmotionSadLine className="no-products-icon"/>

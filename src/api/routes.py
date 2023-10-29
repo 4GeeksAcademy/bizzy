@@ -29,20 +29,20 @@ def post_product():
         category = body.get ("category", None)
         subcategory = body.get ("subcategory", None)
         unit_price = body.get ("unit_price", None)
-        quantity = body.get ("quantity", None)
+        stock = body.get ("stock", None)
         sku = body.get ("sku", None)
         image = body.get ("image", None)
         description = body.get ("description", None)
         
-        info = (name, category, unit_price, quantity, sku, image, description)
+        info = (name, category, unit_price, stock, sku, image, description)
         for key in info:
             if key == None: return {"message": "Some field is missing in request body"}, 400
 
         category = Category.query.filter_by(name=category).one_or_none()
         subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
         
-        new_product = Product( name=name, category=category, subcategory=subcategory, unit_price=unit_price, quantity=quantity, 
-                                sku=sku, image=image, description=description)
+        new_product = Product( name=name, category=category, subcategory=subcategory, unit_price=unit_price, stock=stock, 
+                                sold=0, sku=sku, image=image, description=description, for_sale=False)
         db.session.add(new_product)
         db.session.commit()
         return new_product.serialize(), 200
@@ -153,7 +153,7 @@ def post_order():
 
             for i in items:
                 new_product = Product.query.filter_by(id=i).one_or_none()  
-                new_item = Item(product=new_product, order=new_order)
+                new_item = Item(product=new_product, order=new_order, quantity=new_product.quantity)
                 db.session.add(new_item)
                 db.session.commit()
 
