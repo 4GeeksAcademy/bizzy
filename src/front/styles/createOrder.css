@@ -51,15 +51,15 @@
     flex-direction: column;
     border: none;
     background: none;
-    color: #616161;
+    color: #979797;
 }
 
 .selected-minicard:hover:after{
     content: "\00D7";
     display: flex;
-    height: 60px;
-    width: 60px;
-    margin-top: -60px;
+    height: 70px;
+    width: 70px;
+    margin-top: -70px;
     position: relative;
     left: 2%;
     align-items: center;
@@ -76,11 +76,10 @@
     background: #FF7171;
     color: white;
     font-size: 12px;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     position: relative;
-    top: -7%;
-    left: 60%;
+    left: 62%;
     border-radius: 6px;
     margin-bottom: -20px;
     align-items: center;
@@ -89,10 +88,127 @@
 }
 
 .selected-minicard img{
-    height: 60px;
-    width: 60px;
+    height: 70px;
+    width: 70px;
     object-fit: cover;
     border: 1px solid #F1F3F4;
     border-radius: 10px;
     margin-right: 12px;
+}
+
+.search-customer{
+    position: relative;
+    left: 91%;
+    width: 40px;
+    height: 40px;
+    margin-bottom: -40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F1F3F4;
+    border-radius: 5px;
+}
+
+.search-customer:hover{
+    background: #edeeef;
+}
+
+.remove-customer{
+    position: relative;
+    left: 91%;
+    width: 40px;
+    height: 40px;
+    margin-bottom: -40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffcccc;
+    color: #c52b2b;
+    border-radius: 5px;
+}
+
+.remove-customer:hover{
+    background: #ffc4c4;
+}
+
+
+.customer-holder{
+    height: 55px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.customer-holder span{
+    font-size: 14px;
+    margin-right: 6px;
+}
+
+.customer-initial{
+    width: 35px;
+    height: 35px;
+    background: #f5f5f5;
+    border-radius: 20px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #8d8d8d;
+    margin: 0 20px;
+}
+
+.customer-id{
+    font-size: 12px;
+    font-weight: 500;
+    color: #a3a3a3;
+}
+
+.payment-method-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.payment-method-container div{
+    width: 50%;
+    height: 68px;
+    margin-bottom: 7px;
+}
+
+.payment-method-container button{
+    width: 98%;
+    height: 100%;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
+    background: white;
+    margin: 0;
+    overflow: hidden;
+}
+
+.payment-method-container button span{
+    font-size: 20px;
+    font-weight: 600;
+    color: #979797;
+}
+
+.payment-method-container img{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.payment-method-container input{
+    height: auto;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    position: relative;
+    bottom: 90%;
+    left: 5%;
+    opacity: 50%;
 }

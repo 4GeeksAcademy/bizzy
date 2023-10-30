@@ -142,7 +142,7 @@ class Product(db.Model):
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), unique=True, nullable=False)
-    icon = db.Column(db.String(400), nullable=False)
+    icon = db.Column(db.String(400))
 
     def __init__(self, name, icon):
         self.name = name
@@ -155,6 +155,7 @@ class Payment(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "icon": self.icon
         }
 
 
@@ -165,12 +166,14 @@ class Order(db.Model):
     payment_id = db.Column(db.Integer, db.ForeignKey("payment.id"), nullable=False)
     payment = db.relationship("Payment")
     date = db.Column(db.String(50), nullable=False)
+    notes = db.Column(db.String(500))
 
-    def __init__(self, name, customer, payment, date):
+    def __init__(self, name, customer, payment, date, notes):
         self.name = name
         self.customer = customer
         self.payment = payment
         self.date = date
+        self.notes = notes
 
     def __repr__(self):
         return f'<Order {self.id}>'
@@ -181,7 +184,8 @@ class Order(db.Model):
             "customer": self.customer.serialize(),
             "payment": self.payment.serialize(),
             "items": [itm.serialize() for itm in self.items],
-            "date": self.date
+            "date": self.date,
+            "notes": self.notes
         }
     
 

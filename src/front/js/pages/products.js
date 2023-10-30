@@ -76,8 +76,8 @@ export const Products = () => {
             <ProductCard key={product.id} name={product.name} image={product.image} price={product.unit_price}
             stock={product.stock} />))}
 
-          {!loading && filteredBySubCategory.length == 0 && <div className="no-products" >
-            <RiEmotionSadLine className="no-products-icon"/>
+          {!loading && filteredBySubCategory.length == 0 && <div className="no-items" >
+            <RiEmotionSadLine className="no-items-icon"/>
             <p>No se encontraron productos</p>
             </div>}
 

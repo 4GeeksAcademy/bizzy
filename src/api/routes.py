@@ -164,3 +164,27 @@ def post_order():
         
     else:
         return { "Something is missing or incorrect" }, 500
+
+# CUSTOMER
+
+# [GET] ALL CUSTOMERS
+@api.route('/customers', methods=['GET'])
+def get_customers():
+    try:
+        all_customers = Customer.query.all()
+        return [customer.serialize() for customer in all_customers]
+    
+    except ValueError as err:
+        return {"message": "Failed to retrieve customers" + err}, 500
+
+# PAYMENT
+
+# [GET] ALL PAYMENTS
+@api.route('/payments', methods=['GET'])
+def get_payments():
+    try:
+        all_payments = Payment.query.all()
+        return [payment.serialize() for payment in all_payments]
+    
+    except ValueError as err:
+        return {"message": "Failed to retrieve payments" + err}, 500

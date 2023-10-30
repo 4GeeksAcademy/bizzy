@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			products: [],
 			categories: [],
 			orders: [],
+			customers: [],
+			payments:[],
 			selectedProducts:[]
 		},
 		actions: {
@@ -127,6 +129,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 
 					setStore({ orders: data })
+					return true
+				} catch (error) {
+					return false
+				}
+			},
+
+			// CUSTOMERS
+			getCustomers: async () => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/customers")
+					const data = await resp.json()
+
+					setStore({ customers: data })
+					return true
+				} catch (error) {
+					return false
+				}
+			},
+
+			// PAYMENT
+			getPayments: async () => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/payments")
+					const data = await resp.json()
+
+					setStore({ payments: data })
 					return true
 				} catch (error) {
 					return false

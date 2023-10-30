@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BsChevronLeft } from "react-icons/bs"
-import { FaBasketShopping } from "react-icons/fa6";
+import { FaBasketShopping, FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -10,34 +10,40 @@ import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage
 import "../../styles/createProduct.css";
 import "../../styles/createOrder.css";
 import { SelectProducts } from "../component/selectProducts";
-
+import { SelectCustomer } from "../component/selectCustomer";
 
 export const CreateOrder = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
-	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false) 
-	const [ fileName, setFileName ] = useState("")
+	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false)
+	const [ selectCustomerPopUp, setSelectCustomerPopUp] = useState(false) 
 	const [ tempImage, setTempImage ] = useState("")
-    const [ product, setProduct ] = useState(
+	const [ isSelected, setIsSelected ] = useState(false)
+    const [ order, setOrder ] = useState(
 		{
 			"name":"",
-			"category":"",
-			"subcategory":null,
-			"unit_price":"",
-			"stock":"",
-			"sku":"",
-			"image":"",
-			"description":""
+			"email": "",
+			"phone": "",
+			"payment":"",
+			"notes":"",
+			"date":"",
 		}
 	)
 	
 	async function loadInfo(){
 		const pLoad = await actions.getProducts()
-		const cLoad = await actions.getCategories()
+		const cLoad = await actions.getCustomers()
+		const payLoad = await actions.getPayments()
 	
 		if (!pLoad) toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
 		if (!cLoad) toast.error("Ocurrio un error al cargar las categorias", {autoClose: false})
+		if (!payLoad) toast.error("Ocurrio un error al cargar los metodos de pago", {autoClose: false})
 	  }
+
+	function removeCustomer(){
+		setOrder({...order, "name": "", "email":"", "phone":""})
+		setIsSelected(false)
+	}
 
 	useEffect(() => {
 		actions.changeTab("orders")
@@ -113,7 +119,7 @@ export const CreateOrder = () => {
 			<h2>Crear orden</h2>
 
 			<span className="create-order-header">
-				<p>Pedido</p>
+				<label>Pedido<span style={{color: "#7B57DF"}}>*</span></label>
 				{store.selectedProducts.length > 0 && <button onClick={()=> setSelectProductsPopUp(true) } className="category-btn">Editar</button>}
 			</span>
 			<div className={store.selectedProducts.length > 0 ? "order-selected-products" : "order-no-selected-products"}>
@@ -133,61 +139,66 @@ export const CreateOrder = () => {
 			<div className="two-columns">
 				<div className="column-input">
 					<div className="input-holder">
-						<label>Cliente</label>
-						<input required placeholder="Camiseta Roja"
-						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
-					</div>
-
-					<div style={{display:"flex"}}>
-						<div className="input-holder">
-							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label className="select-label">Metodo de Pago</label>
-							</div>
-							
-							<select required 
-							onChange={(e)=> setProduct({...product, "subcategory":e.target.value })}>
-								<option value="" disabled selected hidden>Elige una opción</option>
-								<option value="" >No aplica</option>
-								{ product.category && store.categories.filter((cat)=> cat.name == product.category)[0].subcategories
-								.map((subcategory)=> <option key={subcategory.id}>{subcategory.name}</option>)}
-							</select>
-
-						</div>
-					</div>
-				</div>
-
-				<div className="column-input">
-					<div style={{display:"flex"}}>
-						<div className="input-holder">
-							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label className="select-label">Categoria</label>
-							</div>
-
-							<select required 
-							onChange={(e)=> setProduct({...product, "category":e.target.value })}>
-								<option value="" disabled selected hidden>Elige una opción</option>
-								{store.categories.map((category)=> <option key={category.id}>{category.name}</option>)}
-							</select>	
-
-						</div>
+						<label>Cliente<span style={{color: "#7B57DF"}}>*</span></label>
+						{!isSelected && <span className="search-customer" onClick={()=>setSelectCustomerPopUp(true)}>
+							<FaMagnifyingGlass/>
+						</span>}
+						{isSelected && <span className="remove-customer" onClick={()=>removeCustomer()}>
+							<FaTrash/>
+						</span>}
+						<input required disabled={isSelected} value={order.name} style={{paddingRight: "50px"}} placeholder={!isSelected? "Maria Perez" : "-"}
+						onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
-						<label>SKU</label>
-						<input required placeholder="SQ-973"
-						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
+						<label>Email</label>
+						<input required value={order.email} disabled={isSelected} placeholder={!isSelected? "mariaperez@email.com" : "-"}
+						onChange={(e)=> setOrder({...order, "email": e.target.value })}></input>
 					</div>
+
+					<div className="input-holder">
+						<label>Telefono</label>
+						<input required value={order.phone} disabled={isSelected} placeholder={!isSelected? "+58 04241234567" : "-"}
+						onChange={(e)=> setOrder({...order, "phone": e.target.value })}></input>
+					</div>
+
 				</div>
+
+				<div className="column-input">
+
+					<div style={{display:"flex"}}>
+						<div className="input-holder">
+							<div style={{display: "flex", justifyContent: "space-between"}}>
+								<label>Metodo de Pago</label>
+							</div>
+							<div className="payment-method-container">
+								{store.payments.map((payment)=><div key={payment.id}>
+									<button onClick={()=>setOrder({...order, "payment": payment.name})}>
+										{payment.icon && <img src={payment.icon}/>}
+										{!payment.icon && <span>{payment.name}</span>}
+									</button>
+									{order.payment == payment.name && <input type="radio" checked />}
+								</div>)}
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				
+
 			</div>
+			<input type="date"/>
 			<div className="input-holder">
 						<label>Notas</label>
 						<textarea required placeholder="Inserta una nota..."
-						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
+						onChange={(e)=> setOrder({...order, "notes": e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewProduct()}>Crear</button>
 			</div>
 		</div>
         { selectProductsPopUp && <SelectProducts close={()=> setSelectProductsPopUp(false)}/>}
+		{ selectCustomerPopUp && <SelectCustomer set={setOrder} ord={order} isSelect={setIsSelected} close={()=> setSelectCustomerPopUp(false)}/>}
         </>
 	);
 };	

@@ -130,7 +130,7 @@ export const CreateProduct = (modal) => {
 				accept="image/png, image/jpeg"/>
 			</div>
 
-			<p>Imagen subida</p>
+			<label>Imagen<span style={{color: "#7B57DF"}}>*</span></label>
 			<div className="imagen-subida">
 				{!tempImage && <>
 								<img src={placeholderImage} width={"300px"}/>
@@ -149,7 +149,7 @@ export const CreateProduct = (modal) => {
 			<div className="two-columns">
 				<div className="column-input">
 					<div className="input-holder">
-						<label>Nombre</label>
+						<label>Nombre<span style={{color: "#7B57DF"}}>*</span></label>
 						<input required placeholder="Camiseta Roja"
 						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
 					</div>
@@ -157,7 +157,7 @@ export const CreateProduct = (modal) => {
 					<div style={{display:"flex"}}>
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label className="select-label">Sub-Categoria</label>
+								<label>Sub-Categoria</label>
 								<button 
 								onClick={()=> product.category? setSubCategoryPopUp(true): toast.warn('Selecciona una categoria', {position: "bottom-center",})} 
 								className="category-btn">Añadir nueva</button>
@@ -175,7 +175,7 @@ export const CreateProduct = (modal) => {
 					</div>
 
 					<div className="input-holder">
-						<label>Precio unidad</label>
+						<label>Precio<span style={{color: "#7B57DF"}}>*</span></label>
 						<input type="number" required placeholder="15"
 						onChange={(e)=> setProduct({...product, "unit_price": parseInt(e.target.value) })}></input>
 					</div>
@@ -185,7 +185,7 @@ export const CreateProduct = (modal) => {
 					<div style={{display:"flex"}}>
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label className="select-label">Categoria</label>
+								<label>Categoria<span style={{color: "#7B57DF"}}>*</span></label>
 								<button onClick={()=>setCategoryPopUp(true)} className="category-btn">Añadir nueva</button>
 							</div>
 
@@ -199,20 +199,20 @@ export const CreateProduct = (modal) => {
 					</div>
 
 					<div className="input-holder">
-						<label>SKU</label>
+						<label>SKU<span style={{color: "#7B57DF"}}>*</span></label>
 						<input required placeholder="SQ-973"
 						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
-						<label>Cantidad</label>
+						<label>Cantidad<span style={{color: "#7B57DF"}}>*</span></label>
 						<input type="number" required placeholder="100"
 						onChange={(e)=> setProduct({...product, "stock": parseInt(e.target.value) })}></input>
 					</div>
 				</div>
 			</div>
 			<div className="input-holder">
-						<label>Descripción</label>
+						<label>Descripción<span style={{color: "#7B57DF"}}>*</span></label>
 						<textarea required placeholder="Inserta la descripción de tu producto aqui..."
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>

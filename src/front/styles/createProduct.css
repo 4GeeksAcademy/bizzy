@@ -117,13 +117,6 @@ input::file-selector-button {
     justify-content: space-around;
 }
 
-
-.form-container label{
-    font-size: 0.9em;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
 .form-container input, .form-container textarea{
     height:40px;
     border-radius: 5px;

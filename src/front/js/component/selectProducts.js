@@ -97,8 +97,8 @@ export const SelectProducts = (select) => {
           {filteredByCategory && filteredByName.map((product)=>(
             <SelectProductsCard key={product.id} product={product} i
             set={setProductList} plist={productList} />))}
-          {!loading && filteredBySubCategory.length == 0 && <div className="no-products" >
-            <RiEmotionSadLine className="no-products-icon"/>
+          {!loading && filteredBySubCategory.length == 0 && <div className="no-items" >
+            <RiEmotionSadLine className="no-items-icon"/>
             <p>No se encontraron productos</p>
             </div>}
           {loading && <div class="spinner"></div>}
