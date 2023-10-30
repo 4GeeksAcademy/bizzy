@@ -52,18 +52,18 @@ export const Products = () => {
             </div>
 
             <div className="filter-box">
-                <select required 
+                <select required defaultValue=""
                 onChange={(e)=> handleCategoryFilter(e)}>
-                  <option value="" disabled selected hidden>Categoria</option>
+                  <option value="" disabled hidden>Categoria</option>
 								  <option value="" >Todos</option>
                   {store.categories.map((category)=> <option key={category.id}>{category.name}</option>)}
                 </select>
             </div>
 
             {catFilter && <div className="filter-box">				
-              <select className="subcat-filter" required 
+              <select className="subcat-filter" required defaultValue="" 
               onChange={(e)=> setSubCatFilter(e.target.value)}>
-                <option value="" disabled selected hidden>Sub-categoria</option>
+                <option value="" disabled hidden>Sub-categoria</option>
 								<option value="" >Todos</option>
                 {catFilter && store.categories.filter((cat)=> cat.name == catFilter)[0].subcategories
                 .map((subcategory)=> <option key={subcategory.id}>{subcategory.name}</option>)}
@@ -76,12 +76,12 @@ export const Products = () => {
             <ProductCard key={product.id} name={product.name} image={product.image} price={product.unit_price}
             stock={product.stock} />))}
 
-          {!loading && filteredBySubCategory.length == 0 && <div className="no-items" >
+          {!loading && filteredByName.length == 0 && <div className="no-items" >
             <RiEmotionSadLine className="no-items-icon"/>
             <p>No se encontraron productos</p>
             </div>}
 
-          {loading && <div class="spinner"></div>}
+          {loading && <div className="spinner"></div>}
 
         </div>
     </div>

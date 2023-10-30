@@ -69,7 +69,7 @@ export const SelectCustomer = (select) => {
             <RiEmotionSadLine className="no-items-icon"/>
             <p>No se encontraron clientes</p>
             </div>}
-            {loading && <div class="spinner"></div>}
+            {loading && <div className="spinner"></div>}
         </div>
       </div>
     </div>

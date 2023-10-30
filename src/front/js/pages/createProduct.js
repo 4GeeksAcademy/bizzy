@@ -163,9 +163,9 @@ export const CreateProduct = (modal) => {
 								className="category-btn">Añadir nueva</button>
 							</div>
 							
-							<select required 
+							<select required defaultValue=""
 							onChange={(e)=> setProduct({...product, "subcategory":e.target.value })}>
-								<option value="" disabled selected hidden>Elige una opción</option>
+								<option value="" disabled hidden>Elige una opción</option>
 								<option value="" >No aplica</option>
 								{ product.category && store.categories.filter((cat)=> cat.name == product.category)[0].subcategories
 								.map((subcategory)=> <option key={subcategory.id}>{subcategory.name}</option>)}
@@ -189,9 +189,9 @@ export const CreateProduct = (modal) => {
 								<button onClick={()=>setCategoryPopUp(true)} className="category-btn">Añadir nueva</button>
 							</div>
 
-							<select required 
+							<select required defaultValue="" 
 							onChange={(e)=> setProduct({...product, "category":e.target.value })}>
-								<option value="" disabled selected hidden>Elige una opción</option>
+								<option value="" disabled hidden>Elige una opción</option>
 								{store.categories.map((category)=> <option key={category.id}>{category.name}</option>)}
 							</select>	
 

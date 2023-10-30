@@ -95,7 +95,7 @@ export const Orders = () => {
           }
         </tbody>
       </table>
-      {loading && <div class="spinner"></div>}
+      {loading && <div className="spinner"></div>}
     </div>
     </>
 	);
