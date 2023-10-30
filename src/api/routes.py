@@ -133,37 +133,43 @@ def get_orders():
         return {"message": "Failed to retrieve orders" + err}, 500
     
 # [POST] ONE ORDER
-@api.route('/orders', methods=['POST'])
+@api.route('/order', methods=['POST'])
 def post_order():
 
     body = request.get_json()
-    customer = body.get("customer", None)
+    name = body.get("name", None)
+    email = body.get("email", None)
+    phone = body.get("phone", None)
     payment =  body.get("payment", None)
-    items = body.get("products", [])
+    items = body.get("items", [])
+    date =  body.get("date", None)
+    notes =  body.get("notes", None)
+    status =  body.get("status", None)
 
-    if customer != None and payment != None:
+    customer = Customer.query.filter_by(name=name).one_or_none()
+    if customer is None:          
+        customer = Customer( name=name, email=email, phone=phone )
+        db.session.add(customer)
+        db.session.commit()
 
-        customer = Customer.query.filter_by(id=customer).one_or_none()
-        payment = Payment.query.filter_by(id=payment).one_or_none()
+    payment = Payment.query.filter_by(name=payment).one_or_none()
 
-        new_order = Order(customer=customer, payment=payment)
-        try:
-            db.session.add(new_order)
+    new_order = Order(customer=customer, payment=payment, date=date, notes=notes, status=status)
+    try:
+        db.session.add(new_order)
+        db.session.commit()
+
+        for product in items:
+            new_product = Product.query.filter_by(id=product["id"]).one_or_none()
+            new_item = Item(product=new_product, order=new_order, quantity=product["quantity"])
+            db.session.add(new_item)
             db.session.commit()
-
-            for i in items:
-                new_product = Product.query.filter_by(id=i).one_or_none()  
-                new_item = Item(product=new_product, order=new_order, quantity=new_product.quantity)
-                db.session.add(new_item)
-                db.session.commit()
-
-            return new_order.serialize()   , 200
-            
-        except ValueError as err:
-            return { "message" : f"Something went wrong, {err}" }, 500
         
-    else:
-        return { "Something is missing or incorrect" }, 500
+        return new_order.serialize(), 200
+        
+    except ValueError as err:
+        return { "message" : f"Something went wrong, {err}" }, 500
+
 
 # CUSTOMER
 
@@ -176,6 +182,28 @@ def get_customers():
     
     except ValueError as err:
         return {"message": "Failed to retrieve customers" + err}, 500
+    
+# [POST] ONE CUSTOMER
+@api.route('/customer', methods=['POST'])
+def post_customer():
+    try:
+        body = request.get_json()
+        name = body.get("name", None)
+        email = body.get("email", None)
+        phone = body.get("phone", None)
+
+        if name == None: return {"message": "Customer name is missing"}, 400
+        
+        customer = Customer.query.filter_by(name=name).one_or_none()
+        if customer: return {"message": f"Customer with name {name} already exists"}, 400
+        
+        new_customer = Customer( name=name, email=email, phone=phone )
+        db.session.add(new_customer)
+        db.session.commit()
+        return new_customer.serialize(), 200
+    
+    except ValueError as err:
+        return {"message": "Failed to create cateogory " + err}, 500
 
 # PAYMENT
 

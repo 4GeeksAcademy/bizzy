@@ -1,14 +1,69 @@
+.create-order-top{
+    display: flex;
+    justify-content: space-between;
+}
+
 .create-order-header{
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+}
+
+.create-order-header select{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: center;
+    outline: none;
+    border: none;
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 23px;
+    margin-bottom: 0;
+}
+
+.green-order-status{
+    background: #dff9cd;
+    color: #4E944F;
+}
+
+.gray-order-status{
+    background: #ededed;
+    color: #797979;
+}
+
+.red-order-status{
+    background: #ffdddd;
+    color: #c32525;
+}
+
+.time-input-holder{
+    display: flex;
+    flex-direction: column;
+}
+
+.time-input-holder input{
+    border-radius: 5px;
+    height: 30px;
+    margin-bottom: 4%;
+    padding: 7px;
+    width: 120px;
+    font-size: 14px;
+    border: none;
+    background: #E9E1FC;
+    color: #7B57DF;
+    font-weight: 500;
+    outline: none;
+    text-align: center;
+}
+
+.order-select-products-header{
+    display:flex;
     margin-bottom: 5px;
 }
 
-.create-order-header p{
-    margin: 0;
-}
-
-.create-order-header button{
+.order-select-products-header button{
     border: 1px solid #7b57DF;
     color: #7b57DF;
     width: 75px;
@@ -21,6 +76,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .order-selected-products{
@@ -98,7 +154,7 @@
 
 .search-customer{
     position: relative;
-    left: 91%;
+    left: 92%;
     width: 40px;
     height: 40px;
     margin-bottom: -40px;

@@ -12,6 +12,9 @@ import "../../styles/createOrder.css";
 import { SelectProducts } from "../component/selectProducts";
 import { SelectCustomer } from "../component/selectCustomer";
 
+var today = new Date()
+var todayFormated =  today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate()
+
 export const CreateOrder = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
@@ -26,9 +29,12 @@ export const CreateOrder = () => {
 			"phone": "",
 			"payment":"",
 			"notes":"",
-			"date":"",
+			"date":todayFormated,
+			"status":"Completada",
+			"items": []
 		}
 	)
+
 	
 	async function loadInfo(){
 		const pLoad = await actions.getProducts()
@@ -56,34 +62,32 @@ export const CreateOrder = () => {
 	actions.addSelectedProducts(newSelects)
 	}
 
-	async function createNewProduct(){
-		// SEARCH FOR EXISTENT PRODUCT
-		const repeated = store.products.filter((item) => item.name == product.name)
-		if (repeated.length > 0){
-			toast.error("Ya existe un producto con este nombre",{
-				position: "bottom-center"})
-			return
+	async function createNewOrder(){
+		// SEARCH FOR EXISTENT CUSTOMER IF NOT SELECTED
+		if (!isSelected){
+			const repeated = store.customers.filter((customer) => customer.name == order.name)
+			if (repeated.length > 0){
+				toast.error("Ya existe un cliente con este nombre",{
+					position: "bottom-center"})
+				return
+			}
 		}
-		// MAKE NULL 
-		if (product.subcategory == "No aplica") setProduct({...product, "subcategory":null })
 		// SEARCH FOR UNFILLED FIELDS
-		for (let value in product){
-			if (value == "image" || value == "subcategory") continue
-			if (!product[value]){
+		for (let value in order){
+			if (value == "email" || value == "phone" || value == "notes") continue
+			if (!order[value]){
 				toast.error("Rellena todos los campos",{
 					position: "bottom-center"})
 				return
 			}
 		}
-		// UPLOAD IMAGE
-		const url = await uploadFile();
-		if(url == false) return false;
 
 		// POST PRODUCT
-		let info = await actions.postProduct({...product, "image": url })
+		let info = await actions.postOrder({...order, "items":store.selectedProducts})
 		if(info){
-			toast.success("Producto creado con exito!")
-			navigate("/products")
+			toast.success("Orden creada con exito!")
+			actions.addSelectedProducts([])
+			navigate("/orders")
 			return
 		}
 		else{
@@ -93,32 +97,26 @@ export const CreateOrder = () => {
 		}
 	}
 
-	const uploadFile = async () => {
-        if (!tempImage) {
-            toast.error("Porfavor agrega una imagen",{
-				position: "bottom-center"})
-            return false
-        }
-        const imageRef = storageRef(storage, `products/${product.category}-${product.subcategory}-${product.name}`);
-
-        try{
-            const uploadResp = await uploadBytes(imageRef, tempImage)
-            const url =  await getDownloadURL(uploadResp.ref)
-            return url
-        }
-		catch(err){
-			toast.error("Ocurrio un error inesperado",{
-				position: "bottom-center"})
-			return false
-        }
-    };
-
 	return (<>
 		<div className="create-views-container">
-			<button className="button-back" onClick={()=>navigate("/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
-			<h2>Crear orden</h2>
-
-			<span className="create-order-header">
+			<div className="create-order-top">
+				<button className="button-back" onClick={()=>navigate("/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
+				<div className="time-input-holder">
+					<input type="date" defaultValue={todayFormated}
+					onChange={(e)=> setOrder({...order, "date": e.target.value })}/>
+				</div>
+			</div>
+			<div className="create-order-header">
+				<h2>Crear orden</h2>
+				<select defaultValue="Completada" className={order.status=="Completada"? "green-order-status" 
+				: order.status=="Pendiente"? "gray-order-status" : "red-order-status"}
+				onChange={(e)=>setOrder({...order, "status": e.target.value })}>
+					<option value="Completada" className="gray-order-status">&#x2022; Completada</option>
+					<option value="Pendiente" className="gray-order-status">&#x2022; Pendiente</option>
+					<option value="Cancelada" className="gray-order-status">&#x2022; Cancelada</option>
+				</select>
+			</div>
+			<span className="order-select-products-header">
 				<label>Pedido<span style={{color: "#7B57DF"}}>*</span></label>
 				{store.selectedProducts.length > 0 && <button onClick={()=> setSelectProductsPopUp(true) } className="category-btn">Editar</button>}
 			</span>
@@ -169,7 +167,7 @@ export const CreateOrder = () => {
 					<div style={{display:"flex"}}>
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label>Metodo de Pago</label>
+								<label>Metodo de Pago<span style={{color: "#7B57DF"}}>*</span></label>
 							</div>
 							<div className="payment-method-container">
 								{store.payments.map((payment)=><div key={payment.id}>
@@ -177,7 +175,7 @@ export const CreateOrder = () => {
 										{payment.icon && <img src={payment.icon}/>}
 										{!payment.icon && <span>{payment.name}</span>}
 									</button>
-									{order.payment == payment.name && <input type="radio" checked />}
+									{order.payment == payment.name && <input type="radio" defaultChecked />}
 								</div>)}
 							</div>
 
@@ -188,13 +186,12 @@ export const CreateOrder = () => {
 				
 
 			</div>
-			<input type="date"/>
 			<div className="input-holder">
 						<label>Notas</label>
 						<textarea required placeholder="Inserta una nota..."
 						onChange={(e)=> setOrder({...order, "notes": e.target.value })}/>
 					</div>
-				<button onClick={()=> createNewProduct()}>Crear</button>
+				<button onClick={()=> createNewOrder()}>Crear</button>
 			</div>
 		</div>
         { selectProductsPopUp && <SelectProducts close={()=> setSelectProductsPopUp(false)}/>}

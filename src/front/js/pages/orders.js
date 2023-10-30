@@ -79,7 +79,7 @@ export const Orders = () => {
             <input type="checkbox" onChange={()=>checkboxes(order.id)}/>
               </td>
             <td>#{order.id}</td>
-            <td>{new Date().toLocaleDateString("en-US")}</td>
+            <td>{order.date}</td>
             <td>{order.customer.name}</td>
             <td>{order.items.length} productos</td>
             <td className="table-product">${ Math.floor(Math.random()*1000) }</td>

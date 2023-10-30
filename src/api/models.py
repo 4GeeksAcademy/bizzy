@@ -167,13 +167,14 @@ class Order(db.Model):
     payment = db.relationship("Payment")
     date = db.Column(db.String(50), nullable=False)
     notes = db.Column(db.String(500))
+    status = db.Column(db.String(15), nullable=False)
 
-    def __init__(self, name, customer, payment, date, notes):
-        self.name = name
+    def __init__(self, customer, payment, date, notes, status):
         self.customer = customer
         self.payment = payment
         self.date = date
         self.notes = notes
+        self.status = status
 
     def __repr__(self):
         return f'<Order {self.id}>'
@@ -185,7 +186,8 @@ class Order(db.Model):
             "payment": self.payment.serialize(),
             "items": [itm.serialize() for itm in self.items],
             "date": self.date,
-            "notes": self.notes
+            "notes": self.notes,
+            "status": self.status
         }
     
 

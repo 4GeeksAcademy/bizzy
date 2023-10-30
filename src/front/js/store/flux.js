@@ -135,6 +135,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// SUBCATEGORIES
+			postOrder: async (order) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/order",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(order)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getOrders()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+
 			// CUSTOMERS
 			getCustomers: async () => {
 				try {
