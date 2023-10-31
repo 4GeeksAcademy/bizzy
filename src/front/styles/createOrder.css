@@ -48,7 +48,7 @@
     height: 30px;
     margin-bottom: 4%;
     padding: 7px;
-    width: 120px;
+    width: 190px;
     font-size: 14px;
     border: none;
     background: #E9E1FC;
@@ -171,7 +171,7 @@
 
 .remove-customer{
     position: relative;
-    left: 91%;
+    left: 92%;
     width: 40px;
     height: 40px;
     margin-bottom: -40px;

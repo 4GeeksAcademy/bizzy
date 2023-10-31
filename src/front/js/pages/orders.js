@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/orders.css";
 import { toast } from "react-toastify";
+import { GoDotFill } from "react-icons/go";
+import moment from "moment";
 
 export const Orders = () => {
 	const { store, actions } = useContext(Context);
@@ -10,11 +12,22 @@ export const Orders = () => {
   const navigate = useNavigate();
   const [ checklist, setChecklist ] = useState([]);
 
+  const calendarOptions = {
+      sameDay: '[Hoy], h:mm A',
+      nextDay: '[Mañana]',
+      nextWeek: 'DD-MMM',
+      lastDay: '[Ayer], h:mm A',
+      lastWeek: 'DD-MMM',
+      sameElse: 'DD-MMM'
+  }
+  
+
   async function loadProducts(){
     const load = await actions.getProducts()
     if (load) setLoading(false)
     else toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
   }
+
   useEffect(() => {
     if(store.products.length == 0)setLoading(true)
 
@@ -65,7 +78,7 @@ export const Orders = () => {
               <th>Orden</th>
               <th>Fecha</th>
               <th>Cliente</th>
-              <th>productos</th>
+              <th>Productos</th>
               <th>Total</th>
               <th>Estado</th>
               <th>Pago</th>
@@ -78,13 +91,22 @@ export const Orders = () => {
             <td style={{paddingLeft: "15px"}}>
             <input type="checkbox" onChange={()=>checkboxes(order.id)}/>
               </td>
-            <td>#{order.id}</td>
-            <td>{order.date}</td>
-            <td>{order.customer.name}</td>
-            <td>{order.items.length} productos</td>
-            <td className="table-product">${ Math.floor(Math.random()*1000) }</td>
-            <td>Pagado</td>
-            <td style={{paddingRight: "15px"}}>{order.payment.name}</td>
+            <td className="table-order-id">#{order.id.toString().padStart(4, "0")}</td>
+            <td className="table-order-date">{moment(order.date, "YYYYMMDDhh:mm").locale("es-us").calendar(calendarOptions).replace(".","")}</td>
+            <td className="table-order-customer">{order.customer.name}</td>
+            <td className="table-order-quantity">{order.total_quantity} productos</td>
+            <td className="table-product">${order.total_price}</td>
+            <td className="table-order-status">
+              <div className={order.status=="Completada"? "table-status-green" : order.status=="Pendiente"? "table-status-gray" : "table-status-red"}>
+                <GoDotFill className="status-dot"/>{order.status}
+              </div>
+            </td>
+            <td style={{paddingRight: "5px"}}>
+              <div className="table-order-payment">
+                {order.payment.icon && <img src={order.payment.icon}/>}
+                {!order.payment.icon && <span>{order.payment.name}</span>}
+              </div>
+            </td>
             </tr>)
             )}
             {!loading && store.products.length == 0 && <tr>

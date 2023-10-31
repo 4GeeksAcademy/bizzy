@@ -74,6 +74,7 @@
 	},
 	"dependencies": {
 		"firebase": "^10.5.0",
+		"moment": "^2.29.4",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",

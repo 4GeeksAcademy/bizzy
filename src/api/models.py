@@ -34,8 +34,8 @@ class User(db.Model):
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    email = db.Column(db.String(80), unique=True)
-    phone = db.Column(db.String(40), unique=True)
+    email = db.Column(db.String(80))
+    phone = db.Column(db.String(40))
 
     def __init__(self, name, email, phone):
         self.name = name
@@ -180,11 +180,19 @@ class Order(db.Model):
         return f'<Order {self.id}>'
 
     def serialize(self):
+        total_quantity = 0
+        total_price = 0
+        for itm in self.items:
+            total_quantity += itm.quantity
+            total_price += itm.product.unit_price*itm.quantity
+
         return {
             "id": self.id,
             "customer": self.customer.serialize(),
             "payment": self.payment.serialize(),
             "items": [itm.serialize() for itm in self.items],
+            "total_quantity": total_quantity,
+            "total_price": total_price,
             "date": self.date,
             "notes": self.notes,
             "status": self.status

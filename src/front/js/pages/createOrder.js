@@ -5,15 +5,12 @@ import { FaBasketShopping, FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Context } from "../store/appContext";
-import { storage } from "../hooks/useFirebase";
-import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../styles/createProduct.css";
 import "../../styles/createOrder.css";
 import { SelectProducts } from "../component/selectProducts";
 import { SelectCustomer } from "../component/selectCustomer";
 
-var today = new Date()
-var todayFormated =  today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate()
+
 
 export const CreateOrder = () => {
 	const navigate = useNavigate();
@@ -22,6 +19,15 @@ export const CreateOrder = () => {
 	const [ selectCustomerPopUp, setSelectCustomerPopUp] = useState(false) 
 	const [ tempImage, setTempImage ] = useState("")
 	const [ isSelected, setIsSelected ] = useState(false)
+
+	var today = new Date()
+	const year = today.getFullYear();
+	const month = (today.getMonth() + 1).toString().padStart(2, "0");
+	const day = today.getDate().toString().padStart(2, "0");
+	const hours = today.getHours().toString().padStart(2, "0");
+	const minutes = today.getMinutes().toString().padStart(2, "0");
+	var todayFormated =  `${year}-${month}-${day}T${hours}:${minutes}`
+
     const [ order, setOrder ] = useState(
 		{
 			"name":"",
@@ -34,7 +40,7 @@ export const CreateOrder = () => {
 			"items": []
 		}
 	)
-
+	
 	
 	async function loadInfo(){
 		const pLoad = await actions.getProducts()
@@ -81,6 +87,11 @@ export const CreateOrder = () => {
 				return
 			}
 		}
+		if(store.selectedProducts.length == 0){
+			toast.error("Agrega productos a la orden",{
+				position: "bottom-center"})
+			return
+		}
 
 		// POST PRODUCT
 		let info = await actions.postOrder({...order, "items":store.selectedProducts})
@@ -102,7 +113,7 @@ export const CreateOrder = () => {
 			<div className="create-order-top">
 				<button className="button-back" onClick={()=>navigate("/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
 				<div className="time-input-holder">
-					<input type="date" defaultValue={todayFormated}
+					<input type="datetime-local" defaultValue={todayFormated}
 					onChange={(e)=> setOrder({...order, "date": e.target.value })}/>
 				</div>
 			</div>
@@ -144,19 +155,19 @@ export const CreateOrder = () => {
 						{isSelected && <span className="remove-customer" onClick={()=>removeCustomer()}>
 							<FaTrash/>
 						</span>}
-						<input required disabled={isSelected} value={order.name} style={{paddingRight: "50px"}} placeholder={!isSelected? "Maria Perez" : "-"}
+						<input required disabled={isSelected} value={order.name} style={{paddingRight: "50px"}} placeholder={!isSelected? "Nombre" : "-"}
 						onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
 						<label>Email</label>
-						<input required value={order.email} disabled={isSelected} placeholder={!isSelected? "mariaperez@email.com" : "-"}
+						<input required value={order.email} disabled={isSelected} placeholder={!isSelected? "Correo electrónico" : "-"}
 						onChange={(e)=> setOrder({...order, "email": e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
-						<label>Telefono</label>
-						<input required value={order.phone} disabled={isSelected} placeholder={!isSelected? "+58 04241234567" : "-"}
+						<label>Teléfono</label>
+						<input required value={order.phone} disabled={isSelected} placeholder={!isSelected? "Número de teléfono" : "-"}
 						onChange={(e)=> setOrder({...order, "phone": e.target.value })}></input>
 					</div>
 
@@ -167,7 +178,7 @@ export const CreateOrder = () => {
 					<div style={{display:"flex"}}>
 						<div className="input-holder">
 							<div style={{display: "flex", justifyContent: "space-between"}}>
-								<label>Metodo de Pago<span style={{color: "#7B57DF"}}>*</span></label>
+								<label>Método de Pago<span style={{color: "#7B57DF"}}>*</span></label>
 							</div>
 							<div className="payment-method-container">
 								{store.payments.map((payment)=><div key={payment.id}>
