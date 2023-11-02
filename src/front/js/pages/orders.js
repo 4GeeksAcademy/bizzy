@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/orders.css";
 import { toast } from "react-toastify";
+import { RiEmotionSadLine } from "react-icons/ri";
 import { GoDotFill } from "react-icons/go";
 import moment from "moment";
 
@@ -109,15 +110,14 @@ export const Orders = () => {
             </td>
             </tr>)
             )}
-            {!loading && store.products.length == 0 && <tr>
-            <td colSpan={11} style={{textAlign:"center"}}>
-              No hay productos en el inventario
-            </td>
-          </tr>
-          }
         </tbody>
       </table>
-      {loading && <div className="spinner"></div>}
+      {!loading && store.orders.length == 0 && <div className="no-items" >
+            <RiEmotionSadLine className="no-items-icon"/>
+            <p>No se encontraron pedidos</p>
+            </div>}
+
+          {loading && <div className="spinner"></div>}
     </div>
     </>
 	);

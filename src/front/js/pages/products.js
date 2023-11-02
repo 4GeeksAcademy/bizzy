@@ -46,7 +46,7 @@ export const Products = () => {
           <h2>Productos</h2>
           <button onClick={()=>navigate("/create-product")}>+ Crear producto</button>
         </div>
-          <div className="filters">
+          <div className="products-filters">
             <div className="filter-box">
               <input placeholder="Buscar producto por nombre o SKU" onChange={(e)=>setNameFilter(e.target.value)}/>
             </div>

@@ -162,9 +162,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCustomers: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/customers")
+					
 					const data = await resp.json()
 
 					setStore({ customers: data })
+					return true
+				} catch (error) {
+					return false
+				}
+			},
+			editCustomer: async (customer) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/customer/${customer.id}`,
+					{
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(customer)
+						})
+					const data = await resp.json()
+					getActions().getCustomers()
 					return true
 				} catch (error) {
 					return false

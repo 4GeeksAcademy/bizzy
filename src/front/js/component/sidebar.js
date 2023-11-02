@@ -28,7 +28,7 @@ export const Sidebar = () => {
                     <MdReceiptLong className="menu-icon"/>Productos
                 </div>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/customers"}>
                 <div className="menu-item">
                     <MdPeopleAlt className="menu-icon"/>Clientes
                 </div>

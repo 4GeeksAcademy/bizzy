@@ -158,13 +158,6 @@ input::file-selector-button {
     margin-bottom: 5%;
 }
 
-.form-container p{
-    margin: 0;
-    font-style: italic;
-    font-size: 13px;
-    color: #757575;
-}
-
 .input-holder{
     width: 100%;
 }
@@ -204,6 +197,7 @@ input::file-selector-button {
     align-items: center;
     align-self: center;
 }
+
 
 /* ARROWS IN INPUTS TYPE NUMBER */
 input::-webkit-outer-spin-button,

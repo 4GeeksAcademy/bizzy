@@ -71,7 +71,6 @@
 }
 
 .add-selected-products button{
-    
     color: #FF7171;
     background-color: #ffe9e9;
     border: none;
@@ -84,4 +83,30 @@
     font-weight: 500;
     font-size: 15px;
     align-items: center;
+}
+
+/* SELECT CUSTOMER */
+.customer-holder span{
+    font-size: 14px;
+    margin-right: 6px;
+}
+
+.customer-initial{
+    width: 35px;
+    height: 35px;
+    background: #f5f5f5;
+    border-radius: 20px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #8d8d8d;
+    margin: 0 20px;
+}
+
+.customer-phone{
+    font-size: 12px;
+    font-weight: 500;
+    color: #a3a3a3;
 }

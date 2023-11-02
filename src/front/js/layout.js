@@ -17,6 +17,7 @@ import { Products } from "./pages/products";
 import { Orders } from "./pages/orders";
 import { CreateProduct } from "./pages/createProduct";
 import { CreateOrder } from "./pages/createOrder";
+import { Customers } from "./pages/customers";
 
 //create your first component
 const Layout = () => {
@@ -40,6 +41,7 @@ const Layout = () => {
                                     <Route element={<CreateOrder />} path="/create-order" />
                                     <Route element={<Products />} path="/products" />
                                     <Route element={<CreateProduct />} path="/create-product" />
+                                    <Route element={<Customers/>} path="/customers" />
                                     <Route element={<Demo />} path="/demo" />
                                     <Route element={<Single />} path="/single/:theid" />
                                     <Route element={<h1>Not found!</h1>} />

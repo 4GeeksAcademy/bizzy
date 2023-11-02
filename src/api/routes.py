@@ -204,6 +204,28 @@ def post_customer():
     
     except ValueError as err:
         return {"message": "Failed to create cateogory " + err}, 500
+    
+# [PUT] ONE CUSTOMER
+@api.route('/customer/<customer_id>', methods=['PUT'])
+def put_customer(customer_id):
+    try:
+        customer = Customer.query.get(customer_id)
+
+        body = request.get_json()
+        name = body.get("name", None)
+        email = body.get("email", None)
+        phone = body.get("phone", None)
+        
+        if name: customer.name = name
+        if email: customer.email = email
+        if phone: customer.phone = phone
+
+        db.session.commit()
+        
+        return customer.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": "Failed to create cateogory " + err}, 500
 
 # PAYMENT
 

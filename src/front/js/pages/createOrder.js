@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BsChevronLeft } from "react-icons/bs"
 import { FaBasketShopping, FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
+import { RiEmotionSadLine } from "react-icons/ri";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -15,6 +16,7 @@ import { SelectCustomer } from "../component/selectCustomer";
 export const CreateOrder = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
+	const [ loading, setLoading ] = useState();
 	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false)
 	const [ selectCustomerPopUp, setSelectCustomerPopUp] = useState(false) 
 	const [ tempImage, setTempImage ] = useState("")
@@ -43,13 +45,13 @@ export const CreateOrder = () => {
 	
 	
 	async function loadInfo(){
-		const pLoad = await actions.getProducts()
 		const cLoad = await actions.getCustomers()
 		const payLoad = await actions.getPayments()
-	
-		if (!pLoad) toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
 		if (!cLoad) toast.error("Ocurrio un error al cargar las categorias", {autoClose: false})
 		if (!payLoad) toast.error("Ocurrio un error al cargar los metodos de pago", {autoClose: false})
+
+		if( !cLoad || !payLoad) return
+		else setLoading(false)
 	  }
 
 	function removeCustomer(){
@@ -58,6 +60,7 @@ export const CreateOrder = () => {
 	}
 
 	useEffect(() => {
+		if(store.payments.length == 0)setLoading(true)
 		actions.changeTab("orders")
 
 		loadInfo()
@@ -156,7 +159,7 @@ export const CreateOrder = () => {
 							<FaTrash/>
 						</span>}
 						<input required disabled={isSelected} value={order.name} style={{paddingRight: "50px"}} placeholder={!isSelected? "Nombre" : "-"}
-						onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
+						maxlength="40" onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
@@ -180,8 +183,14 @@ export const CreateOrder = () => {
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label>Método de Pago<span style={{color: "#7B57DF"}}>*</span></label>
 							</div>
+							{!loading && store.payments.length == 0 && <div className="no-items" >
+								<RiEmotionSadLine className="no-items-icon"/>
+								<p>No se encontraron métodos de pago</p>
+								</div>}
+							{loading && <div className="spinner"></div>}
 							<div className="payment-method-container">
-								{store.payments.map((payment)=><div key={payment.id}>
+							
+								{store.payments.length != 0 && store.payments.map((payment)=><div key={payment.id}>
 									<button onClick={()=>setOrder({...order, "payment": payment.name})}>
 										{payment.icon && <img src={payment.icon}/>}
 										{!payment.icon && <span>{payment.name}</span>}

@@ -1,15 +1,15 @@
 @media screen and (max-width: 1000px) {
-  .filter-box input{
-    width: 150px!important;
+  .products-filters .filter-box input{
+    width: 140px!important;
   }
 }
 
-.filters{
+.products-filters{
   display:flex;
   margin-bottom: 20px;
 }
 
-.filters select{
+.products-filters select{
   outline: none;
   border-radius: 8px;
   border:none;
@@ -22,7 +22,7 @@
   font-weight: 500;
 }
 
-.filters input{
+.products-filters input{
   height: 40px;
   border-radius: 5px;
   border: none;
@@ -32,15 +32,15 @@
   font-size: 13px;
 }
 
-.filters input:focus{
+.products-filters input:focus{
   outline:none
 }
 
-.filter-box{
+.products-filters .filter-box{
   margin-right: 10px;
 }
 
-.filters .subcat-filter{
+.products-filters .subcat-filter{
   background-color: #F0EEFA;
   color: #7B57DF;
 }
@@ -54,7 +54,6 @@
 .products-header h2{
     font-weight: 600;
     color: #2E2153;
-    margin: 0;
 }
 
 .products-header button {

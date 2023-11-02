@@ -13,7 +13,6 @@ export const SelectCustomer = (select) => {
 
   const [ nameFilter, setNameFilter ] = useState();
   const [ loading, setLoading ] = useState();
-  const [ productList, setProductList] = useState(store.selectedProducts)
 
   var filteredByName = nameFilter? store.customers.filter((item)=> 
   item.name.toLowerCase().includes(nameFilter.toLowerCase()) 
@@ -62,7 +61,7 @@ export const SelectCustomer = (select) => {
               <div className="customer-initial">{customer.name[0].toUpperCase()}</div>
               <div>
                 <div>{customer.name}</div>
-                <div className="customer-id">{customer.phone || "-"}</div>
+                <div className="customer-phone">{customer.phone || "-"}</div>
               </div>
             </div>)}
             {!loading && filteredByName.length == 0 && <div className="no-items" >
