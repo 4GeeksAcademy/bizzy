@@ -17,7 +17,7 @@ def get_products():
         return [product.serialize() for product in all_products]
     
     except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
+        return {"message": f"Failed to retrieve products, {err}"}, 500
 
 # [POST] ONE PRODUCT
 @api.route('/product', methods=['POST'])
@@ -48,11 +48,43 @@ def post_product():
         return new_product.serialize(), 200
     
     except ValueError as err:
-        return {"message": "failed to retrieve planet " + err}, 500
+        return {"message": f"Failed to create product, {err}"}, 500
+
+# [PUT] ONE PRODUCT
+@api.route('/product/<product_id>', methods=['PUT'])
+def put_product(product_id):
+    try:
+        product = Product.query.get(product_id)
+
+        body = request.get_json()
+        name = body.get("name", None)
+        category = body.get("category", None)
+        subcategory = body.get("subcategory", None)
+        unit_price = body.get("unit_price", None)
+        stock = body.get("stock", None)
+        sku = body.get("sku", None)
+        image = body.get("image", None)
+        description = body.get("description", None)
+
+        if name: product.name = name
+        if category: product.category = category
+        if subcategory: product.subcategory = subcategory
+        if unit_price: product.unit_price = unit_price
+        if stock: product.stock = stock
+        if sku: product.sku = sku
+        if image: product.image = image
+        if description: product.description = description
+
+        db.session.commit()
+        
+        return product.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit product, {err}"}, 500
 
 # [DELETE] ONE PRODUCT    
 @api.route("/product/<int:product_id>", methods=["DELETE"])
-def delete_people(product_id):
+def delete_product(product_id):
     try:
         selected_product = Product.query.get(product_id) or None
         if selected_product == None:
@@ -63,7 +95,7 @@ def delete_people(product_id):
             return {"message": f"Product has been deleted"}, 200
         
     except ValueError as err:
-        return {"message": "failed to retrieve people " + err}, 500
+        return {"message": f"Failed to delete product, {err}"}, 500
 
 # CATEGORIES
 
@@ -76,14 +108,13 @@ def get_categories():
         return [category.serialize() for category in all_categories]
     
     except ValueError as err:
-        return {"message": "Failed to retrieve categories " + err}, 500
+        return {"message": f"Failed to retrieve categories, {err}"}, 500
 
 # [POST] ONE CATEGORY
 @api.route('/category', methods=['POST'])
 def post_category():
     try:
         body = request.get_json()
-
         name = body.get("name", None)
 
         if name == None: return {"message": "Category name is missing"}, 400
@@ -94,8 +125,25 @@ def post_category():
         return new_category.serialize(), 200
     
     except ValueError as err:
-        return {"message": "Failed to create cateogory " + err}, 500
+        return {"message": f"Failed to create category, {err}"}, 500
     
+# [PUT] ONE CATEGORY
+@api.route('/category/<category_id>', methods=['PUT'])
+def put_category(category_id):
+    try:
+        category = Category.query.get(category_id)
+
+        body = request.get_json()
+        name = body.get("name", None)
+       
+        if name: category.name = name
+
+        db.session.commit()
+        
+        return category.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit category, {err}"}, 500
 
 # SUBCATEGORIES
 
@@ -118,8 +166,30 @@ def post_subcategory():
         return new_subcategory.serialize(), 200
     
     except ValueError as err:
-        return {"message": "Failed to create cateogory " + err}, 500
-    
+        return {"message": f"Failed to create subcategory, {err}"}, 500
+
+# [PUT] ONE SUBCATEGORY
+@api.route('/subcategory/<subcategory_id>', methods=['PUT'])
+def put_subcategory(subcategory_id):
+    try:
+        subcategory = Subcategory.query.get(subcategory_id)
+
+        body = request.get_json()
+        category = body.get("category", None)
+        name = body.get("name", None)
+       
+        if name: subcategory.name = name
+        if category:
+            category = Category.query.filter_by(name=category).one_or_none()  
+            subcategory.category = category
+
+        db.session.commit()
+        
+        return subcategory.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit subcategory, {err}"}, 500
+
 # ORDERS
 
 # [GET] ALL ORDERS
@@ -130,7 +200,7 @@ def get_orders():
         return [order.serialize() for order in all_orders]
     
     except ValueError as err:
-        return {"message": "Failed to retrieve orders" + err}, 500
+        return {"message": f"Failed to retrieve orders, {err}"}, 500
     
 # [POST] ONE ORDER
 @api.route('/order', methods=['POST'])
@@ -168,8 +238,49 @@ def post_order():
         return new_order.serialize(), 200
         
     except ValueError as err:
-        return { "message" : f"Something went wrong, {err}" }, 500
+        return { "message" : f"Failed to create order, {err}" }, 500
 
+# [PUT] ONE ORDER
+@api.route('/order/<order_id>', methods=['PUT'])
+def put_order(order_id):
+    try:
+        order = Order.query.get(order_id)
+
+        body = request.get_json()
+        customer = body.get("customer", None)
+        items = body.get("items", None)
+        date = body.get("date", None)
+        payment = body.get("payment", None)
+        notes = body.get("notes", None)
+        status = body.get("status", None)
+       
+        if customer:
+            customer = Customer.query.filter_by(name=customer).one_or_none()
+            order.customer = customer
+
+        if items:
+            old_items = Item.query.filter_by(order=order)
+            for item in old_items:
+                db.session.delete(item)
+                db.session.commit()
+
+            for product in items:
+                new_product = Product.query.filter_by(id=product["id"]).one_or_none()
+                new_item = Item(product=new_product, order=order, quantity=product["quantity"])
+                db.session.add(new_item)
+                db.session.commit()
+
+        if date: order.date = date
+        if payment: order.payment = payment
+        if notes: order.notes = notes
+        if status: order.status = status
+
+        db.session.commit()
+        
+        return order.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit order, {err}"}, 500
 
 # CUSTOMER
 
@@ -181,7 +292,7 @@ def get_customers():
         return [customer.serialize() for customer in all_customers]
     
     except ValueError as err:
-        return {"message": "Failed to retrieve customers" + err}, 500
+        return {"message": f"Failed to retrieve customers, {err}"}, 500
     
 # [POST] ONE CUSTOMER
 @api.route('/customer', methods=['POST'])
@@ -203,7 +314,7 @@ def post_customer():
         return new_customer.serialize(), 200
     
     except ValueError as err:
-        return {"message": "Failed to create cateogory " + err}, 500
+        return {"message": f"Failed to create customer, {err}"}, 500
     
 # [PUT] ONE CUSTOMER
 @api.route('/customer/<customer_id>', methods=['PUT'])
@@ -225,7 +336,7 @@ def put_customer(customer_id):
         return customer.serialize(), 200
  
     except ValueError as err:
-        return {"message": "Failed to create cateogory " + err}, 500
+        return {"message": f"Failed to edit customer, {err}"}, 500
 
 # PAYMENT
 
@@ -237,4 +348,47 @@ def get_payments():
         return [payment.serialize() for payment in all_payments]
     
     except ValueError as err:
-        return {"message": "Failed to retrieve payments" + err}, 500
+        return {"message": f"Failed to retrieve payments, {err}"}, 500
+    
+# [POST] ONE PAYMENT
+@api.route('/payment', methods=['POST'])
+def post_payment():
+    try:
+        body = request.get_json()
+        name = body.get("name", None)
+        icon = body.get("icon", None)
+
+        if name == None: return {"message": "Payment name is missing"}, 400
+        
+        payment = Payment.query.filter_by(name=name).one_or_none()
+        if payment: return {"message": f"Payment with name {name} already exists"}, 400
+        
+        new_payment = Payment(name=name, icon=icon)
+
+        db.session.add(new_payment)
+        db.session.commit()
+
+        return new_payment.serialize(), 200
+    
+    except ValueError as err:
+        return {"message": f"Failed to create payment, {err}"}, 500
+
+# [PUT] ONE PAYMENT
+@api.route('/payment/<payment_id>', methods=['PUT'])
+def put_payment(payment_id):
+    try:
+        payment = Payment.query.get(payment_id)
+
+        body = request.get_json()
+        name = body.get("name", None)
+        icon = body.get("icon", None)
+       
+        if name: payment.name = name
+        if icon: payment.icon = icon
+
+        db.session.commit()
+        
+        return payment.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit payment, {err}"}, 500

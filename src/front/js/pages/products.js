@@ -29,8 +29,6 @@ export const Products = () => {
     else toast.error("Ocurrio un error al cargar los productos", {autoClose: false})
   }
 
-  
-
   useEffect(() => {
     if(store.products.length == 0)setLoading(true)
 
