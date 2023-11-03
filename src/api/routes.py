@@ -66,9 +66,15 @@ def put_product(product_id):
         image = body.get("image", None)
         description = body.get("description", None)
 
+        if category:
+            category = Category.query.filter_by(name=category).one_or_none()
+            product.category = category
+            
+        if subcategory:
+            subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
+            product.subcategory = subcategory
+            
         if name: product.name = name
-        if category: product.category = category
-        if subcategory: product.subcategory = subcategory
         if unit_price: product.unit_price = unit_price
         if stock: product.stock = stock
         if sku: product.sku = sku

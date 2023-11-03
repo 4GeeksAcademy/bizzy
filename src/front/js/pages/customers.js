@@ -13,7 +13,7 @@ export const Customers = (select) => {
     const [ customer, setCustomer ] = useState();
     const [ editable, setEditable] = useState (false);
 
-    var filteredByName = nameFilter? store.customers.filter((item)=> 
+    let filteredByName = nameFilter? store.customers.filter((item)=> 
     item.name.toLowerCase().includes(nameFilter.toLowerCase()) 
     || item.phone && item.phone.toLowerCase().includes(nameFilter.toLowerCase())
     || item.email && item.email.toLowerCase().includes(nameFilter.toLowerCase())) 

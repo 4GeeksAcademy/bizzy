@@ -14,7 +14,7 @@ export const SelectCustomer = (select) => {
   const [ nameFilter, setNameFilter ] = useState();
   const [ loading, setLoading ] = useState();
 
-  var filteredByName = nameFilter? store.customers.filter((item)=> 
+  let filteredByName = nameFilter? store.customers.filter((item)=> 
   item.name.toLowerCase().includes(nameFilter.toLowerCase()) 
   || item.phone && item.phone.toLowerCase().includes(nameFilter.toLowerCase())
   || item.email && item.email.toLowerCase().includes(nameFilter.toLowerCase())) 

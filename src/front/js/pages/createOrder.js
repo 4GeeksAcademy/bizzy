@@ -22,13 +22,13 @@ export const CreateOrder = () => {
 	const [ tempImage, setTempImage ] = useState("")
 	const [ isSelected, setIsSelected ] = useState(false)
 
-	var today = new Date()
+	let today = new Date()
 	const year = today.getFullYear();
 	const month = (today.getMonth() + 1).toString().padStart(2, "0");
 	const day = today.getDate().toString().padStart(2, "0");
 	const hours = today.getHours().toString().padStart(2, "0");
 	const minutes = today.getMinutes().toString().padStart(2, "0");
-	var todayFormated =  `${year}-${month}-${day}T${hours}:${minutes}`
+	let todayFormated =  `${year}-${month}-${day}T${hours}:${minutes}`
 
     const [ order, setOrder ] = useState(
 		{

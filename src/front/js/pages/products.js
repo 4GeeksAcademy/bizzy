@@ -14,9 +14,9 @@ export const Products = () => {
   const [ nameFilter, setNameFilter ] = useState();
   const [ loading, setLoading ] = useState();
 
-  var filteredByCategory =  catFilter? store.products.filter((item)=> item.category == catFilter) : store.products
-  var filteredBySubCategory = subCatFilter? filteredByCategory.filter((item)=> item.subcategory == subCatFilter) : filteredByCategory
-  var filteredByName = nameFilter? filteredBySubCategory.filter((item)=> item.name.toLowerCase().includes(nameFilter.toLowerCase()) || item.sku.toLowerCase().includes(nameFilter.toLowerCase())) : filteredBySubCategory
+  let filteredByCategory =  catFilter? store.products.filter((item)=> item.category == catFilter) : store.products
+  let filteredBySubCategory = subCatFilter? filteredByCategory.filter((item)=> item.subcategory == subCatFilter) : filteredByCategory
+  let filteredByName = nameFilter? filteredBySubCategory.filter((item)=> item.name.toLowerCase().includes(nameFilter.toLowerCase()) || item.sku.toLowerCase().includes(nameFilter.toLowerCase())) : filteredBySubCategory
 
   function handleCategoryFilter(e){
     setCatFilter(e.target.value)
