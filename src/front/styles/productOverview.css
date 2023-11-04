@@ -1,0 +1,96 @@
+.product-overview-container{
+    padding: 50px;
+    height:100%;
+    overflow-y: scroll;
+}
+
+.product-overview-container img{
+    width: 50%;
+    height: 195px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+}
+
+.top-info{
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-overview-container label{
+    color: gray;
+    font-size: 12px;
+}
+
+.top-info-name{
+    color: #2E2153;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 23px;
+    margin-bottom: 5px;
+}
+
+.top-info-sku{
+    font-size: 11px;
+    font-weight: 600;
+    color: #6f7a89;
+    margin-bottom: 5px;
+}
+
+.top-info-sku label{
+    font-size: 11px;
+    margin-right: 5px;
+}
+
+.product-info-categories{
+    margin-top:20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-info-categories div{
+    width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F0EEFA;
+    color: #7B57DF;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.top-info-stock{
+    display:flex;
+    justify-content:space-between;
+}
+
+.card-price {
+    margin-bottom: -30px;
+    height: 30px;
+    min-width: 100px;
+    max-width: 207px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #FF7171;
+    border-radius: 10px;
+    position: relative;
+    top: 24%;
+    right: 1.5%;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-info-description{
+    font-size: 12px;
+    margin: 5px 0;
+}

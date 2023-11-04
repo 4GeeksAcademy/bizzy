@@ -52,7 +52,6 @@ export const SelectProducts = (select) => {
     if(store.products.length == 0)setLoading(true)
 
     loadProducts()
-    actions.changeTab("products")
     actions.getCategories()
   }, []);
 

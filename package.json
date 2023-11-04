@@ -73,10 +73,12 @@
 		]
 	},
 	"dependencies": {
+		"chart.js": "^4.4.0",
 		"firebase": "^10.5.0",
 		"moment": "^2.29.4",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-chartjs-2": "^5.2.0",
 		"react-dom": "^16.8.4",
 		"react-icons": "^4.11.0",
 		"react-polyfills": "0.0.1",

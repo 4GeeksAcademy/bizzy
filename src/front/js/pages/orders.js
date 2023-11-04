@@ -93,7 +93,7 @@ export const Orders = () => {
             <input type="checkbox" onChange={()=>checkboxes(order.id)}/>
               </td>
             <td className="table-order-id">#{order.id.toString().padStart(4, "0")}</td>
-            <td className="table-order-date">{moment(order.date, "YYYYMMDDhh:mm").locale("es-us").calendar(calendarOptions).replace(".","")}</td>
+            <td className="table-order-date">{moment(order.date, "YYYYMMDDhh:mm").calendar(calendarOptions).replace(".","")}</td>
             <td className="table-order-customer">{order.customer.name}</td>
             <td className="table-order-quantity">{order.total_quantity} productos</td>
             <td className="table-product">${order.total_price}</td>

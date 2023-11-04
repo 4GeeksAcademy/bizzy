@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+import copy
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -105,7 +105,7 @@ class Product(db.Model):
     sold = db.Column(db.Integer, nullable=False)
     sku = db.Column(db.String(15), nullable=False)
     image = db.Column(db.String(400), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
     for_sale = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, name, category, subcategory, unit_price, stock, sold, sku, image, description, for_sale):
@@ -124,6 +124,34 @@ class Product(db.Model):
         return f'<Product {self.name}>'
 
     def serialize(self):
+        years = {}
+        months_template = {
+            "01":{"quantity": 0, "total": 0},
+            "02":{"quantity": 0, "total": 0},
+            "03":{"quantity": 0, "total": 0},
+            "04":{"quantity": 0, "total": 0},
+            "05":{"quantity": 0, "total": 0},
+            "06":{"quantity": 0, "total": 0},
+            "07":{"quantity": 0, "total": 0},
+            "08":{"quantity": 0, "total": 0},
+            "09":{"quantity": 0, "total": 0},
+            "10":{"quantity": 0, "total": 0},
+            "11":{"quantity": 0, "total": 0},
+            "12":{"quantity": 0, "total": 0},
+            }
+        orders = Order.query.all()
+        for order in orders:
+            for item in order.items:
+                if item.product == self:
+                    if order.date[0:4] not in years:
+                        years[order.date[0:4]] = copy.deepcopy(months_template)
+                    for year in years:
+                        if order.date[0:4] == year:
+                            for month in years[f"{year}"]:
+                                if month == order.date[5:7] and year == order.date[0:4]:
+                                    years[f"{year}"][f"{month}"]["quantity"] += item.quantity
+                                    years[f"{year}"][f"{month}"]["total"] += item.quantity*self.unit_price
+
         return {
             "id": self.id,
             "category": self.category.name,
@@ -136,6 +164,7 @@ class Product(db.Model):
             "image": self.image,
             "description": self.description,
             "for_sale": self.for_sale,
+            "all_time": years
         }
     
 

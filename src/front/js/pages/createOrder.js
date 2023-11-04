@@ -19,7 +19,6 @@ export const CreateOrder = () => {
 	const [ loading, setLoading ] = useState();
 	const [ selectProductsPopUp, setSelectProductsPopUp] = useState(false)
 	const [ selectCustomerPopUp, setSelectCustomerPopUp] = useState(false) 
-	const [ tempImage, setTempImage ] = useState("")
 	const [ isSelected, setIsSelected ] = useState(false)
 
 	let today = new Date()
