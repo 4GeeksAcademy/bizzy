@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { BsFillCloudUploadFill, BsChevronLeft, BsCardImage, BsArrowLeftShort } from "react-icons/bs"
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { BsCardImage, BsArrowLeftShort } from "react-icons/bs"
+import { useRef } from 'react';
 
 import { toast } from 'react-toastify';
 import { Context } from "../store/appContext";
@@ -10,7 +10,7 @@ import "../../styles/createProduct.css";
 
 
 export const EditProduct = (edit) => {
-	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."
+	const returnToOverview = useRef(null);
 	const { store, actions } = useContext(Context);
 	const [ fileName, setFileName ] = useState("")
 	const [ tempImage, setTempImage ] = useState(edit.prod.image)
@@ -55,6 +55,21 @@ export const EditProduct = (edit) => {
 		// MAKE NULL 
 		if (product.subcategory == "No aplica") setProduct({...product, "subcategory":null })
 
+		// SEARCH FOR CHANGES
+		let changes = 0
+		for (let key in product){
+			if (product[key] == edit.prod[`${key}`]){
+				if(key != "id" && key != "image"){
+					delete product[key]
+				}
+			}
+			else changes += 1
+		}
+		if (changes == 0 && tempImage == edit.prod.image){
+			returnToOverview.current.click()
+			return
+		}
+
 		// UPLOAD IMAGE
         const url = await uploadFile();
     	if(url == false) return false;
@@ -64,6 +79,7 @@ export const EditProduct = (edit) => {
 		let info = await actions.putProduct({...product, "image": url })
 		if(info){
 			toast.success("Producto editado con exito!")
+			returnToOverview.current.click()
 			return
 		}
 		else{
@@ -92,9 +108,11 @@ export const EditProduct = (edit) => {
     };
 
 	return (<>
-            <div className="popup-header">
-                <h2>Editar producto</h2>
-                <BsArrowLeftShort className="edit-product-return-icon" onClick={() => edit.close()}/>
+            <div className="popup-header" style={{ marginBottom: "8%" }}>
+                <h2 style={{fontSize: "30px"}}>Editar producto</h2>
+				<span ref={returnToOverview} onClick={edit.close}>
+                	<BsArrowLeftShort  className="edit-product-return-icon" />
+				</span>
             </div>
             <div style={{display: "flex"}}>
                 <div className="edit-product-image" 
@@ -125,7 +143,7 @@ export const EditProduct = (edit) => {
 				<div className="column-input">
 					<div className="input-holder">
 						<label>Nombre<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required defaultValue={edit.prod.name}  maxlength="40"
+						<input required defaultValue={edit.prod.name}  maxLength="40"
 						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
 					</div>
 
@@ -163,7 +181,7 @@ export const EditProduct = (edit) => {
 
 					<div className="input-holder">
 						<label>SKU<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required defaultValue={edit.prod.sku} 
+						<input required defaultValue={edit.prod.sku} maxLength="30" 
 						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
 					</div>
 
@@ -176,10 +194,10 @@ export const EditProduct = (edit) => {
 			</div>
 			<div className="input-holder">
 						<label>Descripción<span style={{color: "#7B57DF"}}>*</span></label>
-						<textarea required defaultValue={edit.prod.description} maxlength="1000" 
+						<textarea required defaultValue={edit.prod.description} maxLength="1000" 
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>
-				<button onClick={()=> editThisProduct()}>Editar</button>
+				<button onClick={()=> editThisProduct()}>Guardar</button>
 			</div>
         </>
 	);

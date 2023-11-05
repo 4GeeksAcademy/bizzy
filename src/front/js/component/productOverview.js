@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { useRef } from 'react';
 import moment from "moment";
 
+import { toast } from 'react-toastify';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { defaults } from 'chart.js';
 ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend );
@@ -13,9 +14,8 @@ import "../../styles/productOverview.css";
 import { EditProduct } from "../component/editProduct";
 import { NoItemFound } from "../component/props/noItemFound";
 
-import { FaPencil, FaTrashCan } from "react-icons/fa6";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { BiSolidPencil, BiSolidTrashAlt } from "react-icons/bi";
 
 
 export const ProductOverview = (select) => {
@@ -24,7 +24,32 @@ export const ProductOverview = (select) => {
   const [ chartYear, setChartYear] = useState(Object.keys(select.prod.all_time).reverse()[0])
   const [ productHistory, setProductHistory ] = useState([])
   const [ editView, setEditView ] = useState(false);
+  const [ confirmDelete, setConfirmDelete] = useState(false)
   const [ loading, setLoading ] = useState();
+
+  async function handleDelete (){
+    if (select.prod.sold){
+			toast.warning("No es posible eliminar un producto con ordenes existentes",{
+				position: "bottom-center"
+			})
+            background.current.click()
+			return
+		}
+
+    let info = await actions.deleteProduct(select.prod.id)
+    if(info){
+			toast.success("Producto eliminado!",{
+				position: "bottom-center"
+			})
+            background.current.click()
+			return
+		}
+		else{
+			toast.error("Ocurrio un error inesperado",{
+				position: "bottom-center"
+			})
+		}
+  }
 
   useEffect(() => {
     if(store.products.length == 0)setLoading(true)
@@ -122,12 +147,12 @@ export const ProductOverview = (select) => {
       <div className="popup-body">
         <div className="product-overview-container">
           { !editView && <>
-            <div className="popup-header">
-              <div>
-                <FaPencil onClick={()=>setEditView(true)}/>
-                <FaTrashCan/>
+            <div className="popup-header" style={{margin: 0}}>
+              <AiOutlineCloseCircle className="popup-close" onClick={select.close} style={{margin: 0, marginRight: "auto"}} />
+              <div className="product-overview-top-icons">
+                <BiSolidTrashAlt className="product-overview-delete" onClick={()=> setConfirmDelete(true)}/>
+                <BiSolidPencil className="product-overview-edit" onClick={()=>setEditView(true)}/>
               </div>
-              <AiOutlineCloseCircle className="popup-close" onClick={select.close} />
             </div>
             <span className="card-price">${select.prod.unit_price}</span>
             <div style={{display: "flex"}}>
@@ -167,7 +192,7 @@ export const ProductOverview = (select) => {
                 <label style={{marginTop:"5px"}}>HISTORICO DE VENTAS</label>
               {productHistory.length != 0 && <>
                 <select defaultValue={Object.keys(select.prod.all_time).reverse()[0]} onChange={(e)=> setChartYear(e.target.value)}>
-                  {select.prod.all_time && Object.keys(select.prod.all_time).reverse().map((year)=> <option>{year}</option>)}
+                  {select.prod.all_time && Object.keys(select.prod.all_time).reverse().map((year)=> <option key={year}>{year}</option>)}
                 </select>
                 {chartYear && <Line options={options} data={data}/>}
               </>}
@@ -177,6 +202,19 @@ export const ProductOverview = (select) => {
           
           {editView && <EditProduct prod={select.prod} close={()=>setEditView(false)}/> }
         </div>
+          {confirmDelete && <>
+            <div className="product-overview-delete-popup">
+              <div>
+                <p>¿Estás seguro?</p>
+                <span>Una vez eliminado, no podrás recuperarlo</span>
+              </div>
+              <div className="product-overview-delete-popup-buttons">
+                <button className="eliminar-producto" onClick={()=> handleDelete()}>Eliminar</button>
+                <button className="cancelar-eliminar-producto" onClick={()=>setConfirmDelete(false)}>Cancel</button>
+              </div>
+            </div>
+            <div className="product-overview-delete-popup-background"/>
+          </>}
       </div>
     </>
 	);

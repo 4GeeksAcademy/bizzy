@@ -4,6 +4,23 @@
     overflow-y: scroll;
 }
 
+.product-overview-top-icons{
+    font-size: 23px;
+    color: #c3c3c3;
+}
+
+.product-overview-delete:hover{
+    color: #df5757
+}
+
+.product-overview-edit:hover{
+    color: #7857DF
+}
+
+.product-overview-top-icons svg{
+    margin-left: 10px;
+}
+
 .product-overview-container img{
     width: 50%;
     height: 195px;
@@ -48,6 +65,7 @@
     margin-top:20px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 15px;
 }
 
 .product-info-categories div{
@@ -115,4 +133,80 @@
     width: 25%;
     text-align: center;
     margin: 5px 0;
+}
+
+.product-overview-delete-popup-background{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    bottom: 100%;
+    background: black;
+    opacity: 50%;
+    animation: delete-popup-bg .3s linear;
+}
+
+@keyframes delete-popup-bg {
+	from {
+		opacity: 0;
+	}
+}
+
+.product-overview-delete-popup{
+    width: 300px;
+    height: 160px;
+    margin-bottom: -160px;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    bottom: 58%;
+    left: 100px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 25px;
+    justify-content: space-between;
+}
+
+.product-overview-delete-popup p{
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.product-overview-delete-popup div span{
+    font-size: 11px;
+    text-align: center;
+    font-weight: 500;
+    color: gray;
+}
+
+.product-overview-delete-popup-buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.product-overview-delete-popup-buttons button{
+    width: 40%;
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    align-items: center;
+}
+
+
+.product-overview-delete-popup-buttons .eliminar-producto{
+    color: #990000;
+    background-color: #fce1e1;
+
+}
+
+.product-overview-delete-popup-buttons .cancelar-eliminar-producto{
+    color: rgb(91 91 91);
+    background-color: #ededed;
 }

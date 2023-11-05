@@ -160,7 +160,7 @@ export const CreateOrder = () => {
 							<FaTrash/>
 						</span>}
 						<input required disabled={isSelected} value={order.name} style={{paddingRight: "50px"}} placeholder={!isSelected? "Nombre" : "-"}
-						maxlength="40" onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
+						maxLength="40" onChange={(e)=> setOrder({...order, "name": e.target.value })}></input>
 					</div>
 
 					<div className="input-holder">
@@ -205,7 +205,7 @@ export const CreateOrder = () => {
 			</div>
 			<div className="input-holder">
 						<label>Notas</label>
-						<textarea required placeholder="Inserta una nota..." maxlength="500" 
+						<textarea required placeholder="Inserta una nota..." maxLength="500" 
 						onChange={(e)=> setOrder({...order, "notes": e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewOrder()}>Crear</button>

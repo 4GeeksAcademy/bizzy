@@ -125,6 +125,7 @@ class Product(db.Model):
 
     def serialize(self):
         years = {}
+        sold_quantity = 0
         months_template = {
             "01":{"quantity": 0, "total": 0},
             "02":{"quantity": 0, "total": 0},
@@ -149,6 +150,7 @@ class Product(db.Model):
                         if order.date[0:4] == year:
                             for month in years[f"{year}"]:
                                 if month == order.date[5:7] and year == order.date[0:4]:
+                                    sold_quantity += item.quantity
                                     years[f"{year}"][f"{month}"]["quantity"] += item.quantity
                                     years[f"{year}"][f"{month}"]["total"] += item.quantity*self.unit_price
 
@@ -158,8 +160,8 @@ class Product(db.Model):
             "subcategory": self.subcategory.name if self.subcategory else None,
             "name": self.name,
             "unit_price": self.unit_price,
-            "stock": self.stock,
-            "sold": self.sold,
+            "stock": self.stock-sold_quantity,
+            "sold": sold_quantity,
             "sku": self.sku,
             "image": self.image,
             "description": self.description,

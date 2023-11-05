@@ -150,7 +150,7 @@ export const CreateProduct = (modal) => {
 				<div className="column-input">
 					<div className="input-holder">
 						<label>Nombre<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required placeholder="Camiseta Roja" maxlength="40" 
+						<input required placeholder="Camiseta Roja" maxLength="40" 
 						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
 					</div>
 
@@ -200,7 +200,7 @@ export const CreateProduct = (modal) => {
 
 					<div className="input-holder">
 						<label>SKU<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required placeholder="SQ-973" maxlength="30" 
+						<input required placeholder="SQ-973" maxLength="30" 
 						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
 					</div>
 
@@ -213,7 +213,7 @@ export const CreateProduct = (modal) => {
 			</div>
 			<div className="input-holder">
 						<label>Descripción<span style={{color: "#7B57DF"}}>*</span></label>
-						<textarea required placeholder="Inserta la descripción de tu producto aqui..." maxlength="1000"
+						<textarea required placeholder="Inserta la descripción de tu producto aqui..." maxLength="1000"
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewProduct()}>Crear</button>

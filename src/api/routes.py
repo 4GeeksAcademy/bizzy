@@ -77,7 +77,7 @@ def put_product(product_id):
             
         if name: product.name = name
         if unit_price: product.unit_price = unit_price
-        if stock: product.stock = stock
+        if stock: product.stock = stock + product.serialize()["sold"]
         if sku: product.sku = sku
         if image: product.image = image
         if description: product.description = description
