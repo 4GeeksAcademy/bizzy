@@ -83,13 +83,15 @@
 .popup-header{
     display:flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5%
 }
 
 .popup-header h2{
     align-self:center;
     font-weight: 600;
     color: #2E2153;
-    margin-bottom: 5%;
+    margin: 0;
 }
 
 .popup-close{

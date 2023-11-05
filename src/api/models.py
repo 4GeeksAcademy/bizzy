@@ -103,8 +103,8 @@ class Product(db.Model):
     unit_price = db.Column(db.Integer, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
     sold = db.Column(db.Integer, nullable=False)
-    sku = db.Column(db.String(15), nullable=False)
-    image = db.Column(db.String(400), nullable=False)
+    sku = db.Column(db.String(30), nullable=False)
+    image = db.Column(db.String(500), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     for_sale = db.Column(db.Boolean, nullable=False)
 

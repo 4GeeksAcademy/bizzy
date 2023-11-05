@@ -5,7 +5,9 @@ import { useRef } from 'react';
 import "../../styles/selectProducts.css";
 import { toast } from "react-toastify";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { RiEmotionSadLine } from "react-icons/ri";
+
+import { NoItemFound } from "../component/props/noItemFound";
+import { Spinner } from "../component/props/spinner";
 
 export const SelectCustomer = (select) => {
 	const { store, actions } = useContext(Context);
@@ -64,11 +66,8 @@ export const SelectCustomer = (select) => {
                 <div className="customer-phone">{customer.phone || "-"}</div>
               </div>
             </div>)}
-            {!loading && filteredByName.length == 0 && <div className="no-items" >
-            <RiEmotionSadLine className="no-items-icon"/>
-            <p>No se encontraron clientes</p>
-            </div>}
-            {loading && <div className="spinner"></div>}
+            {!loading && filteredByName.length == 0 && <NoItemFound message={"No se encontraron clientes"}/> }
+						{loading && <Spinner/>}
         </div>
       </div>
     </div>

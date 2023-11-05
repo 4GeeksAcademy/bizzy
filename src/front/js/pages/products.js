@@ -3,7 +3,9 @@ import { Context } from "../store/appContext";
 import "../../styles/products.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { RiEmotionSadLine } from "react-icons/ri";
+
+import { NoItemFound } from "../component/props/noItemFound";
+import { Spinner } from "../component/props/spinner";
 import { ProductCard } from "../component/productCard";
 
 export const Products = () => {
@@ -73,12 +75,8 @@ export const Products = () => {
           {filteredByCategory && filteredByName.map((product)=>(
             <ProductCard key={product.id} prod={product} />))}
 
-          {!loading && filteredByName.length == 0 && <div className="no-items" >
-            <RiEmotionSadLine className="no-items-icon"/>
-            <p>No se encontraron productos</p>
-            </div>}
-
-          {loading && <div className="spinner"></div>}
+          {!loading && filteredByName.length == 0 && <NoItemFound message={"No se encontraron productos"}/>}
+          {loading && <Spinner/>}
 
         </div>
     </div>

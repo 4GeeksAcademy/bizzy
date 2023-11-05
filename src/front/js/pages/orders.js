@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import moment from "moment";
 import "../../styles/orders.css";
 import { toast } from "react-toastify";
-import { RiEmotionSadLine } from "react-icons/ri";
 import { GoDotFill } from "react-icons/go";
-import moment from "moment";
+
+import { NoItemFound } from "../component/props/noItemFound";
+import { Spinner } from "../component/props/spinner";
+
 
 export const Orders = () => {
 	const { store, actions } = useContext(Context);
@@ -112,12 +115,8 @@ export const Orders = () => {
             )}
         </tbody>
       </table>
-      {!loading && store.orders.length == 0 && <div className="no-items" >
-            <RiEmotionSadLine className="no-items-icon"/>
-            <p>No se encontraron pedidos</p>
-            </div>}
-
-          {loading && <div className="spinner"></div>}
+      {!loading && store.orders.length == 0 && <NoItemFound message={"No se encontraron pedidos"}/> }
+			{loading && <Spinner/>}
     </div>
     </>
 	);

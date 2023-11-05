@@ -5,7 +5,9 @@ import { useRef } from 'react';
 import "../../styles/selectProducts.css";
 import { toast } from "react-toastify";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { RiEmotionSadLine } from "react-icons/ri";
+
+import { NoItemFound } from "../component/props/noItemFound";
+import { Spinner } from "../component/props/spinner";
 import { SelectProductsCard } from "../component/selectProductsCard";
 
 export const SelectProducts = (select) => {
@@ -96,11 +98,8 @@ export const SelectProducts = (select) => {
           {filteredByCategory && filteredByName.map((product)=>(
             <SelectProductsCard key={product.id} product={product} i
             set={setProductList} plist={productList} />))}
-          {!loading && filteredByName.length == 0 && <div className="no-items" >
-            <RiEmotionSadLine className="no-items-icon"/>
-            <p>No se encontraron productos</p>
-            </div>}
-          {loading && <div className="spinner"></div>}
+							{!loading && filteredByName.length == 0 && <NoItemFound message={"No se encontraron productos"}/> }
+							{loading && <Spinner/>}
         </div>
           <div className="add-selected-products">
             <button onClick={()=>storeProducts()}>Agregar({productCount})</button>

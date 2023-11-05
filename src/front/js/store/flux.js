@@ -46,6 +46,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			putProduct: async (product) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/product/${product.id}`,
+					{
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(product)
+						})
+					const data = await resp.json()
+					getActions().getProducts()
+					return true
+				} catch (error) {
+					return false
+				}
+			},
 
 			deleteProduct: async (id) => {
 				try {

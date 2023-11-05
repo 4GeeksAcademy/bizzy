@@ -92,5 +92,27 @@
 
 .product-info-description{
     font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.product-info-all-time{
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info-all-time select{
+    background-color: #f8f8f8;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 35px;
+    font-size: 15px;
+    color: #2E2153;
+    font-weight: 500;
+    width: 25%;
+    text-align: center;
     margin: 5px 0;
 }

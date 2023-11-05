@@ -115,19 +115,19 @@ export const CreateProduct = (modal) => {
 			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Productos</button>
 			<h2>Añadir producto</h2>
 			<div>
-			<div className="upload-image">
-				<BsFillCloudUploadFill className="upload-icon"/>
-				<button onClick={()=>ref.current.click()}>Selecciona las imagenes</button>
-				<p>o</p>
-				<p>Sueltalas acá</p>
-				
-			</div>
-			<input
-				className="image-input"
-				ref={ref}
-				onChange={(e) => handleImage(e)}
-				type="file"
-				accept="image/png, image/jpeg"/>
+				<div className="upload-image">
+					<BsFillCloudUploadFill className="upload-icon"/>
+					<button onClick={()=>ref.current.click()}>Selecciona las imagenes</button>
+					<p>o</p>
+					<p>Sueltalas acá</p>
+					
+				</div>
+				<input
+					className="image-input"
+					ref={ref}
+					onChange={(e) => handleImage(e)}
+					type="file"
+					accept="image/png, image/jpeg"/>
 			</div>
 
 			<label>Imagen<span style={{color: "#7B57DF"}}>*</span></label>
@@ -150,7 +150,7 @@ export const CreateProduct = (modal) => {
 				<div className="column-input">
 					<div className="input-holder">
 						<label>Nombre<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required placeholder="Camiseta Roja"
+						<input required placeholder="Camiseta Roja" maxlength="40" 
 						onChange={(e)=> setProduct({...product, "name":e.target.value })}></input>
 					</div>
 
@@ -200,7 +200,7 @@ export const CreateProduct = (modal) => {
 
 					<div className="input-holder">
 						<label>SKU<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required placeholder="SQ-973"
+						<input required placeholder="SQ-973" maxlength="30" 
 						onChange={(e)=> setProduct({...product, "sku":e.target.value })}></input>
 					</div>
 
@@ -213,7 +213,7 @@ export const CreateProduct = (modal) => {
 			</div>
 			<div className="input-holder">
 						<label>Descripción<span style={{color: "#7B57DF"}}>*</span></label>
-						<textarea required placeholder="Inserta la descripción de tu producto aqui..."
+						<textarea required placeholder="Inserta la descripción de tu producto aqui..." maxlength="1000"
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewProduct()}>Crear</button>

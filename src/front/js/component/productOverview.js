@@ -10,6 +10,10 @@ import { Line } from 'react-chartjs-2';
 
 import "../../styles/selectProducts.css";
 import "../../styles/productOverview.css";
+import { EditProduct } from "../component/editProduct";
+import { NoItemFound } from "../component/props/noItemFound";
+
+import { FaPencil, FaTrashCan } from "react-icons/fa6";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 
@@ -19,6 +23,7 @@ export const ProductOverview = (select) => {
   const background = useRef(null);
   const [ chartYear, setChartYear] = useState(Object.keys(select.prod.all_time).reverse()[0])
   const [ productHistory, setProductHistory ] = useState([])
+  const [ editView, setEditView ] = useState(false);
   const [ loading, setLoading ] = useState();
 
   useEffect(() => {
@@ -46,7 +51,7 @@ export const ProductOverview = (select) => {
       },
 
       title: {
-        display: true,
+        display: false,
         text: 'Historico de ventas',
       },
       tooltip:{
@@ -97,7 +102,7 @@ export const ProductOverview = (select) => {
     labels,
     datasets: [
       {
-        label: 'Productos vendidos',
+        label: 'Unidades vendidas',
         data:  productHistory,
         borderColor: '#7B57DF',
         backgroundColor: '#5634b3',
@@ -113,54 +118,66 @@ export const ProductOverview = (select) => {
 
 
 	return (<>
-    <div ref={background} className="background" onClick={select.close}/> 
-    <div className="popup-body">
-      <div className="product-overview-container">
-        <div className="popup-header">
-          <h2>...</h2>
-          <AiOutlineCloseCircle className="popup-close" onClick={select.close} />
-        </div>
-        <span className="card-price">${select.prod.unit_price}</span>
-        <div style={{display: "flex"}}>
-          <img src={select.prod.image} />
-          <div className="top-info">
-            <div>
-
-              <div className="top-info-sku">
-                <label>SKU:</label>
-                {select.prod.sku}
-              </div>
-              <div className="top-info-name">{select.prod.name}</div>
-            </div>
-
-            <div className="top-info-stock">
+      <div ref={background} className="background" onClick={select.close}/> 
+      <div className="popup-body">
+        <div className="product-overview-container">
+          { !editView && <>
+            <div className="popup-header">
               <div>
-                <label>STOCK</label>
-                <div>{select.prod.stock}</div>
+                <FaPencil onClick={()=>setEditView(true)}/>
+                <FaTrashCan/>
               </div>
-              <div>
-                <label>VENDIDOS</label>
-                <div>{select.prod.sold}</div>
+              <AiOutlineCloseCircle className="popup-close" onClick={select.close} />
+            </div>
+            <span className="card-price">${select.prod.unit_price}</span>
+            <div style={{display: "flex"}}>
+              <img src={select.prod.image} />
+              <div className="top-info">
+                <div>
+
+                  <div className="top-info-sku">
+                    <label>SKU:</label>
+                    {select.prod.sku}
+                  </div>
+                  <div className="top-info-name">{select.prod.name}</div>
+                </div>
+
+                <div className="top-info-stock">
+                  <div>
+                    <label>STOCK</label>
+                    <div>{select.prod.stock}</div>
+                  </div>
+                  <div>
+                    <label>VENDIDOS</label>
+                    <div>{select.prod.sold}</div>
+                  </div>
+                </div>
+
               </div>
             </div>
-
-          </div>
-        </div>
-        <div className="product-info-categories">
-          <div>{select.prod.category}</div>
-          <div>{select.prod.subcategory}</div>
-        </div>
-        
-        <div>{select.prod.for_sale}</div>
-        <label style={{marginTop:"5px"}}>DESCRIPCIÓN</label>
-        <div className="product-info-description">{select.prod.description}</div>
-        <select defaultValue={Object.keys(select.prod.all_time).reverse()[0]} onChange={(e)=> setChartYear(e.target.value)}>
-          {select.prod.all_time && Object.keys(select.prod.all_time).reverse().map((year)=> <option>{year}</option>)}
-        </select>
-        {chartYear && <Line options={options} data={data}/>}
+            <div className="product-info-categories">
+              <div>{select.prod.category}</div>
+              <div>{select.prod.subcategory}</div>
+            </div>
+            
+            <div>{select.prod.for_sale}</div>
+            <label style={{marginTop:"5px"}}>DESCRIPCIÓN</label>
+            <div className="product-info-description">{select.prod.description}</div>
+            <div className="product-info-all-time">
+                <label style={{marginTop:"5px"}}>HISTORICO DE VENTAS</label>
+              {productHistory.length != 0 && <>
+                <select defaultValue={Object.keys(select.prod.all_time).reverse()[0]} onChange={(e)=> setChartYear(e.target.value)}>
+                  {select.prod.all_time && Object.keys(select.prod.all_time).reverse().map((year)=> <option>{year}</option>)}
+                </select>
+                {chartYear && <Line options={options} data={data}/>}
+              </>}
+              {productHistory.length == 0 && <NoItemFound message={"No existen ventas para este producto"}/>}
+            </div>
+          </>}
           
+          {editView && <EditProduct prod={select.prod} close={()=>setEditView(false)}/> }
+        </div>
       </div>
-    </div>
     </>
 	);
 };

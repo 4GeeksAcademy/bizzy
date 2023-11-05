@@ -72,6 +72,7 @@ def put_product(product_id):
             
         if subcategory:
             subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
+            if subcategory.category != category: subcategory = None
             product.subcategory = subcategory
             
         if name: product.name = name

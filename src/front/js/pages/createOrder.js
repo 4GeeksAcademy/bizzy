@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BsChevronLeft } from "react-icons/bs"
 import { FaBasketShopping, FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
-import { RiEmotionSadLine } from "react-icons/ri";
+import { NoItemFound } from "../component/props/noItemFound";
+import { Spinner } from "../component/props/spinner";
+
 
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -51,7 +53,7 @@ export const CreateOrder = () => {
 
 		if( !cLoad || !payLoad) return
 		else setLoading(false)
-	  }
+	}
 
 	function removeCustomer(){
 		setOrder({...order, "name": "", "email":"", "phone":""})
@@ -59,7 +61,7 @@ export const CreateOrder = () => {
 	}
 
 	useEffect(() => {
-		if(store.payments.length == 0)setLoading(true)
+		if(store.payments.length == 0) setLoading(true)
 		actions.changeTab("orders")
 
 		loadInfo()
@@ -182,13 +184,9 @@ export const CreateOrder = () => {
 							<div style={{display: "flex", justifyContent: "space-between"}}>
 								<label>Método de Pago<span style={{color: "#7B57DF"}}>*</span></label>
 							</div>
-							{!loading && store.payments.length == 0 && <div className="no-items" >
-								<RiEmotionSadLine className="no-items-icon"/>
-								<p>No se encontraron métodos de pago</p>
-								</div>}
-							{loading && <div className="spinner"></div>}
+							{!loading && store.payments.length == 0 && <NoItemFound message={"No se encontraron métodos de pago"}/> }
+							{loading && <Spinner/>}
 							<div className="payment-method-container">
-							
 								{store.payments.length != 0 && store.payments.map((payment)=><div key={payment.id}>
 									<button onClick={()=>setOrder({...order, "payment": payment.name})}>
 										{payment.icon && <img src={payment.icon}/>}
@@ -207,7 +205,7 @@ export const CreateOrder = () => {
 			</div>
 			<div className="input-holder">
 						<label>Notas</label>
-						<textarea required placeholder="Inserta una nota..."
+						<textarea required placeholder="Inserta una nota..." maxlength="500" 
 						onChange={(e)=> setOrder({...order, "notes": e.target.value })}/>
 					</div>
 				<button onClick={()=> createNewOrder()}>Crear</button>
