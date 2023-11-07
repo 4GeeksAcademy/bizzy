@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 
-import { CreateCustomer } from "../component/createCustomer";
+import { CreateCustomer } from "../../component/admin/customers/createCustomer";
 import { AiOutlineUserAdd } from "react-icons/ai"
 import { BsArrowLeftShort } from "react-icons/bs"
 import { BiSolidPencil, BiSolidTrashAlt } from "react-icons/bi";
-import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "../component/props/spinner";
+import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { Spinner } from "../../component/admin/props/spinner";
 import { toast } from "react-toastify";
 import "../../../styles/createProduct.css";
 import "../../../styles/customers.css";

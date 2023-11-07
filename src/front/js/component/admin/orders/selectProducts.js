@@ -4,10 +4,9 @@ import { useRef } from 'react';
 
 import { toast } from "react-toastify";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
-import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "..props/spinner";
-import { SelectProductsCard } from "..selectProductsCard";
+import { NoItemFound } from "../props/noItemFound";
+import { Spinner } from "../props/spinner";
+import { SelectProductsCard } from "../orders/selectProductsCard";
 import "../../../../styles/selectProducts.css";
 
 export const SelectProducts = (select) => {

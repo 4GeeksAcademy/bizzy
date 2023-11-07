@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
-import { CategoryCard } from "../component/categoryCard";
+import { CategoryCard } from "../../component/admin/misc/categoryCard";
 import "../../../styles/misc.css";
 
 

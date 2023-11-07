@@ -3,9 +3,9 @@ import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
-import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "../component/props/spinner";
-import { ProductCard } from "../component/productCard";
+import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { Spinner } from "../../component/admin/props/spinner";
+import { ProductCard } from "../../component/admin/products/productCard";
 import "../../../styles/products.css";
 
 export const Products = () => {

@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
-import { storage } from "../hooks/useFirebase";
+import { storage } from "../../hooks/useFirebase";
 import { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { BsFillCloudUploadFill, BsChevronLeft } from "react-icons/bs"
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { CreateCategory } from "../component/createCategory";
-import { CreateSubCategory } from "../component/createSubCategory";
+import { CreateCategory } from "../../component/admin/products/createCategory";
+import { CreateSubCategory } from "../../component/admin/products/createSubCategory";
 import { toast } from 'react-toastify';
 import "../../../styles/createProduct.css";
 

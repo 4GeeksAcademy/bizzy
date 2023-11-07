@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 import { toast } from 'react-toastify';
 import { Context } from "../../../store/appContext";
-import { storage } from "../hooks/useFirebase";
+import { storage } from "../../../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
 import "../../../../styles/createProduct.css";
 

@@ -9,13 +9,12 @@ import { defaults } from 'chart.js';
 ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend );
 import { Line } from 'react-chartjs-2';
 
-import "../../../../styles/selectProducts.css";
-import "../../../../styles/productOverview.css";
-import { EditProduct } from "../component/admin/products/editProduct";
-import { NoItemFound } from "../component/admin/props/noItemFound";
-
+import { EditProduct } from "../products/editProduct";
+import { NoItemFound } from "../props/noItemFound";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BiSolidPencil, BiSolidTrashAlt } from "react-icons/bi";
+import "../../../../styles/selectProducts.css";
+import "../../../../styles/productOverview.css";
 
 
 export const ProductOverview = (select) => {

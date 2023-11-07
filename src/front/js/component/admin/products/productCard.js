@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FaDollarSign } from "react-icons/fa";
 
-import "../../../../styles/productCard.css";
+import { FaDollarSign } from "react-icons/fa";
 import { ProductOverview } from "./productOverview";
+import "../../../../styles/productCard.css";
 
 export const ProductCard = (item) => {
 	const [ overview, setOverview] = useState(false)

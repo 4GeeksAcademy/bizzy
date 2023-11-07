@@ -5,8 +5,8 @@ import moment from "moment";
 
 import { toast } from "react-toastify";
 import { GoDotFill } from "react-icons/go";
-import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "../component/props/spinner";
+import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { Spinner } from "../../component/admin/props/spinner";
 import "../../../styles/orders.css";
 
 
