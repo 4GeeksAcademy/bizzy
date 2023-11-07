@@ -94,7 +94,7 @@ export const SelectProducts = (select) => {
           </div>
 
         <div className="products-container">
-          {filteredByCategory && filteredByName.map((product)=>(
+          {filteredByCategory && filteredByName.sort((x, y) => Number(y.for_sale) - Number(x.for_sale)).map((product)=>(
             <SelectProductsCard key={product.id} product={product} i
             set={setProductList} plist={productList} />))}
 							{!loading && filteredByName.length == 0 && <NoItemFound message={"No se encontraron productos"}/> }

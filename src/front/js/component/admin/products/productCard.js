@@ -9,7 +9,8 @@ export const ProductCard = (item) => {
 
 	return (<>
         <div>
-            {!item.prod.for_sale && <div className="not-for-sale-sign">No Disponible</div>}
+            {!item.prod.for_sale && item.prod.stock > 0 && <div className="not-for-sale-sign">No Disponible</div>}
+            {item.prod.stock <= 0 && <div className="not-in-stock-sign">Agotado</div>}
             <div className={item.prod.for_sale? "product-container" : "product-container not-for-sale"} onClick={()=>setOverview(true)}>
                 <img src={item.prod.image}/>
                 <span>

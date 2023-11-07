@@ -193,7 +193,7 @@ class Product(db.Model):
             "sku": self.sku,
             "image": self.image,
             "description": self.description,
-            "for_sale": self.for_sale,
+            "for_sale": False if self.stock-sold_quantity == 0  else self.for_sale,
             "all_time": years
         }
     

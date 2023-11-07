@@ -37,7 +37,9 @@ useEffect(() => {
 }, [selectedProduct]);
 
 	return (
-		<div className="select-product-card-container">
+		<div className={item.product.for_sale? "select-product-card-container" : "select-product-card-container select-not-for-sale"}>
+            {!item.product.for_sale && item.product.stock > 0 && <div className="select-not-for-sale-sign">No Disponible</div>}
+            {item.product.stock <= 0 && <div className="select-not-in-stock-sign">Agotado</div>}
             <img src={item.product.image}/>
             <span>
                 <p className="select-item-price"><FaDollarSign/>{item.product.unit_price}</p>

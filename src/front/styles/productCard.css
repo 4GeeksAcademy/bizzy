@@ -38,6 +38,27 @@
     z-index: 1;
 }
 
+.not-in-stock-sign{
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff9d9d;
+    color: #3b0404;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+    height: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: -20px;
+    position: relative;
+    top: -3%;
+    right: -40%;
+    opacity: 60%;
+    z-index: 1;
+}
+
 .product-container img{
     width: 90px;
     height: 90px;
