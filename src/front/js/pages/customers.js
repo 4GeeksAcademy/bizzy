@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { NoItemFound } from "../component/props/noItemFound";
 import { Spinner } from "../component/props/spinner";
+import { BiSolidPencil, BiSolidTrashAlt } from "react-icons/bi";
 
 import "../../styles/customers.css";
 import { toast } from "react-toastify";
@@ -22,7 +23,10 @@ export const Customers = (select) => {
 
     async function loadCustomers(){
     const load = await actions.getCustomers()
-    if (load) setLoading(false)
+    if (load){
+        setLoading(false)
+        setCustomer(store.customers[0])
+    }
     else toast.error("Ocurrio un error al cargar los clientes", {autoClose: false})
     }
 
@@ -59,24 +63,28 @@ export const Customers = (select) => {
 			        {loading && <Spinner/>}
                 </div>
             </div>
-
-            <div style={{display:"flex", flexDirection: "column"}}>
-                {customer && <div style={{width:"10px", height:"10px", background: "red"}} onClick={()=>setEditable(true)}></div>}
-             <div className="customer-initial">{customer? customer.name[0].toUpperCase(): "?"}</div>
-                <label>Nombre</label>
-                {!editable && <div>{customer? customer.name: "nombre"}</div>}
-                { editable && <input placeholder={customer.name} onChange={(e)=>setCustomer({...customer, "name":e.target.value})}/> }
+            <div className="divisor-line"/>
+            <div className="customer-information">
+                {customer && <div className="customer-info-icons">
+                    <BiSolidTrashAlt className="customer-info-delete"/>
+                    <BiSolidPencil className="customer-info-edit" onClick={()=>setEditable(true)}/>
+                </div>}
+                {!editable && customer && <>
+                <div className="customer-info-id"><label>ID:</label>{customer.id}</div>
+                <div className="customer-info-name">{customer.name}</div>
                 <label>Email</label>
-                {!editable && <div>{customer? customer.email: "email"}</div>}
-                { editable && <input placeholder={customer.email} onChange={(e)=>setCustomer({...customer, "email":e.target.value})}/> }
+                <div style={{fontSize: "14px"}}>{customer.email || "N/A"}</div>
                 <label>Telefono</label>
-                {!editable && <div>{customer? customer.phone: "telefono"}</div>}
-                { editable && <input placeholder={customer.phone} onChange={(e)=>setCustomer({...customer, "phone":e.target.value})}/> }
-                <label>ID</label>
-                {!editable && <div>{customer? customer.id: "id"}</div>}
-                { editable && <input placeholder={customer.id} disabled/> }
+                <div style={{fontSize: "14px"}}>{customer.phone || "N/A"}</div>
+                </>
+                } 
 
-                { editable && <button onClick={()=>actions.editCustomer(customer)}>Save new info</button> }
+
+                {/* { editable && <input placeholder={customer.id} disabled/> }
+                { editable && <input placeholder={customer.name} onChange={(e)=>setCustomer({...customer, "name":e.target.value})}/> }
+                { editable && <input placeholder={customer.email} onChange={(e)=>setCustomer({...customer, "email":e.target.value})}/> }
+                { editable && <input placeholder={customer.phone} onChange={(e)=>setCustomer({...customer, "phone":e.target.value})}/> }
+                { editable && <button onClick={()=>actions.editCustomer(customer)}>Save new info</button> } */}
                 
             </div>
         </div>

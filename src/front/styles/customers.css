@@ -5,7 +5,8 @@
 }
 
 .customers-list-container{
-    width:50%
+    width:50%;
+    padding-right: 5%;
 }
 
 .customers-filters{
@@ -25,4 +26,59 @@
   
 .customers-filters input:focus{
     outline:none;
+}
+
+.customer-information{
+    display: flex;
+    flex-direction: column;
+    width:50%;
+    padding-left: 5%;
+}
+
+.customer-information label{
+    color: gray;
+    font-size: 12px;
+}
+
+.customer-info-name{
+    color: #2E2153;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 23px;
+    margin-bottom: 5px;
+}
+
+.customer-info-id{
+    font-size: 11px;
+    font-weight: 600;
+    color: #6f7a89;
+    margin-bottom: 5px;
+}
+
+.customer-info-id label{
+    font-size: 11px;
+    margin-right: 5px;
+}
+
+.divisor-line{
+    background:#f3f3f3;
+    width: 1px;
+    height: 55vh;
+}
+
+.customer-info-icons{
+    font-size: 23px;
+    color: #c3c3c3;
+    margin-left: auto;
+}
+
+.customer-info-icons svg{
+    margin-left: 10px;
+}
+
+.customer-info-edit:hover{
+    color: #7857DF
+}
+.customer-info-delete:hover{
+    color: #df5757;
 }

@@ -14,7 +14,9 @@ api = Blueprint('api', __name__)
 def get_products():
     try:
         all_products = Product.query.all()
-        return [product.serialize() for product in all_products]
+        products_list = [product.serialize() for product in all_products]
+        products_list = sorted(products_list, key=lambda product: -product['id'])
+        return products_list
     
     except ValueError as err:
         return {"message": f"Failed to retrieve products, {err}"}, 500
@@ -65,6 +67,7 @@ def put_product(product_id):
         sku = body.get("sku", None)
         image = body.get("image", None)
         description = body.get("description", None)
+        for_sale = body.get("for_sale", None)
 
         if category:
             category = Category.query.filter_by(name=category).one_or_none()
@@ -81,6 +84,10 @@ def put_product(product_id):
         if sku: product.sku = sku
         if image: product.image = image
         if description: product.description = description
+        if for_sale: 
+            if for_sale == "true": for_sale = True
+            elif for_sale == "false": for_sale = False
+            product.for_sale = for_sale
 
         db.session.commit()
         
@@ -204,7 +211,9 @@ def put_subcategory(subcategory_id):
 def get_orders():
     try:
         all_orders = Order.query.all()
-        return [order.serialize() for order in all_orders]
+        orders_list = [order.serialize() for order in all_orders]
+        orders_list = sorted(orders_list, key=lambda order: -order['id'])
+        return orders_list
     
     except ValueError as err:
         return {"message": f"Failed to retrieve orders, {err}"}, 500

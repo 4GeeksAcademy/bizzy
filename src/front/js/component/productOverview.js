@@ -165,6 +165,7 @@ export const ProductOverview = (select) => {
                     {select.prod.sku}
                   </div>
                   <div className="top-info-name">{select.prod.name}</div>
+                <div className="top-info-for-sale">{select.prod.for_sale? "Disponible" : "No Disponible"}</div>
                 </div>
 
                 <div className="top-info-stock">
@@ -185,7 +186,6 @@ export const ProductOverview = (select) => {
               <div>{select.prod.subcategory}</div>
             </div>
             
-            <div>{select.prod.for_sale}</div>
             <label style={{marginTop:"5px"}}>DESCRIPCIÓN</label>
             <div className="product-info-description">{select.prod.description}</div>
             <div className="product-info-all-time">

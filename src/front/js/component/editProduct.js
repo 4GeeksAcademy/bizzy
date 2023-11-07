@@ -12,7 +12,6 @@ import "../../styles/createProduct.css";
 export const EditProduct = (edit) => {
 	const returnToOverview = useRef(null);
 	const { store, actions } = useContext(Context);
-	const [ fileName, setFileName ] = useState("")
 	const [ tempImage, setTempImage ] = useState(edit.prod.image)
     const [ product, setProduct ] = useState(
 		{
@@ -24,7 +23,8 @@ export const EditProduct = (edit) => {
 			"stock":edit.prod.stock,
 			"sku":edit.prod.sku,
 			"image":edit.prod.image,
-			"description":edit.prod.description
+			"description":edit.prod.description,
+			"for_sale":edit.prod.for_sale
 		}
 	)
 	
@@ -54,6 +54,7 @@ export const EditProduct = (edit) => {
 		}
 		// MAKE NULL 
 		if (product.subcategory == "No aplica") setProduct({...product, "subcategory":null })
+
 
 		// SEARCH FOR CHANGES
 		let changes = 0
@@ -196,8 +197,19 @@ export const EditProduct = (edit) => {
 						<label>Descripción<span style={{color: "#7B57DF"}}>*</span></label>
 						<textarea required defaultValue={edit.prod.description} maxLength="1000" 
 						onChange={(e)=> setProduct({...product, "description":e.target.value })}/>
-					</div>
-				<button onClick={()=> editThisProduct()}>Guardar</button>
+			</div>
+
+			<div className="input-holder">
+				<label>¿A la venta?<span style={{color: "#7B57DF"}}>*</span></label>
+				<select required defaultValue={edit.prod.for_sale}
+				onChange={(e)=> setProduct({...product, "for_sale":e.target.value })}>
+					<option value={true}>Si</option>
+					<option value={false}>No</option>
+				</select>	
+
+			</div>
+
+			<button onClick={()=> editThisProduct()}>Guardar</button>
 			</div>
         </>
 	);

@@ -33,7 +33,6 @@ export const Products = () => {
 
   useEffect(() => {
     if(store.products.length == 0)setLoading(true)
-
     loadProducts()
     actions.changeTab("products")
     actions.getCategories()
@@ -72,7 +71,7 @@ export const Products = () => {
           </div>
 
         <div className="products-container">
-          {filteredByCategory && filteredByName.map((product)=>(
+          {filteredByCategory && filteredByName.sort((x, y) => Number(y.for_sale) - Number(x.for_sale)).map((product)=>(
             <ProductCard key={product.id} prod={product} />))}
 
           {!loading && filteredByName.length == 0 && <NoItemFound message={"No se encontraron productos"}/>}
