@@ -3,10 +3,10 @@ import { BsCardImage, BsArrowLeftShort } from "react-icons/bs"
 import { useRef } from 'react';
 
 import { toast } from 'react-toastify';
-import { Context } from "../store/appContext";
+import { Context } from "../../../store/appContext";
 import { storage } from "../hooks/useFirebase";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
-import "../../styles/createProduct.css";
+import "../../../../styles/createProduct.css";
 
 
 export const EditProduct = (edit) => {

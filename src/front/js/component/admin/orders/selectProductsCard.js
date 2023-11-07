@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../../store/appContext";
 import { FaDollarSign } from "react-icons/fa";
 
-import "../../styles/selectProductsCard.css";
+import "../../../../styles/selectProductsCard.css";
 
 export const SelectProductsCard = (item) => {
     const { store, actions } = useContext(Context);

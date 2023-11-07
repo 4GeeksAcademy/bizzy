@@ -1,7 +1,11 @@
+.customers-header{
+    display:flex;
+}
+
 .customers-header h2{
     font-weight: 600;
     color: #2E2153;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 .customers-list-container{
@@ -79,6 +83,107 @@
 .customer-info-edit:hover{
     color: #7857DF
 }
+
 .customer-info-delete:hover{
     color: #df5757;
+}
+
+.customer-info-return:hover{
+    color: #8a8a8a;
+}
+
+
+/* MODAL */
+.customer-delete-popup-background{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 50%;
+    animation: delete-popup-bg .3s linear;
+}
+
+@keyframes delete-popup-bg {
+	from {
+		opacity: 0;
+	}
+}
+
+.customer-delete-popup{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 160px;
+    background: white;
+    border-radius: 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 25px;
+    justify-content: space-between;
+}
+
+.customer-delete-popup p{
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.customer-delete-popup div span{
+    font-size: 11px;
+    text-align: center;
+    font-weight: 500;
+    color: gray;
+}
+
+.customer-delete-popup-buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.customer-delete-popup-buttons button{
+    width: 40%;
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    align-items: center;
+}
+
+.customer-delete-popup-buttons .accept-delete{
+    color: #990000;
+    background-color: #fce1e1;
+
+}
+
+.customer-delete-popup-buttons .cancel-delete{
+    color: rgb(91 91 91);
+    background-color: #ededed;
+}
+
+.create-customer{
+    width: 40px;
+    height: 40px;
+    margin-bottom: -40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F1F3F4;
+    border-radius: 5px;
+    font-size:20px
+}
+
+.create-customer:hover{
+    background: #edeeef;
 }

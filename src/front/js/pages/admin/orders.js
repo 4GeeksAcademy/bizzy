@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import moment from "moment";
-import "../../styles/orders.css";
+
 import { toast } from "react-toastify";
 import { GoDotFill } from "react-icons/go";
-
 import { NoItemFound } from "../component/props/noItemFound";
 import { Spinner } from "../component/props/spinner";
+import "../../../styles/orders.css";
 
 
 export const Orders = () => {

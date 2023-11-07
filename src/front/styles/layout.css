@@ -1,9 +1,3 @@
-#content{
-    overflow-y: scroll;
-    height: 100%;
-    padding-bottom: 10%;
-}
-
 /*SCROLLBAR*/
   /* width */
 ::-webkit-scrollbar {

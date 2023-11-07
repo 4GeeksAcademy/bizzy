@@ -305,7 +305,9 @@ def put_order(order_id):
 def get_customers():
     try:
         all_customers = Customer.query.all()
-        return [customer.serialize() for customer in all_customers]
+        customers_list = [customer.serialize() for customer in all_customers]
+        customers_list = sorted(customers_list, key=lambda customer: customer['id'])
+        return customers_list
     
     except ValueError as err:
         return {"message": f"Failed to retrieve customers, {err}"}, 500

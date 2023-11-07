@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaDollarSign } from "react-icons/fa";
 
-import "../../styles/productCard.css";
+import "../../../../styles/productCard.css";
 import { ProductOverview } from "./productOverview";
 
 export const ProductCard = (item) => {

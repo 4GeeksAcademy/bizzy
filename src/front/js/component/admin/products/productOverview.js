@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../../store/appContext";
 import { useRef } from 'react';
 import moment from "moment";
 
@@ -9,10 +9,10 @@ import { defaults } from 'chart.js';
 ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend );
 import { Line } from 'react-chartjs-2';
 
-import "../../styles/selectProducts.css";
-import "../../styles/productOverview.css";
-import { EditProduct } from "../component/editProduct";
-import { NoItemFound } from "../component/props/noItemFound";
+import "../../../../styles/selectProducts.css";
+import "../../../../styles/productOverview.css";
+import { EditProduct } from "../component/admin/products/editProduct";
+import { NoItemFound } from "../component/admin/props/noItemFound";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BiSolidPencil, BiSolidTrashAlt } from "react-icons/bi";
@@ -209,11 +209,11 @@ export const ProductOverview = (select) => {
                 <span>Una vez eliminado, no podrás recuperarlo</span>
               </div>
               <div className="product-overview-delete-popup-buttons">
-                <button className="eliminar-producto" onClick={()=> handleDelete()}>Eliminar</button>
-                <button className="cancelar-eliminar-producto" onClick={()=>setConfirmDelete(false)}>Cancel</button>
+                <button className="accept-delete" onClick={()=> handleDelete()}>Eliminar</button>
+                <button className="cancel-delete" onClick={()=>setConfirmDelete(false)}>Cancel</button>
               </div>
             </div>
-            <div className="product-overview-delete-popup-background"/>
+            <div className="product-overview-delete-popup-background" onClick={()=>setConfirmDelete(false)}/>
           </>}
       </div>
     </>

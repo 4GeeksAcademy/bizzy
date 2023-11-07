@@ -5,6 +5,19 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#content{
+    overflow-y: scroll;
+    height: 100%;
+    padding-bottom: 10%;
+    background-color:#F7F9F8;
+}
+
 .create-views-container{
     margin: 50px 6vw;
     width:65%;

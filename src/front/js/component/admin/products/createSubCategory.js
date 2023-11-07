@@ -1,10 +1,10 @@
 import React, { useState, useContext} from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../../store/appContext";
 import { useRef } from 'react';
 
 import { toast } from 'react-toastify';
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import "../../styles/createCategory.css";
+import "../../../../styles/createCategory.css";
 
 export const CreateSubCategory = (create) => {
     const { store, actions } = useContext(Context);

@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
+
 import { BsChevronLeft } from "react-icons/bs"
 import { FaBasketShopping, FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
-import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "../component/props/spinner";
-
-
-import { useNavigate } from "react-router-dom";
+import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { Spinner } from "../../component/admin/props/spinner";
 import { toast } from 'react-toastify';
-import { Context } from "../store/appContext";
-import "../../styles/createProduct.css";
-import "../../styles/createOrder.css";
-import { SelectProducts } from "../component/selectProducts";
-import { SelectCustomer } from "../component/selectCustomer";
+
+import { SelectProducts } from "../../component/admin/orders/selectProducts";
+import { SelectCustomer } from "../../component/admin/orders/selectCustomer";
+import "../../../styles/createProduct.css";
+import "../../../styles/createOrder.css";
 
 
 

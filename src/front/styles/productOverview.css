@@ -199,13 +199,13 @@
     align-items: center;
 }
 
-.product-overview-delete-popup-buttons .eliminar-producto{
+.product-overview-delete-popup-buttons .accept-delete{
     color: #990000;
     background-color: #fce1e1;
 
 }
 
-.product-overview-delete-popup-buttons .cancelar-eliminar-producto{
+.product-overview-delete-popup-buttons .cancel-delete{
     color: rgb(91 91 91);
     background-color: #ededed;
 }

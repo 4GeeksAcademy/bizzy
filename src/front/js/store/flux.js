@@ -187,7 +187,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			editCustomer: async (customer) => {
+			postCustomer: async (customer) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/customer",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(customer)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getCustomers()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+			putCustomer: async (customer) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/customer/${customer.id}`,
 					{
@@ -199,6 +220,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 					getActions().getCustomers()
 					return true
+				} catch (error) {
+					return false
+				}
+			},
+			deleteCustomer: async (id) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/customer/${id}`, {
+						method: "DELETE"})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getCustomers()
+						return true;
+					}
+					else{
+						return false;
+					}
 				} catch (error) {
 					return false
 				}

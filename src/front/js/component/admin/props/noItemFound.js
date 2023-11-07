@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/index.css";
+import "../../../../styles/index.css";
 import { RiEmotionSadLine } from "react-icons/ri";
 
 export const NoItemFound = (notFound) => {

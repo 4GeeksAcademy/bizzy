@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
-import { BsFillCloudUploadFill, BsChevronLeft } from "react-icons/bs"
-import { AiOutlineCloseCircle } from "react-icons/ai";
-
+import { Context } from "../../store/appContext";
+import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
+import { storage } from "../hooks/useFirebase";
 import { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { Context } from "../store/appContext";
-import { storage } from "../hooks/useFirebase";
-import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
-import "../../styles/createProduct.css";
+
+import { BsFillCloudUploadFill, BsChevronLeft } from "react-icons/bs"
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import { CreateCategory } from "../component/createCategory";
 import { CreateSubCategory } from "../component/createSubCategory";
+import { toast } from 'react-toastify';
+import "../../../styles/createProduct.css";
 
 export const CreateProduct = (modal) => {
 	const placeholderImage = "https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7&_gl=1*awbatw*_ga*MTgwNzc5NjIwMS4xNjk2Mjk0ODc2*_ga_CW55HF8NVT*MTY5ODA0OTA4NS41LjEuMTY5ODA0OTEzOC43LjAuMA.."

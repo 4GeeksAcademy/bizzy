@@ -6,20 +6,21 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import "../styles/layout.css";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { Demo } from "./pages/admin/demo";
+import { Single } from "./pages/admin/single";
 import injectContext from "./store/appContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Navbar } from "./component/navbar";
 import { Sidebar } from "./component/sidebar";
-import { Dashboard } from "./pages/dashboard";
-import { Products } from "./pages/products";
-import { Orders } from "./pages/orders";
-import { CreateProduct } from "./pages/createProduct";
-import { CreateOrder } from "./pages/createOrder";
-import { Customers } from "./pages/customers";
+import { Dashboard } from "./pages/admin/dashboard";
+import { Products } from "./pages/admin/products";
+import { Orders } from "./pages/admin/orders";
+import { CreateProduct } from "./pages/admin/createProduct";
+import { CreateOrder } from "./pages/admin/createOrder";
+import { Customers } from "./pages/admin/customers";
+import { Misc } from "./pages/admin/misc";
 
 //create your first component
 const Layout = () => {
@@ -47,6 +48,7 @@ const Layout = () => {
                                     <Route element={<Products />} path="/products" />
                                     <Route element={<CreateProduct />} path="/create-product" />
                                     <Route element={<Customers/>} path="/customers" />
+                                    <Route element={<Misc/>} path="/misc" />
                                     <Route element={<Demo />} path="/demo" />
                                     <Route element={<Single />} path="/single/:theid" />
                                     <Route element={<h1>Not found!</h1>} />

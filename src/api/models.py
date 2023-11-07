@@ -46,11 +46,25 @@ class Customer(db.Model):
         return f'<Customer {self.name}>'
 
     def serialize(self):
+        info = {
+            "orders": 0,
+            "spent": 0,
+            "quantity": 0,
+        }
+        orders = Order.query.all()
+        for order in orders:
+            if order.customer == self:
+                for itm in order.items:
+                    info["orders"] += 1
+                    info["spent"] += itm.product.unit_price*itm.quantity
+                    info["quantity"] += itm.quantity 
+
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email,
-            "phone": self.phone
+            "phone": self.phone,
+            "info": info
         }
 
 
@@ -65,10 +79,17 @@ class Category(db.Model):
         return f'<Category {self.name}>'
 
     def serialize(self):
+        products_in_category = 0
+        products = Product.query.all()
+        for product in products:
+            if product.category == self:
+                products_in_category += 1
+
         return {
             "id": self.id,
             "name": self.name,
-            "subcategories": [subcat.serialize() for subcat in self.subcategories]
+            "subcategories": [subcat.serialize() for subcat in self.subcategories],
+            "products_quantity": products_in_category
         }
 
 
@@ -86,10 +107,17 @@ class Subcategory(db.Model):
         return f'<Subcategory {self.name}>'
 
     def serialize(self):
+        products_in_subcategory = 0
+        products = Product.query.all()
+        for product in products:
+            if product.subcategory == self:
+                products_in_subcategory += 1
+
         return {
             "id": self.id,
             "category": self.category.name,
-            "name": self.name
+            "name": self.name,
+            "products_quantity": products_in_subcategory
         }
 
 

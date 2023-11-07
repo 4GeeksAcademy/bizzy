@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../../store/appContext";
 import { useRef } from 'react';
 
-import "../../styles/selectProducts.css";
 import { toast } from "react-toastify";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 import { NoItemFound } from "../component/props/noItemFound";
-import { Spinner } from "../component/props/spinner";
-import { SelectProductsCard } from "../component/selectProductsCard";
+import { Spinner } from "..props/spinner";
+import { SelectProductsCard } from "..selectProductsCard";
+import "../../../../styles/selectProducts.css";
 
 export const SelectProducts = (select) => {
 	const { store, actions } = useContext(Context);
