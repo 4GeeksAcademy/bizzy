@@ -356,6 +356,21 @@ def put_customer(customer_id):
     except ValueError as err:
         return {"message": f"Failed to edit customer, {err}"}, 500
 
+# [DELETE] ONE CUSTOMER   
+@api.route("/customer/<int:customer_id>", methods=["DELETE"])
+def delete_customer(customer_id):
+    try:
+        selected_customer = Customer.query.get(customer_id) or None
+        if selected_customer == None:
+            return {"message": f"customer with id {customer_id} does not exist"}, 400
+        else:
+            db.session.delete(selected_customer)
+            db.session.commit()
+            return {"message": f"Customer has been deleted"}, 200
+        
+    except ValueError as err:
+        return {"message": f"Failed to delete customer, {err}"}, 500
+
 # PAYMENT
 
 # [GET] ALL PAYMENTS
