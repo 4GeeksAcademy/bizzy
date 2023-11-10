@@ -62,8 +62,8 @@ export const CreateOrder = () => {
 
 	useEffect(() => {
 		if(store.payments.length == 0) setLoading(true)
-		actions.changeTab("orders")
-
+		actions.changeTab("admin/orders")
+		actions.changeAdminNav(true)
 		loadInfo()
 	}, []);
 
@@ -102,7 +102,7 @@ export const CreateOrder = () => {
 		if(info){
 			toast.success("Orden creada con exito!")
 			actions.addSelectedProducts([])
-			navigate("/orders")
+			navigate("/admin/orders")
 			return
 		}
 		else{
@@ -115,7 +115,7 @@ export const CreateOrder = () => {
 	return (<>
 		<div className="create-views-container">
 			<div className="create-order-top">
-				<button className="button-back" onClick={()=>navigate("/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
+				<button className="button-back" onClick={()=>navigate("/admin/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
 				<div className="time-input-holder">
 					<input type="datetime-local" defaultValue={todayFormated}
 					onChange={(e)=> setOrder({...order, "date": e.target.value })}/>

@@ -7,7 +7,8 @@ import "../../../styles/misc.css";
 export const Misc = () => {
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
-		actions.changeTab("misc")
+		actions.changeTab("admin/misc")
+		actions.changeAdminNav(true)
 	  }, []);
 
 	return (<div style={{margin: "50px 6vw"}}>

@@ -36,7 +36,8 @@ export const Orders = () => {
     if(store.products.length == 0)setLoading(true)
 
     loadProducts()
-    actions.changeTab("orders")
+    actions.changeTab("admin/orders")
+    actions.changeAdminNav(true)
     actions.getOrders()
   }, []);
 
@@ -65,7 +66,7 @@ export const Orders = () => {
       <div style={{margin: "50px 6vw"}}>
         <div className="table-header">
           <h2>Pedidos</h2>
-          <button onClick={()=>navigate("/create-order")}>+ Crear orden</button>
+          <button onClick={()=>navigate("/admin/create-order")}>+ Crear orden</button>
         </div>
         <button 
         className="delete-button" 

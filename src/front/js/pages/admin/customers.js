@@ -38,7 +38,8 @@ export const Customers = (select) => {
     }
 
     useEffect(() => {
-        actions.changeTab("customers")
+        actions.changeTab("admin/customers")
+        actions.changeAdminNav(true)
         if(store.customers.length == 0)setLoading(true)
         loadCustomers()
     }, []);
@@ -146,15 +147,18 @@ export const Customers = (select) => {
                     <div className="customer-info-id"><label>ID:</label>{customer.id}</div>
                     <div className="input-holder">
                         <label>Nombre</label>
-                        <input defaultValue={customer.name} onChange={(e)=>setCustomer({...customer, "name":e.target.value})}/>
+                        <input defaultValue={customer.name} maxLength="40"
+                        onChange={(e)=>setCustomer({...customer, "name":e.target.value})}/> 
                     </div>
                     <div className="input-holder">
                         <label>Email</label>
-                        <input defaultValue={customer.email} onChange={(e)=>setCustomer({...customer, "email":e.target.value})}/>
+                        <input defaultValue={customer.email} maxLength="80"
+                        onChange={(e)=>setCustomer({...customer, "email":e.target.value})}/>
                     </div>
                     <div className="input-holder">
                         <label>Telefono</label>
-                        <input defaultValue={customer.phone} onChange={(e)=>setCustomer({...customer, "phone":e.target.value})}/>
+                        <input defaultValue={customer.phone} maxLength="40"
+                        onChange={(e)=>setCustomer({...customer, "phone":e.target.value})}/>
                     </div>
 
                     <button onClick={()=>handleEdit()}>Actualizar</button>

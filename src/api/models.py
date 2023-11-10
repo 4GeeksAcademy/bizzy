@@ -9,13 +9,15 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(30), nullable=False)
     active =  db.Column(db.Boolean, nullable=False)
+    admin = db.Column(db.Boolean, nullable=False)
     
-    def __init__(self, name, username, email, password, active):
-        self.name = name
+    def __init__(self, name, username, email, password, active, admin):
+        self.name: name
         self.username = username
         self.email = email
         self.password = password
         self.active = active
+        self.admin = admin
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -26,7 +28,7 @@ class User(db.Model):
             "name": self.name,
             "username": self.username,
             "email": self.email,
-            "role": self.role,
+            "admin": self.admin,
             "password": self.password,
         }
 
@@ -168,19 +170,17 @@ class Product(db.Model):
             "11":{"quantity": 0, "total": 0},
             "12":{"quantity": 0, "total": 0},
             }
-        orders = Order.query.all()
-        for order in orders:
-            for item in order.items:
-                if item.product == self:
-                    if order.date[0:4] not in years:
-                        years[order.date[0:4]] = copy.deepcopy(months_template)
-                    for year in years:
-                        if order.date[0:4] == year:
-                            for month in years[f"{year}"]:
-                                if month == order.date[5:7] and year == order.date[0:4]:
-                                    sold_quantity += item.quantity
-                                    years[f"{year}"][f"{month}"]["quantity"] += item.quantity
-                                    years[f"{year}"][f"{month}"]["total"] += item.quantity*self.unit_price
+        items = Item.query.filter_by(product=self)
+        for item in items:
+            if item.order.date[0:4] not in years:
+                years[item.order.date[0:4]] = copy.deepcopy(months_template)
+            for year in years:
+                if item.order.date[0:4] == year:
+                    for month in years[f"{year}"]:
+                        if month == item.order.date[5:7]:
+                            sold_quantity += item.quantity
+                            years[f"{year}"][f"{month}"]["quantity"] += item.quantity
+                            years[f"{year}"][f"{month}"]["total"] += item.quantity*self.unit_price
 
         return {
             "id": self.id,

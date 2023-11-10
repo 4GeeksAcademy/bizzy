@@ -44,17 +44,17 @@ export const CreateCustomer = (create) => {
                     
                     <div className="input-holder">
 						<label>Nombre<span style={{color: "#7B57DF"}}>*</span></label>
-						<input required placeholder="Nombre"
+						<input required placeholder="Nombre" maxLength="40"
 						onChange={(e)=> setCustomer({...customer, "name":e.target.value })}></input>
 					</div>
 					<div className="input-holder">
 						<label>Email</label>
-						<input required placeholder="Correo electronico"
+						<input required placeholder="Correo electronico" maxLength="80"
 						onChange={(e)=> setCustomer({...customer, "email":e.target.value })}></input>
 					</div>
 					<div className="input-holder">
 						<label>Telefono</label>
-						<input required placeholder="Número de telefono"
+						<input required placeholder="Número de telefono" maxLength="40"
 						onChange={(e)=> setCustomer({...customer, "phone":e.target.value })}></input>
 					</div>
                     <div className="button-container">

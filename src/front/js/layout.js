@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "./store/appContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import moment from "moment";
 
-import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import "../styles/layout.css";
@@ -12,8 +12,8 @@ import injectContext from "./store/appContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Navbar } from "./component/navbar";
-import { Sidebar } from "./component/sidebar";
+import { Navbar } from "./component/navigation/navbar";
+import { Sidebar } from "./component/navigation/sidebar";
 import { Dashboard } from "./pages/admin/dashboard";
 import { Products } from "./pages/admin/products";
 import { Orders } from "./pages/admin/orders";
@@ -22,8 +22,12 @@ import { CreateOrder } from "./pages/admin/createOrder";
 import { Customers } from "./pages/admin/customers";
 import { Misc } from "./pages/admin/misc";
 
+import { Login } from "./pages/shop/login";
+import { Home } from "./pages/shop/home";
+
 //create your first component
 const Layout = () => {
+    const { store, actions } = useContext(Context);
     // MOMENT.JS TIME FORMAT
     moment.locale("es-us")
     
@@ -34,32 +38,35 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <div style={{display: "flex", height: "100vh"}}>
-                            <Sidebar/>
-                        <div style={{width: "100%"}}>
-                            <Navbar />
-                            <div id="content">
-                                <Routes>
-                                    <Route element={<Dashboard />} path="/" />
-                                    <Route element={<Orders />} path="/orders" />
-                                    <Route element={<CreateOrder />} path="/create-order" />
-                                    <Route element={<Products />} path="/products" />
-                                    <Route element={<CreateProduct />} path="/create-product" />
-                                    <Route element={<Customers/>} path="/customers" />
-                                    <Route element={<Misc/>} path="/misc" />
-                                    <Route element={<Demo />} path="/demo" />
-                                    <Route element={<Single />} path="/single/:theid" />
-                                    <Route element={<h1>Not found!</h1>} />
-                                </Routes>
-                            </div>
+    <>
+        <BrowserRouter basename={basename}>
+            <div style={{display: "flex", height: "100vh"}}>
+                <Sidebar/>
+                <div style={{width: "100%"}}>
+                    <Navbar/>
+                    <div id="content">
+                        <Routes>
+                            {/* ADMIN VIEWS */}
+                            <Route element={<Dashboard />} path="/admin/*"/>
+                            <Route element={<Orders />} path="/admin/orders" />
+                            <Route element={<CreateOrder />} path="/admin/create-order" />
+                            <Route element={<Products />} path="/admin/products" />
+                            <Route element={<CreateProduct />} path="/admin/create-product" />
+                            <Route element={<Customers/>} path="/admin/customers" />
+                            <Route element={<Misc/>} path="/admin/misc" />
+                            <Route element={<Demo />} path="/admin/demo" />
+                            <Route element={<Single />} path="/single/:theid" />
 
-                        </div>
+                            {/* NORMAL VIEWS */}
+                            <Route element={<Login/>} path="/login" />
+                            <Route element={<Home/>} path="/*" />
+                        </Routes>
                     </div>
-                    <ToastContainer autoClose={2000} />
-                </ScrollToTop>
-            </BrowserRouter>
+                </div>
+            </div>
+            <ToastContainer autoClose={2000} />
+        </BrowserRouter>
+    </>
     );
 };
 

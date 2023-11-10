@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
-import "../../../styles/dashboard.css";
+import { useNavigate } from "react-router-dom";
 
-export const Dashboard = () => {
+export const Home = () => {
 	const { store, actions } = useContext(Context);
 	useEffect(() => {
-		actions.changeTab("admin")
-		actions.changeAdminNav(true)
+		actions.changeTab("home")
+		actions.changeAdminNav(false)
 	  }, []);
 
 	return (<div style={{margin: "50px 6vw"}}>

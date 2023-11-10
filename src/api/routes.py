@@ -4,13 +4,56 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Product, Category, Subcategory, Customer, Order, Payment, Item
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 
 api = Blueprint('api', __name__)
+
+#ADMIN REQUIRED DECORATOR
+def admin_required(func):
+    def wrapper( *args, **kwargs):
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        if user.admin:
+            return func(*args, **kwargs)
+        else:
+            raise Exception(f"User must be an admin.")
+    return wrapper
+
+#TOKEN
+@api.route('/token', methods=['POST'])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    user = User.query.filter_by( email=email, password=password ).one_or_none()
+    if user is None:
+        return {"message": f"Couldn't find user"}, 401
+    
+    # crea un nuevo token con el id de usuario dentro
+    access_token = create_access_token( identity=user.id )
+    return { "token": access_token, "user": user.serialize()} , 200
+
+@api.route("/account", methods=["GET"])
+@jwt_required()
+def account():
+    # Accede a la identidad del usuario actual con get_jwt_identity
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if user:
+        return user.serialize(), 200
+    else:
+        return False
+
 
 # PRODUCTS
 
 # [GET] ALL PRODUCTS
 @api.route('/products', methods=['GET'])
+@jwt_required()
+@admin_required
 def get_products():
     try:
         all_products = Product.query.all()
@@ -80,7 +123,8 @@ def put_product(product_id):
             
         if name: product.name = name
         if unit_price or unit_price == 0: product.unit_price = unit_price
-        if stock or stock == 0: product.stock = stock + product.serialize()["sold"]
+        if stock or stock == 0: 
+            product.stock = stock + product.serialize()["sold"]
         if sku: product.sku = sku
         if image: product.image = image
         if description: product.description = description

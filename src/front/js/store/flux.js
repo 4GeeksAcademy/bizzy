@@ -7,17 +7,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			orders: [],
 			customers: [],
 			payments:[],
-			selectedProducts:[]
+			selectedProducts:[],
+			token: "",
+			user:{},
+			adminNav: false
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 
 			//PRODUCTS
 			getProducts: async () => {
+				const token = localStorage.getItem('token');
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/products")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/products",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
-
+					if (data.msg) return false
 					setStore({ products: data })
 					return true;
 				} catch (error) {
@@ -258,10 +269,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeTab: (tab) => {
 				setStore({active: tab})
 				},
+			changeAdminNav: (bool) => {
+				setStore({adminNav: bool})
+				},
 
 			addSelectedProducts: (products) => {
 				setStore({selectedProducts: products})
 				},
+			// USERS
+			getUserToken: async (user) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/token",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",},
+						body: JSON.stringify(user)
+						})
+					const data = await resp.json()
+					if (resp.ok){
+						localStorage.setItem("token", data.token);
+						setStore({ token: data.token, user: data.user })
+						return true;
+					}
+					else return false
+				} catch (error) {
+					return false
+				}
+			},
+			checkToken: async () => {
+				// retrieve token form localStorage
+				const token = localStorage.getItem('token');
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/account",
+						{
+							method: "GET",
+							headers: {
+								"Content-Type": "application/json",
+								"Authorization": "Bearer " + token
+							},
+						})
+					const data = await resp.json()
+					if (data){
+						setStore({ token: token, user: data })
+						return {admin: data.admin}
+					}
+					else{
+						setStore({ token: "", user: ""})
+						return false
+					}
+				} catch (error) {
+					return false
+				}
+			},
 		}
 	};
 };

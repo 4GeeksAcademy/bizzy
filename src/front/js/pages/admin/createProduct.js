@@ -43,8 +43,8 @@ export const CreateProduct = (modal) => {
 	  }
 
 	useEffect(() => {
-		actions.changeTab("products")
-
+		actions.changeTab("admin/products")
+		actions.changeAdminNav(true)
 		loadInfo()
 	}, []);
 
@@ -80,7 +80,7 @@ export const CreateProduct = (modal) => {
 		let info = await actions.postProduct({...product, "image": url })
 		if(info){
 			toast.success("Producto creado con exito!")
-			navigate("/products")
+			navigate("/admin/products")
 			return
 		}
 		else{
@@ -112,7 +112,7 @@ export const CreateProduct = (modal) => {
 
 	return (<>
 		<div className="create-views-container">
-			<button className="button-back" onClick={()=>navigate("/products")}><span><BsChevronLeft/></span> Volver a Productos</button>
+			<button className="button-back" onClick={()=>navigate("/admin/products")}><span><BsChevronLeft/></span> Volver a Productos</button>
 			<h2>Añadir producto</h2>
 			<div>
 				<div className="upload-image">

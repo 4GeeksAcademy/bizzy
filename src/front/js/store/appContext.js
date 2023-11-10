@@ -22,7 +22,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-
+			state.actions.checkToken()
 			state.actions.getProducts()
 			state.actions.getCategories()
 			state.actions.getOrders()
