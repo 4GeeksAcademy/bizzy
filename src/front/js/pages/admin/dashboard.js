@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
+import { MdTrendingUp } from "react-icons/md";
+import { AiFillHeart } from "react-icons/ai";
+
 import "../../../styles/dashboard.css";
 
 export const Dashboard = () => {
@@ -13,12 +16,59 @@ export const Dashboard = () => {
 			<div className="customers-header">
           		<h2>Overview</h2>
 	  		</div>
-			<div className="modulito">
-				<span style={{display: "flex", justifyContent: "space-between"}}>	<p >Ventas totales</p>	<p>💚</p>	</span>
-				
-				<span style={{display: "flex"}}>	<h2 style={{textAlign: "center"}}>$1000</h2>		</span>
+			<div className="dashboard-top">
+				<div className="modulito">
+					<span className="modulito-top">
+						<p>Ventas totales</p>
+						<AiFillHeart/>
+					</span>
+					
+					<div className="modulito-bot">	
+						<h2>$1000</h2>
+						<span>+5.66 %<MdTrendingUp/></span>
+					</div>
+				</div>
+				<div className="modulito">
+					<span className="modulito-top">
+						<p>Ventas totales</p>
+						<AiFillHeart/>
+					</span>
+					
+					<div className="modulito-bot">	
+						<h2>$1000</h2>
+						<span>+5.66 %<MdTrendingUp/></span>
+					</div>
+				</div>
+				<div className="modulito">
+					<span className="modulito-top">
+						<p>Ventas totales</p>
+						<AiFillHeart/>
+					</span>
+					
+					<div className="modulito-bot">	
+						<h2>$1000</h2>
+						<span>+5.66 %<MdTrendingUp/></span>
+					</div>
+				</div>
+				<div className="modulito">
+					<span className="modulito-top">
+						<p>Ventas totales</p>
+						<AiFillHeart/>
+					</span>
+					
+					<div className="modulito-bot">	
+						<h2>$1000</h2>
+						<span>+5.66 %<MdTrendingUp/></span>
+					</div>
+				</div>
 			</div>
+			<div className="dashboard-middle">
+				<div></div>
+				<div></div>
+			</div>
+			<div className="dashboard-bottom">
 
+			</div>
 	</div>
 	);
 };
