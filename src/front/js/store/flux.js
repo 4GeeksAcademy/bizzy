@@ -10,7 +10,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			selectedProducts:[],
 			token: "",
 			user:{},
-			adminNav: false
+			adminNav: false,
+			info:{ years:{}, categories:{}}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -93,10 +94,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			// CATEGORIES
 			getCategories: async () => {
+				const token = localStorage.getItem('token');
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/categories")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/categories",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
-
+					if (data.msg) return false
 					setStore({ categories: data })
 					return true
 				} catch (error) {
@@ -151,10 +160,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// ORDERS
 			getOrders: async () => {
+				const token = localStorage.getItem('token');
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/orders")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/orders",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
-
+					if (data.msg) return false
 					setStore({ orders: data })
 					return true
 				} catch (error) {
@@ -187,10 +204,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// CUSTOMERS
 			getCustomers: async () => {
+				const token = localStorage.getItem('token');
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/customers")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/customers",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
 					
 					const data = await resp.json()
+					if (data.msg) return false
 
 					setStore({ customers: data })
 					return true
@@ -254,8 +280,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// PAYMENT
 			getPayments: async () => {
+				const token = localStorage.getItem('token');
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/payments")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/payments",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
 
 					setStore({ payments: data })
@@ -268,14 +302,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//TABS
 			changeTab: (tab) => {
 				setStore({active: tab})
-				},
+			},
+			
 			changeAdminNav: (bool) => {
 				setStore({adminNav: bool})
-				},
+			},
 
 			addSelectedProducts: (products) => {
 				setStore({selectedProducts: products})
-				},
+			},
 			// USERS
 			getUserToken: async (user) => {
 				try {
@@ -289,7 +324,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await resp.json()
 					if (resp.ok){
 						localStorage.setItem("token", data.token);
-						setStore({ token: data.token, user: data.user })
+						getActions().checkToken()
 						return true;
 					}
 					else return false
@@ -297,6 +332,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			
 			checkToken: async () => {
 				// retrieve token form localStorage
 				const token = localStorage.getItem('token');
@@ -310,18 +346,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 							},
 						})
 					const data = await resp.json()
-					if (data){
+					if (data.msg){
+						getActions().logout()
+						return false
+					}
+					else if (data){
 						setStore({ token: token, user: data })
 						return {admin: data.admin}
 					}
 					else{
-						setStore({ token: "", user: ""})
+						getActions().logout()
 						return false
 					}
 				} catch (error) {
 					return false
 				}
 			},
+			getInfo: async () => {
+				const token = localStorage.getItem('token');
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/info",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+					})
+					const data = await resp.json()
+
+					setStore({ info: data })
+					return true
+				} catch (error) {
+					return false
+				}
+			},
+			logout: async () => {
+				try {
+					localStorage.setItem("token", "")
+					setStore({ token: "", user: ""})
+					return true
+				} catch (error) {
+					throw Error(error)
+				}
+		   }
 		}
 	};
 };

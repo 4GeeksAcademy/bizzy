@@ -7,20 +7,20 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import copy
 
 
 api = Blueprint('api', __name__)
 
-#ADMIN REQUIRED DECORATOR
-def admin_required(func):
-    def wrapper( *args, **kwargs):
-        current_user_id = get_jwt_identity()
-        user = User.query.get(current_user_id)
-        if user.admin:
-            return func(*args, **kwargs)
-        else:
-            raise Exception(f"User must be an admin.")
-    return wrapper
+#ADMIN REQUIRED FUNCTIOn
+def admin_required():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if user.admin: 
+        return True
+    else: 
+        return False
+
 
 #TOKEN
 @api.route('/token', methods=['POST'])
@@ -53,8 +53,8 @@ def account():
 # [GET] ALL PRODUCTS
 @api.route('/products', methods=['GET'])
 @jwt_required()
-@admin_required
 def get_products():
+    if not admin_required(): return [], 401
     try:
         all_products = Product.query.all()
         products_list = [product.serialize() for product in all_products]
@@ -66,7 +66,9 @@ def get_products():
 
 # [POST] ONE PRODUCT
 @api.route('/product', methods=['POST'])
+@jwt_required()
 def post_product():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
 
@@ -97,7 +99,9 @@ def post_product():
 
 # [PUT] ONE PRODUCT
 @api.route('/product/<product_id>', methods=['PUT'])
+@jwt_required()
 def put_product(product_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         product = Product.query.get(product_id)
 
@@ -142,7 +146,9 @@ def put_product(product_id):
 
 # [DELETE] ONE PRODUCT    
 @api.route("/product/<int:product_id>", methods=["DELETE"])
+@jwt_required()
 def delete_product(product_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         selected_product = Product.query.get(product_id) or None
         if selected_product == None:
@@ -159,7 +165,9 @@ def delete_product(product_id):
 
 # [GET] ALL CATEGORIES
 @api.route('/categories', methods=['GET'])
+@jwt_required()
 def get_categories():
+    if not admin_required(): return [], 401
     try:
         all_categories = Category.query.all()
 
@@ -170,7 +178,9 @@ def get_categories():
 
 # [POST] ONE CATEGORY
 @api.route('/category', methods=['POST'])
+@jwt_required()
 def post_category():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
         name = body.get("name", None)
@@ -187,7 +197,9 @@ def post_category():
     
 # [PUT] ONE CATEGORY
 @api.route('/category/<category_id>', methods=['PUT'])
+@jwt_required()
 def put_category(category_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         category = Category.query.get(category_id)
 
@@ -207,7 +219,9 @@ def put_category(category_id):
 
 # [POST] ONE SUBCATEGORY
 @api.route('/subcategory', methods=['POST'])
+@jwt_required()
 def post_subcategory():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
         category = body.get("category", None)
@@ -228,7 +242,9 @@ def post_subcategory():
 
 # [PUT] ONE SUBCATEGORY
 @api.route('/subcategory/<subcategory_id>', methods=['PUT'])
+@jwt_required()
 def put_subcategory(subcategory_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         subcategory = Subcategory.query.get(subcategory_id)
 
@@ -252,7 +268,9 @@ def put_subcategory(subcategory_id):
 
 # [GET] ALL ORDERS
 @api.route('/orders', methods=['GET'])
+@jwt_required()
 def get_orders():
+    if not admin_required(): return [], 401
     try:
         all_orders = Order.query.all()
         orders_list = [order.serialize() for order in all_orders]
@@ -264,7 +282,9 @@ def get_orders():
     
 # [POST] ONE ORDER
 @api.route('/order', methods=['POST'])
+@jwt_required()
 def post_order():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
 
     body = request.get_json()
     name = body.get("name", None)
@@ -302,7 +322,9 @@ def post_order():
 
 # [PUT] ONE ORDER
 @api.route('/order/<order_id>', methods=['PUT'])
+@jwt_required()
 def put_order(order_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         order = Order.query.get(order_id)
 
@@ -346,7 +368,9 @@ def put_order(order_id):
 
 # [GET] ALL CUSTOMERS
 @api.route('/customers', methods=['GET'])
+@jwt_required()
 def get_customers():
+    if not admin_required(): return [], 401
     try:
         all_customers = Customer.query.all()
         customers_list = [customer.serialize() for customer in all_customers]
@@ -358,7 +382,9 @@ def get_customers():
     
 # [POST] ONE CUSTOMER
 @api.route('/customer', methods=['POST'])
+@jwt_required()
 def post_customer():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
         name = body.get("name", None)
@@ -380,7 +406,9 @@ def post_customer():
     
 # [PUT] ONE CUSTOMER
 @api.route('/customer/<customer_id>', methods=['PUT'])
+@jwt_required()
 def put_customer(customer_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         customer = Customer.query.get(customer_id)
 
@@ -402,7 +430,9 @@ def put_customer(customer_id):
 
 # [DELETE] ONE CUSTOMER   
 @api.route("/customer/<int:customer_id>", methods=["DELETE"])
+@jwt_required()
 def delete_customer(customer_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         selected_customer = Customer.query.get(customer_id) or None
         if selected_customer == None:
@@ -419,7 +449,9 @@ def delete_customer(customer_id):
 
 # [GET] ALL PAYMENTS
 @api.route('/payments', methods=['GET'])
+@jwt_required()
 def get_payments():
+    if not admin_required(): return [], 401
     try:
         all_payments = Payment.query.all()
         return [payment.serialize() for payment in all_payments]
@@ -429,7 +461,9 @@ def get_payments():
     
 # [POST] ONE PAYMENT
 @api.route('/payment', methods=['POST'])
+@jwt_required()
 def post_payment():
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
         name = body.get("name", None)
@@ -452,7 +486,9 @@ def post_payment():
 
 # [PUT] ONE PAYMENT
 @api.route('/payment/<payment_id>', methods=['PUT'])
+@jwt_required()
 def put_payment(payment_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         payment = Payment.query.get(payment_id)
 
@@ -469,3 +505,50 @@ def put_payment(payment_id):
  
     except ValueError as err:
         return {"message": f"Failed to edit payment, {err}"}, 500
+    
+# CHARTS INFORMATION
+# [GET] INFO
+@api.route('/info', methods=['GET'])
+@jwt_required()
+def get_info():
+    if not admin_required(): return [], 401
+    try:
+        years = {}
+        categories = {}
+        months_template = {
+            "01":{"quantity": 0, "total": 0},
+            "02":{"quantity": 0, "total": 0},
+            "03":{"quantity": 0, "total": 0},
+            "04":{"quantity": 0, "total": 0},
+            "05":{"quantity": 0, "total": 0},
+            "06":{"quantity": 0, "total": 0},
+            "07":{"quantity": 0, "total": 0},
+            "08":{"quantity": 0, "total": 0},
+            "09":{"quantity": 0, "total": 0},
+            "10":{"quantity": 0, "total": 0},
+            "11":{"quantity": 0, "total": 0},
+            "12":{"quantity": 0, "total": 0},
+            }
+        all_categories = Category.query.all()
+        items = Item.query.all()
+        for item in items:
+            for category in all_categories:
+                if category.name not in categories:
+                    categories[f"{category.name}"] = 0
+                if item.product.category == category:
+                    categories[f"{category.name}"] += item.quantity
+
+
+            if item.order.date[0:4] not in years:
+                years[item.order.date[0:4]] = copy.deepcopy(months_template)
+            for year in years:
+                if item.order.date[0:4] == year:
+                    for month in years[f"{year}"]:
+                        if month == item.order.date[5:7]:
+                            years[f"{year}"][f"{month}"]["quantity"] += item.quantity
+                            years[f"{year}"][f"{month}"]["total"] += item.quantity*item.product.unit_price
+            
+
+        return {"years": years, "categories": categories}, 200
+    except ValueError as err:
+        return {"message": f"Failed to retrieve payments, {err}"}, 500

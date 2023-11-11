@@ -9,16 +9,10 @@ export const Home = () => {
 		actions.changeAdminNav(false)
 	  }, []);
 
-	return (<div style={{margin: "50px 6vw"}}>
-			<div className="customers-header">
-          		<h2>Overview</h2>
-	  		</div>
-			<div className="modulito">
-				<span style={{display: "flex", justifyContent: "space-between"}}>	<p >Ventas totales</p>	<p>💚</p>	</span>
-				
-				<span style={{display: "flex"}}>	<h2 style={{textAlign: "center"}}>$1000</h2>		</span>
+	return (<>
+			<div style={{display: "flex", justifyContent: "center"}}>
+				<img style={{width: "1440px", height: "300px", objectFit:"cover"}} src="https://img.freepik.com/premium-photo/banner-large-group-dogs-together-row-orange-background_191971-28737.jpg?w=2000"/>
 			</div>
-
-	</div>
+	</>
 	);
 };

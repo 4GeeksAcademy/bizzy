@@ -41,7 +41,7 @@ const Layout = () => {
     <>
         <BrowserRouter basename={basename}>
             <div style={{display: "flex", height: "100vh"}}>
-                <Sidebar/>
+                {store.adminNav && <Sidebar/> }
                 <div style={{width: "100%"}}>
                     <Navbar/>
                     <div id="content">

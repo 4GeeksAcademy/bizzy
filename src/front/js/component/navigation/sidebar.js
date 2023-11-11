@@ -12,7 +12,7 @@ export const Sidebar = () => {
 
 
 	return <>
-		{store.adminNav && <div id="sidebar">
+		<div id="sidebar">
             <img src="https://www.nic.do/wp-content/uploads/2016/10/logo-placeholder-3.jpg" className="sidebar-logo"/>
             <button className="shrt-order-btn" onClick={()=> navigate("/admin/create-order")}>
                 <MdStar className="order-heart"/>Nuevo pedido
@@ -45,6 +45,5 @@ export const Sidebar = () => {
             </Link>
             <div className="menu-logout"><MdLogout className="logout-icon"/>Cerrar sesión</div>
         </div>
-        }
     </>
 };

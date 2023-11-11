@@ -6,17 +6,17 @@
 }
 
 .dashboard-top{
-    display:flex;
-    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .modulito{
     background-color: white;
     border-radius: 10px;
-    width: 275px;
+    width: 24%;
     height: 100px;
     padding: 15px;
-    margin-right: 10px;
     margin-bottom: 10px;
 }
 
@@ -67,11 +67,15 @@
 }
 
 .dashboard-middle div{
-    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+    width: 49%;
     height: 275px;
     border-radius: 10px;
     background: white;
-    margin-right: 10px;
 }
 
 .dashboard-bottom{
