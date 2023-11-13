@@ -7,7 +7,6 @@ import { BackendURL } from "./component/backendURL";
 
 import "../styles/layout.css";
 import { Demo } from "./pages/admin/demo";
-import { Single } from "./pages/admin/single";
 import injectContext from "./store/appContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,6 +23,10 @@ import { Misc } from "./pages/admin/misc";
 
 import { Login } from "./pages/shop/login";
 import { Home } from "./pages/shop/home";
+import { ProductDetails } from "./pages/shop/productDetails";
+import { Category } from "./pages/shop/category";
+
+import { AdminNavbar } from "./component/navigation/adminNavbar";
 
 //create your first component
 const Layout = () => {
@@ -43,7 +46,8 @@ const Layout = () => {
             <div style={{display: "flex", height: "100vh"}}>
                 {store.adminNav && <Sidebar/> }
                 <div style={{width: "100%"}}>
-                    <Navbar/>
+                    {store.adminNav? <AdminNavbar/> : <Navbar/>}
+                    
                     <div id="content">
                         <Routes>
                             {/* ADMIN VIEWS */}
@@ -55,11 +59,12 @@ const Layout = () => {
                             <Route element={<Customers/>} path="/admin/customers" />
                             <Route element={<Misc/>} path="/admin/misc" />
                             <Route element={<Demo />} path="/admin/demo" />
-                            <Route element={<Single />} path="/single/:theid" />
 
                             {/* NORMAL VIEWS */}
                             <Route element={<Login/>} path="/login" />
                             <Route element={<Home/>} path="/*" />
+                            <Route element={<ProductDetails/>} path="/product/:id" />
+                            <Route element={<Category/>} path="/category/:name" />
                         </Routes>
                     </div>
                 </div>

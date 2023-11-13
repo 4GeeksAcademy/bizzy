@@ -192,7 +192,7 @@ export const Dashboard = () => {
 			<div className="dashboard-middle">
 				<div>
 				{productHistory.length != 0 && <>
-                <select defaultValue={Object.keys(store.info.years).reverse()[0]} onChange={(e)=> setChartYear(e.target.value)}>
+                <select defaultValue={store.info.years && Object.keys(store.info.years).reverse()[0]} onChange={(e)=> setChartYear(e.target.value)}>
                   {store.info.years && Object.keys(store.info.years).reverse().map((year)=> <option key={year}>{year}</option>)}
                 </select>
                 {chartYear && <Line options={lineOptions} data={lineData}/>}

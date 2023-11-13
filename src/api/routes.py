@@ -127,8 +127,6 @@ def put_product(product_id):
             
         if name: product.name = name
         if unit_price or unit_price == 0: product.unit_price = unit_price
-        if stock or stock == 0: 
-            product.stock = stock + product.serialize()["sold"]
         if sku: product.sku = sku
         if image: product.image = image
         if description: product.description = description
@@ -136,6 +134,10 @@ def put_product(product_id):
             if for_sale == "true": for_sale = True
             elif for_sale == "false": for_sale = False
             product.for_sale = for_sale
+
+        if stock or stock == 0: 
+            product.stock = stock + product.sold
+            if product.stock - product.sold <= 0: product.for_sale = False
 
         db.session.commit()
         
@@ -310,8 +312,11 @@ def post_order():
         db.session.commit()
 
         for product in items:
-            new_product = Product.query.filter_by(id=product["id"]).one_or_none()
-            new_item = Item(product=new_product, order=new_order, quantity=product["quantity"])
+            selected_product = Product.query.filter_by(id=product["id"]).one_or_none()
+            selected_product.sold += product["quantity"]
+            if selected_product.stock - selected_product.sold <= 0:
+                selected_product.for_sale = False
+            new_item = Item(product=selected_product, order=new_order, quantity=product["quantity"])
             db.session.add(new_item)
             db.session.commit()
         
@@ -347,8 +352,11 @@ def put_order(order_id):
                 db.session.commit()
 
             for product in items:
-                new_product = Product.query.filter_by(id=product["id"]).one_or_none()
-                new_item = Item(product=new_product, order=order, quantity=product["quantity"])
+                selected_product = Product.query.filter_by(id=product["id"]).one_or_none()
+                selected_product.sold += product["quantity"]
+                if selected_product.stock - selected_product.sold <= 0:
+                    selected_product.for_sale = False
+                new_item = Item(product=selected_product, order=order, quantity=product["quantity"])
                 db.session.add(new_item)
                 db.session.commit()
 
@@ -552,3 +560,22 @@ def get_info():
         return {"years": years, "categories": categories}, 200
     except ValueError as err:
         return {"message": f"Failed to retrieve payments, {err}"}, 500
+    
+
+# SHOP INFORMATION
+# [GET] SHOP INFO
+@api.route('/shop', methods=['GET'])
+def get_shop():
+    try:
+        all_products = Product.query.filter_by(for_sale=True)
+        products_list = sorted(all_products, key=lambda product: -product.sold)
+        products_list = [product.shop_serialize() for product in products_list]
+
+        all_categories = Category.query.all()
+        categories_list = [category.serialize() for category in all_categories]
+        categories_list = sorted(categories_list, key=lambda category: -category["products_quantity"])
+        return {"products": products_list, "categories": categories_list }
+            
+    except ValueError as err:
+        return {"message": f"Failed to retrieve payments, {err}"}, 500
+    

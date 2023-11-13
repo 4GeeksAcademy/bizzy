@@ -152,10 +152,20 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'<Product {self.name}>'
+    
+    def shop_serialize(self):
+        return {
+            "id": self.id,
+            "category": self.category.name,
+            "subcategory": self.subcategory.name if self.subcategory else None,
+            "name": self.name,
+            "unit_price": self.unit_price,
+            "image": self.image,
+            "description": self.description,
+        }
 
     def serialize(self):
         years = {}
-        sold_quantity = 0
         months_template = {
             "01":{"quantity": 0, "total": 0},
             "02":{"quantity": 0, "total": 0},
@@ -178,7 +188,6 @@ class Product(db.Model):
                 if item.order.date[0:4] == year:
                     for month in years[f"{year}"]:
                         if month == item.order.date[5:7]:
-                            sold_quantity += item.quantity
                             years[f"{year}"][f"{month}"]["quantity"] += item.quantity
                             years[f"{year}"][f"{month}"]["total"] += item.quantity*self.unit_price
 
@@ -188,12 +197,12 @@ class Product(db.Model):
             "subcategory": self.subcategory.name if self.subcategory else None,
             "name": self.name,
             "unit_price": self.unit_price,
-            "stock": self.stock-sold_quantity,
-            "sold": sold_quantity,
+            "stock": self.stock-self.sold,
+            "sold": self.sold,
             "sku": self.sku,
             "image": self.image,
             "description": self.description,
-            "for_sale": False if self.stock-sold_quantity == 0  else self.for_sale,
+            "for_sale": self.for_sale,
             "all_time": years
         }
     

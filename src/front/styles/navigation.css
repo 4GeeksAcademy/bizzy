@@ -99,11 +99,11 @@
 
 .navbar-main{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     height:80px;
     padding:20px;
-    padding-right:50px;
-    
+    padding-right: 125px;
+    padding-left: 125px;
 }
 
 .navbar-user{

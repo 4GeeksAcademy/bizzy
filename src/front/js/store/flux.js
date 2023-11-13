@@ -9,9 +9,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			payments:[],
 			selectedProducts:[],
 			token: "",
-			user:{},
+			user: "",
 			adminNav: false,
-			info:{ years:{}, categories:{}}
+			info:{ years:{}, categories:{}},
+			shop:{},
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -38,12 +39,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			postProduct: async (product) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/product",
 						{
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(product)
 						})
 					const data = await resp.json()
@@ -59,12 +63,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			putProduct: async (product) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/product/${product.id}`,
 					{
 						method: "PUT",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(product)
 						})
 					const data = await resp.json()
@@ -76,9 +83,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			deleteProduct: async (id) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/product/${id}`, {
-						method: "DELETE"})
+						method: "DELETE",
+						headers: {
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
 					if (resp.ok == true){
 						getActions().getProducts()
@@ -114,12 +126,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			postCategory: async (category) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/category",
 						{
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(category)
 						})
 					const data = await resp.json()
@@ -137,12 +152,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// SUBCATEGORIES
 			postSubCategory: async (subcategory) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/subcategory",
 						{
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(subcategory)
 						})
 					const data = await resp.json()
@@ -181,12 +199,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// SUBCATEGORIES
 			postOrder: async (order) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/order",
 						{
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(order)
 						})
 					const data = await resp.json()
@@ -225,12 +246,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			postCustomer: async (customer) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/customer",
 						{
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(customer)
 						})
 					const data = await resp.json()
@@ -246,12 +270,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			putCustomer: async (customer) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/customer/${customer.id}`,
 					{
 						method: "PUT",
 						headers: {
-							"Content-Type": "application/json",},
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
 						body: JSON.stringify(customer)
 						})
 					const data = await resp.json()
@@ -262,9 +289,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			deleteCustomer: async (id) => {
+				const token = localStorage.getItem('token');
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + `/api/customer/${id}`, {
-						method: "DELETE"})
+						method: "DELETE",
+						headers: {
+							"Authorization": "Bearer " + token
+						},
+					})
 					const data = await resp.json()
 					if (resp.ok == true){
 						getActions().getCustomers()
@@ -291,6 +323,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					})
 					const data = await resp.json()
+					if (data.msg) return false
 
 					setStore({ payments: data })
 					return true
@@ -303,7 +336,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeTab: (tab) => {
 				setStore({active: tab})
 			},
-			
 			changeAdminNav: (bool) => {
 				setStore({adminNav: bool})
 			},
@@ -362,6 +394,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+
 			getInfo: async () => {
 				const token = localStorage.getItem('token');
 				try {
@@ -381,6 +414,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			getShopInfo: async () => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/shop")
+					const data = await resp.json()
+
+					setStore({ shop: data})
+					return true
+				} catch (error) {
+					return false
+				}
+			},
 			logout: async () => {
 				try {
 					localStorage.setItem("token", "")
@@ -389,7 +433,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					throw Error(error)
 				}
-		   }
+			}
 		}
 	};
 };

@@ -22,14 +22,8 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			if (state.store.adminNav && localStorage.getItem('token') && state.actions.checkToken().admin){
-				state.actions.getInfo()
-				state.actions.getProducts()
-				state.actions.getCategories()
-				state.actions.getOrders()
-				state.actions.getCustomers()
-				state.actions.getPayments()
-			}
+			state.actions.checkToken()
+			state.actions.getShopInfo()
 			/**
 			 * EDIT THIS!
 			 * This function is the equivalent to "window.onLoad", it only runs once on the entire application lifetime
