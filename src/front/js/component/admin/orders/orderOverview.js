@@ -60,36 +60,49 @@ export const OrderOverview = (order) => {
               </div>
             </div>
 
-            <div style={{display:"flex", justifyContent: "space-between", marginTop:"25px"}}>
+            <label className="order-overview-date">FECHA:&nbsp;{moment(order.ord.date, "YYYYMMDDhh:mm").format('ll').toUpperCase()}</label>
+            <div style={{display:"flex", justifyContent: "space-between", margin:"10px 0", alignItems: "flex-end"}}>
               <div className="order-overview-id">
-                <label>ORDEN N°:</label> {order.ord.id}
+                <label style={{margin: 0}}>ORDEN N°:</label> {order.ord.id}
               </div>
-              <div className="order-overview-status">{order.ord.status}</div>
+              <div className={order.ord.status=="Completada"? "overview-status-green" : order.ord.status=="Pendiente"? "overview-status-gray" : "overview-status-red"}>{order.ord.status}</div>
             </div>
 
             <div className="order-overview-name">{order.ord.customer.name}</div>
-            <div className="order-overview-phone">{order.ord.customer.phone || "-"}</div>
-            <div className="order-overview-date">{moment(order.ord.date, "YYYYMMDDhh:mm").format('LL')}</div>
-            <div className="order-overview-status">{order.ord.payment.name}</div>
-            <div className="order-overview-notes">
-              <label>NOTAS</label>
-              <div>{order.ord.notes || "No hay notas..."}</div>
+            <div className="order-overview-phone">TLF:&nbsp;{order.ord.customer.phone || "-"}</div>
+
+            <div>
+              <label>MÉTODO DE PAGO:</label>
+              <div className="order-overview-payment">
+                {order.ord.payment.icon && <img src={order.ord.payment.icon}/>}
+                {!order.ord.payment.icon && <span>{order.ord.payment.name}</span>}
+              </div>
             </div>
 
-            <div className="order-overview-products-header">
-              <h3>ORDEN:</h3> <div>TOTAL: <span>${order.ord.total_price}</span></div>
-            </div>
+            <label>ORDEN:</label>
 
             <div className="order-overview-products-container">
               {order.ord.items.length > 0 && order.ord.items.map((itm)=> (
                 <div key={itm.id} className="order-overview-products">
-                <div>{itm.quantity}</div>
+                <div className="order-overview-product-quantity">{itm.quantity}</div>
                 <img src={itm.product.image}/>
-                <p>{itm.product.sku}</p>
+                <div className="order-overview-product-info">
+                  <p className="order-overview-product-name">{itm.product.name}</p>
+                  <p>SKU: {itm.product.sku}</p>
+                  <div>
+                    {itm.quantity} x&nbsp;<span style={{fontWeight: "700"}}>{itm.product.unit_price}</span>&nbsp;= ${itm.quantity*itm.product.unit_price}
+                  </div>
+                </div>
                 </div>
                 ))}
             </div>
+            <div className="order-overview-total">TOTAL:&nbsp;<span>${order.ord.total_price}</span></div>
 
+
+            <div className="order-overview-notes">
+              <label>NOTAS:</label>
+              <div>{order.ord.notes || "No hay notas..."}</div>
+            </div>
 
         </div>
 

@@ -85,6 +85,7 @@ export const Home = () => {
 					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
 						{ subcategoryList.length > 0 && subcategoryList.map( (subcategory)=> <SwiperSlide key={subcategory.name}>
 								<div className="home-subcategory-card">
+									<img src={subcategory.image}/>
 								</div>
 								<span>{subcategory.name}</span>
 							</SwiperSlide>

@@ -220,7 +220,6 @@
 
 .active-payment{
     border: 2px solid #c5b0ff!important;
-    filter: drop-shadow(1px 2px 2px #c5b0ff);
 }
 
 .payment-method-container button span{

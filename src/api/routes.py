@@ -185,11 +185,12 @@ def post_category():
     if not admin_required(): return {"message": "User is not an admin"}, 401
     try:
         body = request.get_json()
-        name = body.get("name", None)
+        name = body.get("name", None),
+        icon = body.get("icon", None)
 
-        if name == None: return {"message": "Category name is missing"}, 400
+        if name == None or icon == None: return {"message": "Something is missing"}, 400
         
-        new_category = Category( name=name )
+        new_category = Category( name=name, icon=icon )
         db.session.add(new_category)
         db.session.commit()
         return new_category.serialize(), 200
@@ -207,8 +208,10 @@ def put_category(category_id):
 
         body = request.get_json()
         name = body.get("name", None)
+        icon = body.get("icon", None)
        
         if name: category.name = name
+        if icon: category.icon = icon
 
         db.session.commit()
         
@@ -228,13 +231,15 @@ def post_subcategory():
         body = request.get_json()
         category = body.get("category", None)
         name = body.get("name", None)
+        image = body.get("image", None)
 
         if name == None: return {"message": "Sub-category name is missing"}, 400
         if category == None: return {"message": "Category is missing"}, 400
+        if image == None: return {"message": "Image is missing"}, 400
         
         category = Category.query.filter_by(name=category).one_or_none()  
         
-        new_subcategory = Subcategory( name=name, category=category )
+        new_subcategory = Subcategory( name=name, category=category, image=image )
         db.session.add(new_subcategory)
         db.session.commit()
         return new_subcategory.serialize(), 200
@@ -253,8 +258,10 @@ def put_subcategory(subcategory_id):
         body = request.get_json()
         category = body.get("category", None)
         name = body.get("name", None)
+        image = body.get("image", None)
        
         if name: subcategory.name = name
+        if image: subcategory.image = image
         if category:
             category = Category.query.filter_by(name=category).one_or_none()  
             subcategory.category = category

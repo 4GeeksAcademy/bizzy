@@ -12,7 +12,7 @@ export const Login = () => {
 		}
 	);
 	useEffect(() => {
-		if(store.token) navigate("/admin/products")
+		if(store.token) navigate("/admin/")
 		actions.changeAdminNav(false)
 	}, []);
 	
@@ -21,7 +21,7 @@ export const Login = () => {
 		if (!user.email || !user.password) alert("Some fields are missing")
 		else{
 			let create = await actions.getUserToken(user)
-			if (create) navigate("/admin/products")
+			if (create) navigate("/admin/")
 			else alert("User doesn't exist or password is incorrect")
 		}
 	}
