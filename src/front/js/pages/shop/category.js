@@ -9,7 +9,7 @@ export const Category = () => {
 	const { store, actions } = useContext(Context);
 	const [ category, setCategory ] = useState()
 	const params = useParams();
-
+    // We eventually will use params.subcategory to preapply filters on subcategories
 	useEffect(() => {
 		if (store.shop.categories && store.shop.categories.length > 0){
 			setCategory(store.shop.categories.filter((category)=> category.name == params.name )[0] )
@@ -24,6 +24,7 @@ export const Category = () => {
 				width={{width:"175px"}} prod={product} key={product.id}
 				/>)}
             </div>
+			
 		</div>
 		}
 	</>

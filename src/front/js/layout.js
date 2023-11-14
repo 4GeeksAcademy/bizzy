@@ -65,6 +65,7 @@ const Layout = () => {
                             <Route element={<Home/>} path="/*" />
                             <Route element={<ProductDetails/>} path="/product/:id" />
                             <Route element={<Category/>} path="/category/:name" />
+                            <Route element={<Category/>} path="/category/:name/:subcategory" />
                         </Routes>
                     </div>
                 </div>

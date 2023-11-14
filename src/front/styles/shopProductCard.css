@@ -13,3 +13,17 @@
     background-position: center;
     background-size: 150%;
 }
+
+.shop-product-card-name{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #484848;
+}
+
+.shop-product-card-price{
+    font-weight: 600;
+    font-size: 15px;
+    color: #A25BF4;
+}

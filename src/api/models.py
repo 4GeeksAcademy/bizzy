@@ -73,9 +73,11 @@ class Customer(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), unique=True, nullable=False)
+    icon = db.Column(db.String(400), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, icon):
         self.name = name
+        self.icon = icon
 
     def __repr__(self):
         return f'<Category {self.name}>'
@@ -90,6 +92,7 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "icon": self.icon,
             "subcategories": [subcat.serialize() for subcat in self.subcategories],
             "products_quantity": products_in_category
         }
@@ -100,10 +103,12 @@ class Subcategory(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     category = db.relationship("Category", backref="subcategories")
     name = db.Column(db.String(40), unique=True, nullable=False)
+    image = db.Column(db.String(400), nullable=False)
 
-    def __init__(self, name, category):
+    def __init__(self, name, category, image):
         self.name = name
         self.category = category
+        self.image = image
 
     def __repr__(self):
         return f'<Subcategory {self.name}>'
@@ -119,6 +124,7 @@ class Subcategory(db.Model):
             "id": self.id,
             "category": self.category.name,
             "name": self.name,
+            "image": self.image,
             "products_quantity": products_in_subcategory
         }
 

@@ -188,7 +188,8 @@ export const CreateOrder = () => {
 							{loading && <Spinner/>}
 							<div className="payment-method-container">
 								{store.payments.length != 0 && store.payments.map((payment)=><div key={payment.id}>
-									<button onClick={()=>setOrder({...order, "payment": payment.name})}>
+									<button className={ order.payment == payment.name? "active-payment":"" }
+									onClick={()=>setOrder({...order, "payment": payment.name})}>
 										{payment.icon && <img src={payment.icon}/>}
 										{!payment.icon && <span>{payment.name}</span>}
 									</button>

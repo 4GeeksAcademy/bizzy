@@ -521,6 +521,7 @@ def put_payment(payment_id):
 def get_info():
     if not admin_required(): return [], 401
     try:
+        data = {"income": 0 , "orders": 0, "customers": 0}
         years = {}
         categories = {}
         months_template = {
@@ -536,9 +537,18 @@ def get_info():
             "10":{"quantity": 0, "total": 0},
             "11":{"quantity": 0, "total": 0},
             "12":{"quantity": 0, "total": 0},
-            }
+        }
         all_categories = Category.query.all()
         items = Item.query.all()
+        orders = Order.query.all()
+        customers = Customer.query.all()
+
+        for customer in customers:
+            data["customers"] += 1
+
+        for order in orders:
+            data["orders"] += 1
+
         for item in items:
             for category in all_categories:
                 if category.name not in categories:
@@ -546,18 +556,18 @@ def get_info():
                 if item.product.category == category:
                     categories[f"{category.name}"] += item.quantity
 
-
             if item.order.date[0:4] not in years:
                 years[item.order.date[0:4]] = copy.deepcopy(months_template)
             for year in years:
                 if item.order.date[0:4] == year:
                     for month in years[f"{year}"]:
                         if month == item.order.date[5:7]:
+                            data["income"] += item.quantity*item.product.unit_price
                             years[f"{year}"][f"{month}"]["quantity"] += item.quantity
                             years[f"{year}"][f"{month}"]["total"] += item.quantity*item.product.unit_price
             
 
-        return {"years": years, "categories": categories}, 200
+        return {"years": years, "categories": categories, "data": data}, 200
     except ValueError as err:
         return {"message": f"Failed to retrieve payments, {err}"}, 500
     

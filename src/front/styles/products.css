@@ -4,6 +4,12 @@
   }
 }
 
+@media screen and (max-width: 440px) {
+  .products-container{
+    gap: 1px!important;
+}
+}
+
 .products-filters{
   display:flex;
   margin-bottom: 20px;
@@ -74,5 +80,5 @@
 .products-container{
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
 }
-

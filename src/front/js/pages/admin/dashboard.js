@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { MdTrendingUp } from "react-icons/md";
 import { AiFillHeart } from "react-icons/ai";
+import { OrderTableRow } from "../../component/admin/orders/orderTableRow";
+import { OrderOverview } from "../../component/admin/orders/orderOverview";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { defaults } from 'chart.js';
@@ -11,9 +12,12 @@ import { Line } from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2';
 import moment from "moment";
 import "../../../styles/dashboard.css";
+import "../../../styles/orders.css";
+
 
 export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
+	const [ overviewed, setOverviewed ] = useState()
 	const navigate = useNavigate();
 	const [ chartYear, setChartYear] = useState()
 	const [ productHistory, setProductHistory ] = useState([])
@@ -24,11 +28,11 @@ export const Dashboard = () => {
   
 	  plugins: {
 		legend: {
-		  position: 'top',
+		  display: false
 		},
   
 		title: {
-		  display: false,
+		  display: true,
 		  text: 'Historico de ventas',
 		},
 		tooltip:{
@@ -96,6 +100,10 @@ export const Dashboard = () => {
 		plugins: {
 			legend: {
 			display: false,
+			},
+		title: {
+			display: true,
+			text: 'Ventas por categoria'
 			}
 		}
 	}
@@ -132,12 +140,8 @@ export const Dashboard = () => {
 		actions.changeTab("admin")
 		actions.changeAdminNav(true)
 		actions.getInfo()
+		actions.getOrders()
 	  }, []);
-
-	//REDIRECT TO LOGIN IF NOT LOGGED AS ADMIN
-	useEffect(() => {
-		if(!localStorage.getItem("token") || store.user.id && !store.user.admin) console.log("rechazado")
-	}, [store.user]);
 
 	return (<div style={{margin: "50px 6vw"}}>
 			<div className="customers-header">
@@ -151,43 +155,30 @@ export const Dashboard = () => {
 					</span>
 					
 					<div className="modulito-bot">	
-						<h2>$1000</h2>
-						<span>+5.66 %<MdTrendingUp/></span>
+						<h2>${store.info.data && store.info.data.income}</h2>
 					</div>
 				</div>
 				<div className="modulito">
 					<span className="modulito-top">
-						<p>Ventas totales</p>
+						<p>Clientes</p>
 						<AiFillHeart/>
 					</span>
 					
 					<div className="modulito-bot">	
-						<h2>$1000</h2>
-						<span>+5.66 %<MdTrendingUp/></span>
+						<h2>{store.info.data && store.info.data.customers}</h2>
 					</div>
 				</div>
 				<div className="modulito">
 					<span className="modulito-top">
-						<p>Ventas totales</p>
+						<p>Ordenes</p>
 						<AiFillHeart/>
 					</span>
 					
 					<div className="modulito-bot">	
-						<h2>$1000</h2>
-						<span>+5.66 %<MdTrendingUp/></span>
+						<h2>{store.info.data && store.info.data.orders}</h2>
 					</div>
 				</div>
-				<div className="modulito">
-					<span className="modulito-top">
-						<p>Ventas totales</p>
-						<AiFillHeart/>
-					</span>
-					
-					<div className="modulito-bot">	
-						<h2>$1000</h2>
-						<span>+5.66 %<MdTrendingUp/></span>
-					</div>
-				</div>
+
 			</div>
 			<div className="dashboard-middle">
 				<div>
@@ -202,9 +193,26 @@ export const Dashboard = () => {
 				{chartYear && <Doughnut options={doughnutOptions} data={doughnutData}/>}
 				</div>
 			</div>
+			<div className="dashboard-bottom-header">Ordenes recientes</div>
 			<div className="dashboard-bottom">
-
+				<table>
+					<thead>
+						<tr>
+						<th style={{paddingLeft: "25px"}} >Orden</th>
+						<th>Fecha</th>
+						<th>Cliente</th>
+						<th>Productos</th>
+						<th>Total</th>
+						<th>Estado</th>
+						<th>Pago</th>
+						</tr>
+					</thead>
+					<tbody> 
+						{store.orders.slice(0,4).map((order)=>(<OrderTableRow key={order.id} ord={order} infoSetter={setOverviewed}/>))}
+					</tbody>
+				</table>
 			</div>
+		{overviewed && <OrderOverview ord={overviewed} close={()=>setOverviewed()}/>}
 	</div>
 	);
 };

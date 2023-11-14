@@ -20,27 +20,27 @@ export const Home = () => {
 
 	const homeBreakpoints = {
 		0: {
-			slidesPerView: 1,
-			spaceBetween: 15,
-			},
-		550: {
 			slidesPerView: 2,
 			spaceBetween: 15,
 			},
-		880: {
+		550: {
 			slidesPerView: 3,
 			spaceBetween: 15,
 			},
-		1200: {
+		880: {
 			slidesPerView: 4,
 			spaceBetween: 15,
-		},
-		1400: {
+			},
+		1200: {
 			slidesPerView: 5,
 			spaceBetween: 15,
 		},
-		1700: {
+		1400: {
 			slidesPerView: 6,
+			spaceBetween: 15,
+		},
+		1700: {
+			slidesPerView: 7,
 			spaceBetween: 15,
 		},
 	}
@@ -65,12 +65,13 @@ export const Home = () => {
 	return (<>
 			<div className="home-container">
 				<img className="home-top-banner" src="https://img.freepik.com/premium-photo/banner-large-group-dogs-together-row-orange-background_191971-28737.jpg?w=2000"/>
-				<h2>Compra por Especie</h2>
+				<div className="home-categories-title">Compra por <span className="title-effect"><span>Especie</span></span></div>
 
 				<div className="home-categories">
 					{store.shop.categories && store.shop.categories.map( (category)=> (
-						<div className="home-category-container" key={category.name} onClick={()=>setCategoryView(category.name)} >
-								<LuDog/>
+						<div className={categoryView == category.name?"home-category-container selected-category-container" : "home-category-container"} 
+						key={category.name} onClick={()=>setCategoryView(category.name)} >
+								<img src={category.icon}/>
 								<span>{category.name}</span>
 						</div>
 						)

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import { MdSpaceDashboard, MdShoppingBasket, MdReceiptLong, MdPeopleAlt, MdMiscellaneousServices, MdArrowForwardIos, MdStar, MdLogout } from "react-icons/md"
 import { Link } from "react-router-dom";
@@ -10,6 +10,15 @@ export const Sidebar = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
+    //REDIRECT TO LOGIN IF NOT LOGGED AS ADMIN
+	useEffect(() => {
+		if(!localStorage.getItem("token") || store.user.id && !store.user.admin) navigate("/")
+	}, [store.user])
+
+    useEffect(() => {
+		actions.checkToken()
+        if(!localStorage.getItem("token") || store.user.id && !store.user.admin) navigate("/")
+	}, [store.active])
 
 	return <>
 		<div id="sidebar">

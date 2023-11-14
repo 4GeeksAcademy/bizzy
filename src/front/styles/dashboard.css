@@ -1,3 +1,18 @@
+@media screen and (max-width: 1400px) {
+    .modulito{
+        width:49%!important;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .modulito{
+        width:100%!important;
+    }
+    .dashboard-middle div{
+        width:100%!important;
+    }
+}
+
 
 .customers-header h2{
     font-weight: 600;
@@ -9,12 +24,15 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .modulito{
     background-color: white;
     border-radius: 10px;
-    width: 24%;
+    width: 32%;
     height: 100px;
     padding: 15px;
     margin-bottom: 10px;
@@ -43,17 +61,6 @@
     justify-content: space-between;
 }
 
-.modulito-bot span{
-    font-size: 12px;
-    font-weight: 600;
-    color: #5dc552;
-    margin-bottom: 5px;
-}
-
-.modulito-bot svg{
-    font-size: 17px;
-}
-
 .modulito-bot h2{
     font-size: 50px;
     font-weight: 600;
@@ -62,8 +69,11 @@
 }
 
 .dashboard-middle{
-    display:flex;
+    display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .dashboard-middle div{
@@ -78,10 +88,31 @@
     background: white;
 }
 
+.dashboard-middle select{
+    background-color: #f3f3f3;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 15px;
+    color: #2E2153;
+    font-weight: 500;
+    text-align: center;
+    margin: 5px 0;
+    margin-right: auto;
+}
+
 .dashboard-bottom{
     width: 100%;
-    height: 500px;
     background: white;
     margin-top: 10px;
     border-radius: 10px;
+}
+
+.dashboard-bottom-header{
+    font-size: 22px;
+    font-weight: 600;
+    color: #2E2153;
+    margin: 0;
 }

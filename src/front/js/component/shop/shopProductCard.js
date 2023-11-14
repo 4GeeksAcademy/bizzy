@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { FaDollarSign } from "react-icons/fa";
 import "../../../styles/shopProductCard.css";
 
 export const ShopProductCard = (product) => {
@@ -12,7 +11,7 @@ export const ShopProductCard = (product) => {
 		onClick={()=> navigate(`product/${product.prod.id}`)}>
 			<img src={product.prod.image} />
 		</div>
-		<div>{product.prod.name}</div>
-		<div> <FaDollarSign/> {product.prod.unit_price}</div>
+		<div className="shop-product-card-name">{product.prod.name}</div>
+		<div className="shop-product-card-price"> $ {product.prod.unit_price}</div>
     </div>
 };
