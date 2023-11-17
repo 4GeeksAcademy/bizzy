@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import { ShopProductCard } from "../../component/shop/shopProductCard";
+import { FaTags } from "react-icons/fa6";
 import "../../../styles/category.css";
 
 
@@ -55,49 +56,49 @@ export const Category = () => {
 			<div className="shop-view-category-title">
 				<img src={category && category.icon}/>
 				{!subcategory && <span>Suministros para {category && category.name}</span> }
-				{subcategory && <span>{subcategory} | {category && category.name}</span> }
+				{subcategory && <span>{subcategory} para {category && category.name}</span> }
 				
 			</div>
 		</div>
 
 		<div style={{display:"flex", margin: "0 10%"}}>
 			<div className="shop-view-category-filters">
-				<div className="subcat-filter-title">Categorias</div>
+				<div className="subcat-filter-title">Categorías</div>
 				{category && category.subcategories.map((subcat)=> <div className={subcategory==subcat.name? "subcat-filter-option-disabled" : "subcat-filter-option" }
 				key={subcat.name} onClick={()=> subcategory==subcat.name? "" : navigate(`/category/${category.name}/${subcat.name}`)}>
 						{subcat.name}<span>({subcat.products_quantity})</span>
 					</div>
 				)}
 				<div className="category-filter-divisor"/>
-				<div>En oferta</div>
+				<div className="category-filter-offer-tag"><FaTags /><span>En oferta</span></div>
 				<div className="category-filter-divisor"/>
 				<div className="price-filter-title">Precio</div>
 				
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio" 
-					defaultChecked onClick={()=>setPriceRange()}/> Todos
+					defaultChecked onClick={()=>setPriceRange()}/> <span>Todos</span>
 				</div>
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
-					onClick={()=>setPriceRange([0,10])}/> Menos de $10
+					onClick={()=>setPriceRange([0,10])}/> <span>Menos de $10</span>
 				</div>
-				<div className="price-filter-option"  >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
-					onClick={()=>setPriceRange([10,20])}/> $10 a $20
+					onClick={()=>setPriceRange([10,20])}/> <span>$10 a $20</span>
 				</div>
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
-					onClick={()=>setPriceRange([20,30])}/> $20 a $30
+					onClick={()=>setPriceRange([20,30])}/> <span>$20 a $30</span>
 				</div>
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
-					onClick={()=>setPriceRange([30,40])}/> $30 a $40
+					onClick={()=>setPriceRange([30,40])}/> <span>$30 a $40</span>
 				</div>
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
-					onClick={()=>setPriceRange([40,50])}/> $40 a $50
+					onClick={()=>setPriceRange([40,50])}/> <span>$40 a $50</span>
 				</div>
-				<div className="price-filter-option" >
+				<div className="price-filter-option">
 					<input name="price" type="radio"
 					onClick={()=>setPriceRange([50, Infinity])}/> $50 o más
 				</div>
@@ -106,15 +107,17 @@ export const Category = () => {
 			<div className="shop-view-category-products">
 				<div className="shop-view-category-products-header">
 					<div>{sortedProducts.length} resultados</div>
-					<select onChange={(e)=>setSortBy(e.target.value)}>
-						<option value="">Bestselling</option>
-						<option value="-price">Menor Precio</option>
-						<option value="+price">Mayor Precio</option>
-					</select>
+					<div>
+						<select onChange={(e)=>setSortBy(e.target.value)}>
+							<option value="">Bestselling</option>
+							<option value="-price">Menor Precio</option>
+							<option value="+price">Mayor Precio</option>
+						</select>
+					</div>
 				</div>
 				<div className="shop-view-category-products-container">
 					{sortedProducts.map( (product)=> <ShopProductCard 
-					width={{width:"175px"}} prod={product} key={product.id}
+					width={{width:"200px"}} prod={product} key={product.id}
 					/>)}
 				</div>
 			</div>

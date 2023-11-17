@@ -48,7 +48,7 @@ const Layout = () => {
                 <div style={{width: "100%"}}>
                     {store.adminNav? <AdminNavbar/> : <Navbar/>}
                     
-                    <div id="content">
+                    <div id="content" style={store.adminNav? {backgroundColor: "#F7F9F8"} : {}}>
                         <Routes>
                             {/* ADMIN VIEWS */}
                             <Route element={<Dashboard />} path="/admin/*"/>
