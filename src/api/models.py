@@ -86,7 +86,7 @@ class Category(db.Model):
         products_in_category = 0
         products = Product.query.all()
         for product in products:
-            if product.category == self:
+            if product.category == self and product.for_sale:
                 products_in_category += 1
 
         return {
@@ -117,7 +117,7 @@ class Subcategory(db.Model):
         products_in_subcategory = 0
         products = Product.query.all()
         for product in products:
-            if product.subcategory == self:
+            if product.subcategory == self and product.for_sale:
                 products_in_subcategory += 1
 
         return {

@@ -1,0 +1,136 @@
+.shop-view-category-banner{
+    width: 100%;
+    height: 200px;
+    background: pink;
+    margin-bottom: 57px;
+}
+
+.shop-view-category-header{
+    margin: 0 10%;
+}
+
+.shop-view-category-header div{
+    margin-left: 19px;
+}
+
+.shop-view-category-title{
+    color: #540EA7;
+    font-size: 34px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 65px;
+}
+
+.shop-view-category-title img{
+    height: 50px;
+    margin-right: 15px;
+}
+
+.shop-view-category-filters{
+    width:20%;
+}
+
+.shop-view-category .subcat-filter-title{
+    font-size: 22px;
+    font-weight: 500;
+    color: #7F8FAD;
+    margin-top: 50px;
+    margin-bottom: 18px;
+}
+
+.shop-view-category .subcat-filter-option{
+    font-size: 15px;
+    color: #A25BF4;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.shop-view-category .subcat-filter-option-disabled{
+    font-size: 15px;
+    color: #7F8FAD;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.shop-view-category .subcat-filter-option span{
+    color: #7F8FAD;
+}
+
+.shop-view-category .price-filter-title{
+    font-size: 22px;
+    font-weight: 500;
+    color: #484848;
+}
+
+.shop-view-category .price-filter-option{
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: #484848;
+}
+
+.shop-view-category .price-filter-option input{
+    height: 18px;
+    width: 18px;
+    margin-right: 7px;
+}
+
+.shop-view-category-filters .category-filter-divisor{
+    height: 1px;
+    width: 100%;
+    background-color: #d3d3d3;
+    margin: 30px 0;
+}
+
+.shop-view-category-products{
+    width:80%;
+    margin-left: 5%;
+}
+
+.shop-view-category-products-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 41px;
+}
+
+.shop-view-category-products-header div{
+    font-size: 16px;
+    font-weight: 500;
+    color: #7F8FAD;
+}
+
+.shop-view-category-header-perma-link{
+    color: #7F8FAD;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.shop-view-category-header-abled{
+    color: #A25BF4;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.shop-view-category-products-header select{
+    height: 56px;
+    width: 240px;
+    outline: none;
+    border: 1px solid #540EA7;
+    color: #540EA7;
+    border-radius: 10px;
+    padding: 0px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #F7F9F8;
+}
+
+.shop-view-category-products-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px 30px;
+}

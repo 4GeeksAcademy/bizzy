@@ -8,7 +8,7 @@ export const ShopProductCard = (product) => {
 
 	return <div style={product.width}>
         <div className="shop-product-card" style={product.width}
-		onClick={()=> navigate(`product/${product.prod.id}`)}>
+		onClick={()=> navigate(`/product/${product.prod.id}`)}>
 			<img src={product.prod.image} />
 		</div>
 		<div className="shop-product-card-name">{product.prod.name}</div>

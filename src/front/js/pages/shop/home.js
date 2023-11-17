@@ -58,7 +58,8 @@ export const Home = () => {
 
 	useEffect(() => {
 		if (categoryView && store.shop.categories && store.shop.categories.length > 0){
-			setSubcategoryList( store.shop.categories.filter((category)=> category.name == categoryView )[0].subcategories )
+			setSubcategoryList( store.shop.categories.filter((category)=> category.name == categoryView )
+			[0].subcategories.sort((a,b)=> b.products_quantity - a.products_quantity ) )
 		}
 	}, [categoryView]);
 
@@ -81,10 +82,10 @@ export const Home = () => {
 				<div className="home-line-separator"/>
 
 				<div className="home-subcategory-cards-container">
-					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
+					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true}}
 					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
 						{ subcategoryList.length > 0 && subcategoryList.map( (subcategory)=> <SwiperSlide key={subcategory.name}>
-								<div className="home-subcategory-card">
+								<div className="home-subcategory-card" onClick={()=>navigate(`/category/${subcategory.category}/${subcategory.name}`)}>
 									<img src={subcategory.image}/>
 								</div>
 								<span>{subcategory.name}</span>
