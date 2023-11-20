@@ -14,20 +14,21 @@ def setup_commands(app):
     by typing: $ flask insert-test-users 5
     Note: 5 is the number of users to add
     """
-    @app.cli.command("insert-test-users") # name of our command
-    @click.argument("count") # argument of out command
-    def insert_test_users(count):
-        print("Creating test users")
-        for x in range(1, int(count) + 1):
-            user = User()
-            user.email = "test_user" + str(x) + "@test.com"
-            user.password = "123456"
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            print("User: ", user.email, " created.")
+    @app.cli.command("create-superadmin") # name of our command
+    def create_superadmin():
+        print("Creating superadmin...")
+        user = User("admin", "superadmin", "superadmin@bizzy.com", "superadmin", True, True)
+        user.name = "admin"
+        user.username = "superadmin"
+        user.email = "superadmin@bizzy.com"
+        user.password = "superadmin"
+        user.is_active = False
+        user.admin = True
 
-        print("All test users created")
+        db.session.add(user)
+        db.session.commit()
+
+        print("superadmin created")
 
     @app.cli.command("insert-test-data")
     def insert_test_data():

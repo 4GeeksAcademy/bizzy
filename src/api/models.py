@@ -74,10 +74,12 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), unique=True, nullable=False)
     icon = db.Column(db.String(400), nullable=False)
+    banner = db.Column(db.String(400), nullable=False)
 
-    def __init__(self, name, icon):
+    def __init__(self, name, icon, banner):
         self.name = name
         self.icon = icon
+        self.banner = banner
 
     def __repr__(self):
         return f'<Category {self.name}>'
@@ -94,7 +96,8 @@ class Category(db.Model):
             "name": self.name,
             "icon": self.icon,
             "subcategories": [subcat.serialize() for subcat in self.subcategories],
-            "products_quantity": products_in_category
+            "products_quantity": products_in_category,
+            "banner": self.banner
         }
 
 
@@ -125,7 +128,7 @@ class Subcategory(db.Model):
             "category": self.category.name,
             "name": self.name,
             "image": self.image,
-            "products_quantity": products_in_subcategory
+            "products_quantity": products_in_subcategory,
         }
 
 
