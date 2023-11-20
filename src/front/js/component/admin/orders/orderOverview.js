@@ -19,17 +19,10 @@ export const OrderOverview = (order) => {
   const [ loading, setLoading ] = useState();
 
   async function handleDelete (){
-    if (order.ord.prod.sold){
-			toast.warning("No es posible eliminar un producto con ordenes existentes",{
-				position: "bottom-center"
-			})
-            background.current.click()
-			return
-		}
 
-    let info = await actions.deleteProduct(order.ord.prod.id)
+    let info = await actions.deleteOrder(order.ord.id)
     if(info){
-			toast.success("Producto eliminado!",{
+			toast.success("Orden eliminada!",{
 				position: "bottom-center"
 			})
             background.current.click()

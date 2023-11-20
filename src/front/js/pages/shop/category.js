@@ -36,7 +36,7 @@ export const Category = () => {
 
 	return <div className="shop-view-category">
 		<div className="shop-view-category-banner">
-
+			<img src={category && category.banner}/>
 		</div>
 
 		<div className="shop-view-category-header">

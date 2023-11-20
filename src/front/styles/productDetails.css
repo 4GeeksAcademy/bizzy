@@ -1,0 +1,165 @@
+
+.shop-view-product-middle{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 75px
+}
+
+.shop-view-product-image{
+    width: 550px;
+    height: 500px;
+    margin-right: 5%;
+    border-radius: 10px
+}
+
+.shop-view-product-image img{
+    width: 550px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px
+}
+
+.shop-view-product-info {
+    width:500px
+}
+
+.shop-view-product-info .sku{
+    font-size: 10px;
+    color: #B8B8B8;
+}
+
+.shop-view-product-info .name{
+    font-size: 30px;
+    font-weight: 700;
+    color: #414141;
+}
+
+.shop-view-product-info .price{
+    font-size: 24px;
+    font-weight: 600;
+    color: #CB3737;
+    margin-bottom: 20px;
+}
+
+.shop-view-product-info .quantity {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.shop-view-product-info .quantity select{
+    height: 56px;
+    width: 104px;
+    outline: none;
+    border: 1px solid #540EA7;
+    color: #540EA7;
+    border-radius: 10px;
+    padding: 0px 20px;
+    font-size: 15px;
+}
+
+.shop-view-product-info .quantity::before{
+    content: "Cantidad";
+    margin-top: -16.5px;
+    margin-left: -58px;
+    position: relative;
+    top: 9px;
+    right: -16%;
+    background: white;
+    width: 58px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    font-size: 11px;
+    color: #AE70F5;
+}
+
+.shop-view-product-info .quantity .stock-info{
+    width: 160px;
+    margin-left: 15px;
+}
+
+.shop-view-product-info .quantity .stock-info p{
+    font-size: 11px;
+    margin: 0 0 2px 0;
+}    
+    
+.shop-view-product-info .quantity .stock-info p b{
+    font-weight: 600;
+}
+
+.shop-view-product-info .add-to-cart{
+    border: 1px solid #6BC10A;
+    background: #6BC10A;
+    color: white;
+    width: 263px;
+    height: 44px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+
+.shop-view-product-info .buy-now{
+    border: 1px solid #540EA7;
+    color: #540EA7;
+    width: 263px;
+    height: 44px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 30px;
+    background: rgba(0,0,0,0);
+    margin-bottom: 20px;
+}
+
+
+.shop-view-product-info .payments{
+    font-size: 11px;
+}
+
+.shop-product-payment-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.shop-product-payment-container div{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-product-payment-container div img{
+    padding: 6px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.shop-product-payment-container div span{
+    font-size: 12px;
+    font-weight: 600;
+    color: #979797;
+    text-align: center;
+    line-height: 13px;
+}
+
+.payment-methods p{
+    font-size: 11px;
+    margin: 0 0 2px 0;
+    font-weight: 500;
+}
+
+.shop-view-products-description h3{
+    font-weight: 700;
+    color: #414141;
+}
+
+.shop-view-products-description p{
+    color: #414141;
+}

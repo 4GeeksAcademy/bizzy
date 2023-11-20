@@ -9,9 +9,6 @@
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
-    background: url(https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/placeholder-image.jpg?alt=media&token=02f6aa41-62db-4321-912c-02d5fb6ca9a7) no-repeat scroll 0 0;
-    background-position: center;
-    background-size: 150%;
 }
 
 .shop-product-card-name{

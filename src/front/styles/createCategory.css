@@ -154,6 +154,18 @@ input::file-selector-button {
     color: #9b9b9b;
 }
 
+.delete-category-image-two{
+    margin-left: -23px;
+    font-size: 23px;
+    color: #9b9b9b;
+    position: relative;
+    top: -64px;
+}
+
+.delete-category-image-two:hover{
+    color: #8a8a8a;
+}
+
 .delete-category-image:hover{
     color: #8a8a8a;
 }

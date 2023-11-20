@@ -196,6 +196,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			deleteOrder: async (id) => {
+				const token = localStorage.getItem('token');
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/order/${id}`, {
+						method: "DELETE",
+						headers: {
+							"Authorization": "Bearer " + token
+						},
+					})
+					const data = await resp.json()
+					if (resp.ok == true){
+						getActions().getOrders()
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
 
 			// SUBCATEGORIES
 			postOrder: async (order) => {

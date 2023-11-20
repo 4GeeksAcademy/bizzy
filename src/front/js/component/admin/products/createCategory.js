@@ -15,7 +15,9 @@ export const CreateCategory = (create) => {
     const { store, actions } = useContext(Context);
     const background = useRef(null);
 	const ref = useRef(null);
+	const bannerRef = useRef(null);
 	const [ tempImage, setTempImage ] = useState("")
+	const [ tempBanner, setTempBanner ] = useState("")
 	const [ fileName, setFileName ] = useState("")
     const [ category, setCategory ] = useState(
         {
@@ -26,6 +28,10 @@ export const CreateCategory = (create) => {
 	function handleImage(e){
 		setTempImage(e.target.files[0])
 		setFileName(e.target.value)
+	}
+
+	function handleBanner(e){
+		setTempBanner(e.target.files[0])
 	}
     
     async function createNewCategory(){
@@ -47,12 +53,15 @@ export const CreateCategory = (create) => {
 		}
 
 		// UPLOAD IMAGE
-		const url = await uploadFile();
-		if(url == false) return false;
+		const icon = await uploadFile(tempImage);
+		if(icon == false) return false;
+
+		const banner = await uploadFile(tempBanner);
+		if(banner == false) return false;
 
 
 		// POST CATEGORY
-		let info = await actions.postCategory({...category, "icon": url })
+		let info = await actions.postCategory({...category, "icon": icon, "banner": banner })
 		if(info){
 			toast.success("Categoria creada con exito!")
             background.current.click()
@@ -65,16 +74,16 @@ export const CreateCategory = (create) => {
 		}
 	}
 
-	const uploadFile = async () => {
-        if (!tempImage) {
-            toast.error("Porfavor agrega una imagen",{
+	const uploadFile = async (file) => {
+        if (!file) {
+            toast.error("Porfavor las imagenes",{
 				position: "bottom-center"})
             return false
         }
         const imageRef = storageRef(storage, `category/${category.name}`);
 
         try{
-            const uploadResp = await uploadBytes(imageRef, tempImage)
+            const uploadResp = await uploadBytes(imageRef, file)
             const url =  await getDownloadURL(uploadResp.ref)
             return url
         }
@@ -93,15 +102,14 @@ export const CreateCategory = (create) => {
                         <h2> Crear categoria </h2>
                         <AiOutlineCloseCircle className="popup-close" onClick={create.close} />
                     </div>
-                    
+
+
                     <div className="input-holder">
 						<label>Nombre</label>
 						<input required placeholder="Ingresa el nombre de la categoria"
 						onChange={(e)=> setCategory({...category, "name":e.target.value })}></input>
 					</div>
-
-
-
+                    
 			<label>Icono<span style={{color: "#7B57DF"}}>*</span></label>
 			<div className="uploaded-category-image">
 				{!tempImage && <>
@@ -117,7 +125,7 @@ export const CreateCategory = (create) => {
 				className="delete-category-image"/>
 			</div>
 
-			<div className="category-upload-image-container">
+			<div className="category-upload-image-container" style={tempImage? {visibility:"hidden"}: {}}>
 				<div className="upload-category-image">
 					<BsFillCloudUploadFill className="upload-category-icon"/>
 					<button onClick={()=>ref.current.click()}>Selecciona la Imagen</button>
@@ -132,6 +140,34 @@ export const CreateCategory = (create) => {
 					type="file"
 					accept="image/png, image/jpeg"/>
 			</div>
+
+			<div style={{width:"100%", height:"1px", background: "#F1F3F4", margin: "10px 0 40px 0"}}/>
+
+					<label>Banner<span style={{color: "#7B57DF"}}>*</span></label>
+			<div className="uploaded-category-image" style={{height:"100px"}}>
+				{!tempBanner && <img src={placeholderImage} style={{height:"100px", width:"100%", borderRadius:"10px"}}/>}
+				{tempBanner && <img src={URL.createObjectURL(tempBanner)} style={{height:"100px", width:"100%", borderRadius:"10px"}}/>}
+				{tempBanner &&<AiOutlineCloseCircle 
+					onClick={()=> setTempBanner()}
+					className="delete-category-image-two"/>
+				}
+			</div>
+
+			<div className="category-upload-image-container" style={tempBanner? {visibility:"hidden"}: {}}>
+				<div className="upload-category-image" style={{height:"80px"}}>
+					<button onClick={()=>bannerRef.current.click()}>Selecciona la Imagen</button>
+					<p>o sueltala acá...</p>
+				</div>
+				<input style={{height:"80px", top:"-87px"}}
+					className="image-category-input"
+					ref={bannerRef}
+					onChange={(e) => handleBanner(e)}
+					type="file"
+					accept="image/png, image/jpeg"/>
+			</div>
+
+
+
 
 
                     <div className="button-container">

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { OrderTableRow } from "../../component/admin/orders/orderTableRow";
 import { OrderOverview } from "../../component/admin/orders/orderOverview";
+import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { toast } from "react-toastify";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { defaults } from 'chart.js';
@@ -18,6 +20,7 @@ import "../../../styles/orders.css";
 export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
 	const [ overviewed, setOverviewed ] = useState()
+	const [ loading, setLoading ] = useState(true);
 	const navigate = useNavigate();
 	const [ chartYear, setChartYear] = useState()
 	const [ productHistory, setProductHistory ] = useState([])
@@ -121,6 +124,15 @@ export const Dashboard = () => {
 	],
 	};
 
+	async function loadData(){
+		const loadI = await actions.getInfo()
+		const loadO = await actions.getOrders()
+		if (loadI && loadO) setLoading(false)
+		else {
+			toast.error("Ocurrio un error al cargar la información", {autoClose: false})
+		}		
+	  }
+
 	useEffect(() => {
 		let allTime = []
 		if (store.info.years){
@@ -137,10 +149,9 @@ export const Dashboard = () => {
 	}, [store.info.years]);
 
 	useEffect(() => {
+		loadData()
 		actions.changeTab("admin")
 		actions.changeAdminNav(true)
-		actions.getInfo()
-		actions.getOrders()
 	  }, []);
 
 	return (<div style={{margin: "50px 6vw"}}>
@@ -188,9 +199,13 @@ export const Dashboard = () => {
                 </select>
                 {chartYear && <Line options={lineOptions} data={lineData}/>}
               </>}
+			  	{!loading && !chartYear && <NoItemFound message={"No info"}/> }
 				</div>
+
 				<div>
 				{chartYear && <Doughnut options={doughnutOptions} data={doughnutData}/>}
+
+				{!loading && !chartYear && <NoItemFound message={"No info"}/> }
 				</div>
 			</div>
 			<div className="dashboard-bottom-header">Ordenes recientes</div>
@@ -209,8 +224,10 @@ export const Dashboard = () => {
 					</thead>
 					<tbody> 
 						{store.orders.slice(0,4).map((order)=>(<OrderTableRow key={order.id} ord={order} infoSetter={setOverviewed}/>))}
+						
 					</tbody>
 				</table>
+				{!loading && store.orders.length == 0 && <NoItemFound message={"No se encontraron pedidos"}/> }
 			</div>
 		{overviewed && <OrderOverview ord={overviewed} close={()=>setOverviewed()}/>}
 	</div>

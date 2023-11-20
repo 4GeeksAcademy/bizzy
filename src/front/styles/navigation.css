@@ -97,7 +97,7 @@
     margin-right: 8px;
 }
 
-.navbar-main{
+.admin-navbar-main{
     display: flex;
     justify-content: space-between;
     height:80px;
@@ -121,4 +121,26 @@
 .navbar-user-arrow{
     transform: rotate(90deg);
     margin-left: 15px;
+}
+
+.navbar-main{
+    display: flex;
+    justify-content: space-between;
+    height:80px;
+    padding:20px;
+    padding-right: 125px;
+    padding-left: 125px;
+}
+
+.navbar-left{
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    align-items: center;
+}
+
+.navbar-left div{
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
 }

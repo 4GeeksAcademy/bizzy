@@ -13,14 +13,12 @@ export const Navbar = () => {
 		<nav className="navbar-main" style={{background: "#540EA7"}}>
 			<img src="https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/shop%2Fimage.png?alt=media&token=3fa8c0af-c2a8-4f28-9a9d-59ee374921af"
 			onClick={()=> navigate("/")}/>
-			<div className="navbar-user">
-				{store.user && <button onClick={()=>actions.logout()}>logout</button>}
-				{!store.user && <button onClick={()=>navigate("/login")}>login</button>}
-				{store.adminNav && <span onClick={()=>navigate("/")}>shop</span>}
-				{store.user && store.user.admin && !store.adminNav && <span onClick={()=>navigate("/admin")}>admin</span>}
-				<img className="navbar-user-icon"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"/>
-				{store.user.name || "NoOne"}
-				<MdArrowForwardIos className="navbar-user-arrow"/>
+			<div className="navbar-left">
+				{store.user && store.user.admin && !store.adminNav && <div onClick={()=>navigate("/admin")}>admin</div>}
+				<div>24/7 help</div>
+				{store.user && <div onClick={()=>actions.logout()}>account</div>}
+				{!store.user && <div onClick={()=>navigate("/login")}>login</div>}
+				<div>cart</div>
 			</div>
 		</nav>
 	);

@@ -89,7 +89,7 @@ def post_product():
         subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
         
         new_product = Product( name=name, category=category, subcategory=subcategory, unit_price=unit_price, stock=stock, 
-                                sold=0, sku=sku, image=image, description=description, for_sale=False)
+                                sold=0, sku=sku, image=image, description=description, for_sale=True)
         db.session.add(new_product)
         db.session.commit()
         return new_product.serialize(), 200
@@ -186,11 +186,12 @@ def post_category():
     try:
         body = request.get_json()
         name = body.get("name", None),
-        icon = body.get("icon", None)
+        icon = body.get("icon", None),
+        banner = body.get("banner", None)
 
-        if name == None or icon == None: return {"message": "Something is missing"}, 400
+        if not name or not icon  or not banner : return {"message": "Something is missing"}, 400
         
-        new_category = Category( name=name, icon=icon )
+        new_category = Category( name=name, icon=icon, banner=banner )
         db.session.add(new_category)
         db.session.commit()
         return new_category.serialize(), 200
@@ -378,6 +379,28 @@ def put_order(order_id):
  
     except ValueError as err:
         return {"message": f"Failed to edit order, {err}"}, 500
+
+# [DELETE] ONE ORDER   
+@api.route("/order/<int:order_id>", methods=["DELETE"])
+@jwt_required()
+def delete_order(order_id):
+    if not admin_required(): return {"message": "User is not an admin"}, 401
+    try:
+        selected_order = Order.query.get(order_id) or None
+        if selected_order == None:
+            return {"message": f"Order with id {order_id} does not exist"}, 400
+        
+        for item in selected_order.items:
+            db.session.delete(item)
+            db.session.commit()
+
+        else:
+            db.session.delete(selected_order)
+            db.session.commit()
+            return {"message": f"Order has been deleted"}, 200
+        
+    except ValueError as err:
+        return {"message": f"Failed to delete order, {err}"}, 500
 
 # CUSTOMER
 
@@ -591,7 +614,11 @@ def get_shop():
         all_categories = Category.query.all()
         categories_list = [category.serialize() for category in all_categories]
         categories_list = sorted(categories_list, key=lambda category: -category["products_quantity"])
-        return {"products": products_list, "categories": categories_list }
+
+        all_payments = Payment.query.all()
+        payments_list = [payment.serialize() for payment in all_payments]
+
+        return {"products": products_list, "categories": categories_list, "payments": payments_list}
             
     except ValueError as err:
         return {"message": f"Failed to retrieve payments, {err}"}, 500

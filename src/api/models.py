@@ -165,6 +165,7 @@ class Product(db.Model):
     def shop_serialize(self):
         return {
             "id": self.id,
+            "sku": self.sku,
             "category": self.category.name,
             "subcategory": self.subcategory.name if self.subcategory else None,
             "name": self.name,
