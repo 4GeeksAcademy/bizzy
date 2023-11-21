@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import bcrypt
 import copy
 
 
@@ -28,13 +29,20 @@ def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    user = User.query.filter_by( email=email, password=password ).one_or_none()
+    if not email or not password: return {"message": "Some field is missing in request body"}, 400
+
+    user = User.query.filter_by( email=email ).one_or_none()
+
     if user is None:
         return {"message": f"Couldn't find user"}, 401
     
-    # crea un nuevo token con el id de usuario dentro
-    access_token = create_access_token( identity=user.id )
-    return { "token": access_token, "user": user.serialize()} , 200
+    password_byte = bytes(password, 'utf-8')
+    # hash_password = bcrypt.hashpw(password_byte)
+    if bcrypt.checkpw(password_byte, user.password.encode('utf-8')):
+        return {'token': create_access_token(identity = user.id), "user": user.serialize()},200
+    
+    else:
+        return {"message": "Invalid token :c"}, 400
 
 @api.route("/account", methods=["GET"])
 @jwt_required()
@@ -47,6 +55,34 @@ def account():
     else:
         return False
 
+# [POST] USER
+@api.route('/user', methods=['POST'])
+def post_user():
+    try:
+        body = request.get_json()
+        name = body.get("name", None)
+        email = body.get("email", None)
+        password = body.get("password", None)
+
+        if name == None: return {"message": "Name is missing"}, 400
+        if email == None: return {"message": "Email is missing"}, 400
+        if password == None: return {"message": "Password is missing"}, 400
+
+        bpassword = bytes(password, 'utf-8')
+        salt = bcrypt.gensalt(14)
+        hashed_password = bcrypt.hashpw(password=bpassword, salt=salt)
+
+        exist = User.query.filter_by(email=email).one_or_none()  
+        if exist:
+            return {"message": "Email already on use"}, 400
+        new_user = User(name=name, email=email, password=hashed_password.decode('utf-8'), salt=salt.decode('utf-8'), active=False, admin=False)
+        new_user.name = name
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user.serialize(), 200
+    
+    except ValueError as err:
+        return {"message": f"Failed to create subcategory, {err}"}, 500
 
 # PRODUCTS
 

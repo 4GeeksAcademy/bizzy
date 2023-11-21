@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import "../../../styles/login&register.css";
+
 
 export const Login = () => {
 	const navigate = useNavigate();
@@ -11,37 +14,59 @@ export const Login = () => {
 			"password":""
 		}
 	);
+
 	useEffect(() => {
-		if(store.token) navigate("/admin/")
+		if(store.token) navigate("/")
 		actions.changeAdminNav(false)
 	}, []);
 	
 
 	async function userLogin(){
-		if (!user.email || !user.password) alert("Some fields are missing")
+		if (!user.email || !user.password){
+			toast.error("Rellena todos los campos",{
+			position: "bottom-center"})
+		}
 		else{
 			let create = await actions.getUserToken(user)
-			if (create) navigate("/admin/")
-			else alert("User doesn't exist or password is incorrect")
+			if (create) navigate("/")
+			else{
+				toast.error("Usuario inexistente o contraseña incorrecta",{
+					position: "bottom-center"
+				})
+            }
 		}
 	}
 
 	return (
-		<div className="container w-25 bg-light border rounded p-4 my-5">
-			<h1 className="text-center mb-3">Log in!</h1>
-			<div className="mb-3">
-				<label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-				<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+		<div className="login-container">
+			<h4>Inicia Sesión</h4>
+			<div className="login-input">
+				<input required maxlength="3200"
 				onChange={(e) => setUser({...user, "email":e.target.value})}/>
+				<label>Correo Electrónico</label>
 
 			</div>
-			<div className="mb-3">
-				<label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-				<input type="password" className="form-control" id="exampleInputPassword1"
+			<div className="login-input">
+				<input type="password" required maxlength="100"
 				onChange={(e) => setUser({...user, "password":e.target.value})}/>
+				<label>Contraseña</label>
+			</div>
+			<div className="login-subline">
+				<div className="login-keep-logged">
+					<input type="checkbox"/>
+					<span>No cerrar sesión</span>
+				</div>
+				<div className="login-forgot-password" onClick={()=>navigate("/forgot-password")}>¿Olvidaste tu contraseña?</div>
 			</div>
 
-			<button type="submit" className="btn btn-primary mt-2" onClick={()=> userLogin() }>Submit</button>
+			<button className="login-button" onClick={()=> userLogin() }>Iniciar Sesión</button>
+
+			<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+				<div className="login-divisor"/>
+				<div className="login-new">¿Nuevo en Petzzy?</div>
+			</div>
+
+			<button className="register-button" onClick={()=>navigate("/register")}>Crea una cuenta</button>
 		</div>
 
 	);

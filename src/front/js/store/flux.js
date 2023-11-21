@@ -415,6 +415,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			postUser: async (user) => {
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + "/api/user",
+						{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(user)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						await getActions().getUserToken(user)
+						return true;
+					}
+					else{
+						return false;
+					}
+				} catch (error) {
+					return false
+				}
+			},
+		
 
 			getInfo: async () => {
 				const token = localStorage.getItem('token');

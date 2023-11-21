@@ -1,5 +1,6 @@
 
 import click
+import bcrypt
 from api.models import db, User
 
 """
@@ -17,13 +18,19 @@ def setup_commands(app):
     @app.cli.command("create-superadmin") # name of our command
     def create_superadmin():
         print("Creating superadmin...")
-        user = User("admin", "superadmin", "superadmin@bizzy.com", "superadmin", True, True)
+        password = "superadmin"
+        bpassword = bytes(password, 'utf-8')
+        salt = bcrypt.gensalt(14)
+        hashed_password = bcrypt.hashpw(password=bpassword, salt=salt)
+
+        user = User("admin", "superadmin@bizzy.com", hashed_password.decode('utf-8'), salt.decode('utf-8'), True, True)
         user.name = "admin"
-        user.username = "superadmin"
         user.email = "superadmin@bizzy.com"
-        user.password = "superadmin"
+        user.password = hashed_password.decode('utf-8')
+        user.salt = salt.decode('utf-8')
         user.is_active = False
         user.admin = True
+
 
         db.session.add(user)
         db.session.commit()

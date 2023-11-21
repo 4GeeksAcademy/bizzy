@@ -1,0 +1,155 @@
+@media screen and (max-width: 1400px) {
+    .login-container{
+        width: 40%!important;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .login-container{
+        width: 50%!important;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .login-container{
+        width: 80%!important;
+    }
+}
+
+
+.login-container{
+    width: 30%;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
+    padding: 3% 4%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.login-container h4{
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+
+.login-input input{
+    border: 1px solid #707070;
+    border-radius: 8px;
+    padding: 0 14px;
+    height: 50px;
+    width: 100%;
+}
+
+.login-input label{
+    position: relative;
+    font-size: 15px;
+    left: 4%;
+    top: -36px;
+    pointer-events: none;
+    transition: 0.2s ease-in-out;
+    color: #707070;
+}
+
+input:focus {
+    outline:none
+}
+
+.login-input input:focus + label,
+.login-input input:valid + label{
+    left: 5%;
+    top: -62px;
+    font-size: 13px;
+    background: white;
+    padding: 0 5px;
+    color: #A25BF4;
+}
+
+.login-input input:focus,
+.login-input input:valid{
+    border: 2px solid #A25BF4;
+}
+
+.login-button{
+    background: #A25BF4;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.login-new{
+    font-size: 15px;
+    color: #4F4D4D;
+    z-index: 1;
+    background: white;
+    padding: 0 12px;
+}
+
+.login-divisor{
+    height: 1px;
+    background: #CCCCCC;
+    width: 100%;
+    position: relative;
+    top: 13px;
+}
+
+.register-button{
+    background: white;
+    border: 2px solid #540EA7;
+    color: #540EA7;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    margin-top: 20px;
+}
+
+.login-subline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -16px;
+    margin-bottom: 20px;
+}
+
+
+.login-keep-logged{
+    display: flex;
+}
+
+.login-keep-logged span{
+    font-size: 14px;
+    color: #484848;
+    margin-left: 7px;
+}
+
+.login-forgot-password{
+    color: #540EA7;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.login-tips{
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.login-tips p{
+    font-size: 12px;
+    display: flex;
+    color: #707070;
+    margin-top: 0;
+    margin-bottom: 0px;
+    align-items: center;
+}
+
+.login-tips p svg{
+    font-size: 10px;
+    margin: 0 5px 0 10px;
+}

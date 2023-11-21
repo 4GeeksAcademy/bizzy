@@ -27,6 +27,8 @@ import { ProductDetails } from "./pages/shop/productDetails";
 import { Category } from "./pages/shop/category";
 
 import { AdminNavbar } from "./component/navigation/adminNavbar";
+import { Register } from "./pages/shop/register";
+import { ForgotPassword } from "./pages/shop/forgotPassword";
 
 //create your first component
 const Layout = () => {
@@ -62,6 +64,8 @@ const Layout = () => {
 
                             {/* NORMAL VIEWS */}
                             <Route element={<Login/>} path="/login" />
+                            <Route element={<Register />} path="/register"/>
+                            <Route element={<ForgotPassword />} path="/forgot-password"/>
                             <Route element={<Home/>} path="/*" />
                             <Route element={<ProductDetails/>} path="/product/:id" />
                             <Route element={<Category/>} path="/category/:name" />
