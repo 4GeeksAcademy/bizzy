@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			adminNav: false,
 			info:{ years:{}, categories:{}},
 			shop:{},
+			cart:[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -363,6 +364,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addSelectedProducts: (products) => {
 				setStore({selectedProducts: products})
+			},
+			addToCart: (products) => {
+				setStore({cart: products})
 			},
 			// USERS
 			getUserToken: async (user) => {

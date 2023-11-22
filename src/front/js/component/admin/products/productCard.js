@@ -14,7 +14,7 @@ export const ProductCard = (item) => {
             <div className={item.prod.for_sale? "product-container" : "product-container not-for-sale"} onClick={()=>setOverview(true)}>
                 <img src={item.prod.image}/>
                 <span>
-                    <p className="item-price"><FaDollarSign/>{item.prod.unit_price}</p>
+                    <p className="item-price"><FaDollarSign/>{parseFloat(item.prod.unit_price).toFixed(2)}</p>
                     <p className="item-name" >{item.prod.name}</p>
                     <p className="item-stock" >{item.prod.stock} disponibles</p>
                 </span>

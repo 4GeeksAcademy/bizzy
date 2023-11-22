@@ -153,7 +153,7 @@ export const ProductOverview = (select) => {
                 <BiSolidPencil className="product-overview-edit" onClick={()=>setEditView(true)}/>
               </div>
             </div>
-            <span className="card-price">${select.prod.unit_price}</span>
+            <span className="card-price">${parseFloat(select.prod.unit_price).toFixed(2)}</span>
             <div style={{display: "flex"}}>
               <img src={select.prod.image} />
               <div className="top-info">

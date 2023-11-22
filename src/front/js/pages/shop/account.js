@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import "../../../styles/login&register.css";
 
 
-export const Login = () => {
+export const Account = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
 	const [ user, setUser ] = useState(
@@ -16,7 +16,6 @@ export const Login = () => {
 	);
 
 	useEffect(() => {
-		if(store.token) navigate("/")
 		actions.changeAdminNav(false)
 	}, []);
 	
@@ -39,15 +38,15 @@ export const Login = () => {
 
 	return (
 		<div className="login-container">
-			<h4>Inicia Sesión</h4>
+			<h4>ACCOUNT</h4>
 			<div className="login-input">
-				<input required maxLength="3200"
+				<input required maxlength="3200"
 				onChange={(e) => setUser({...user, "email":e.target.value})}/>
 				<label>Correo Electrónico</label>
 
 			</div>
 			<div className="login-input">
-				<input type="password" required maxLength="100"
+				<input type="password" required maxlength="100"
 				onChange={(e) => setUser({...user, "password":e.target.value})}/>
 				<label>Contraseña</label>
 			</div>

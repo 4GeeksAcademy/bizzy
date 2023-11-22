@@ -34,7 +34,7 @@ export const ForgotPassword = () => {
                 <p>Por favor, ingresa el correo electrónico asociado con tu cuenta.</p>
             </div>
 			<div className="login-input">
-				<input required maxlength="320"
+				<input required maxLength="320"
 				onChange={(e) => setUser({...user, "email":e.target.value})}/>
 				<label>Correo Electrónico</label>
 

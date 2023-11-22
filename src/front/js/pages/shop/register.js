@@ -60,25 +60,25 @@ export const Register = () => {
 		<div className="login-container">
 			<h4>Crea tu cuenta</h4>
 			<div className="login-input">
-				<input required maxlength="40"
+				<input required maxLength="40"
 				onChange={(e) => setUser({...user, "name":e.target.value})}/>
 				<label>Nombre Completo</label>
 			</div>
 
             <div className="login-input">
-				<input required maxlength="320"
+				<input required maxLength="320"
 				onChange={(e) => setUser({...user, "email":e.target.value})}/>
 				<label>Correo Electrónico</label>
 			</div>
 
             <div className="login-input">
-				<input type="password" required maxlength="100"
+				<input type="password" required maxLength="100"
 				onChange={(e) => setUser({...user, "password":e.target.value})}/>
 				<label>Contraseña</label>
 			</div>
 
 			<div className="login-input">
-				<input type="password" required maxlength="100"
+				<input type="password" required maxLength="100"
 				onChange={(e) => setUser({...user, "confirm_password":e.target.value})}/>
 				<label>Confirmar Contraseña</label>
 			</div>

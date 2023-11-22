@@ -20,7 +20,7 @@ export const OrderTableRow = (order) => {
             <td className="table-order-date">{moment(order.ord.date, "YYYYMMDDhh:mm").calendar(calendarOptions).replace(".","")}</td>
             <td className="table-order-customer">{order.ord.customer.name}</td>
             <td className="table-order-quantity">{order.ord.total_quantity} productos</td>
-            <td className="table-product">${order.ord.total_price}</td>
+            <td className="table-product">${parseFloat(order.ord.total_price).toFixed(2)}</td>
             <td className="table-order-status">
             <div className={order.ord.status=="Completada"? "table-status-green" : order.ord.status=="Pendiente"? "table-status-gray" : "table-status-red"}>
                 <GoDotFill className="status-dot"/>{order.ord.status}

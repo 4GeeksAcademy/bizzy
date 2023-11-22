@@ -83,13 +83,15 @@ export const OrderOverview = (order) => {
                   <p className="order-overview-product-name">{itm.product.name}</p>
                   <p>SKU: {itm.product.sku}</p>
                   <div>
-                    {itm.quantity} x&nbsp;<span style={{fontWeight: "700"}}>{itm.product.unit_price}</span>&nbsp;= ${itm.quantity*itm.product.unit_price}
+                    {itm.quantity} x&nbsp;
+                    <span style={{fontWeight: "700"}}>{parseFloat(itm.product.unit_price).toFixed(2)}</span>
+                    &nbsp;= ${parseFloat(itm.quantity*itm.product.unit_price).toFixed(2)}
                   </div>
                 </div>
                 </div>
                 ))}
             </div>
-            <div className="order-overview-total">TOTAL:&nbsp;<span>${order.ord.total_price}</span></div>
+            <div className="order-overview-total">TOTAL:&nbsp;<span>${parseFloat(order.ord.total_price).toFixed(2)}</span></div>
 
 
             <div className="order-overview-notes">

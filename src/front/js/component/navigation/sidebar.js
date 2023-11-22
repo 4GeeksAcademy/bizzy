@@ -34,7 +34,7 @@ export const Sidebar = () => {
             </Link> 
             <Link to={"/admin/orders"}>
                 <div className={store.active == "admin/orders"? "menu-item menu-item-active": "menu-item"}>
-                    <MdShoppingBasket className="menu-icon"/>Pedidos<MdArrowForwardIos className="expand-item"/>
+                    <MdShoppingBasket className="menu-icon"/>Pedidos
                 </div>
             </Link>
             <Link to={"/admin/products"}>
@@ -52,7 +52,7 @@ export const Sidebar = () => {
                     <MdMiscellaneousServices className="menu-icon"/>Misc.
                 </div>
             </Link>
-            <div className="menu-logout"><MdLogout className="logout-icon"/>Cerrar sesión</div>
+            <div className="menu-logout" onClick={()=> actions.logout()}><MdLogout className="logout-icon"/>Cerrar sesión</div>
         </div>
     </>
 };

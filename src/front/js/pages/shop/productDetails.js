@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import "../../../styles/category.css";
 import "../../../styles/productDetails.css";
+import { Cart } from "../../component/shop/cart";
 
 
 
@@ -13,8 +14,27 @@ export const ProductDetails = ()=> {
 	const navigate = useNavigate();
 	const [ category, setCategory ] = useState()
 	const [ subcategory, setSubcategory ] = useState()
+	const [ cart, setCart ] = useState(false)
 	const [ product, setProduct ] = useState()
+	const [ item, setItem ] = useState({
+		"product": {},
+		"quantity": 1,
+	})
 	const params = useParams();
+
+	function handleCart(){
+		let inCart = store.cart.filter((p) => p.product == product )
+
+		if (inCart.length == 0){
+			actions.addToCart([...store.cart, {...item, "product": product}])
+		}
+		else{
+			let newCart = store.cart.filter((p) => p.product != product )
+			newCart.push({"product": product, "quantity": item.quantity})
+        	actions.addToCart(newCart)
+		}
+		setCart(true)
+	}
 
 	useEffect(() => {
 		if (store.shop.products && store.shop.products.length > 0){
@@ -29,7 +49,8 @@ export const ProductDetails = ()=> {
 		}
 	}, [product]);
 
-	return <div style={{margin: "3% 10% 0 10%"}}>
+	return <>
+	<div style={{margin: "3% 10% 0 10%"}}>
 
 		<div className="shop-view-category-header" style={{marginBottom: "40px"}}>
 			<div className="shop-view-category-header-perma-link">
@@ -60,9 +81,9 @@ export const ProductDetails = ()=> {
 			<div className="shop-view-product-info">
 				<div className="sku">SKU: {product && product.sku}</div>
 				<div className="name">{product && product.name}</div>
-				<div className="price">${product && product.unit_price}</div>
+				<div className="price">${product && parseFloat(product.unit_price).toFixed(2)}</div>
 				<div className="quantity">
-					<select>
+					<select onChange={(e)=>setItem({...item, "quantity": parseInt(e.target.value)})}>
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -75,13 +96,13 @@ export const ProductDetails = ()=> {
 					</div>
 				</div>
 				<div style={{display:'flex', flexDirection: "column"}}>
-					<button className="add-to-cart">añadir al carrito</button>
+					<button className="add-to-cart" onClick={()=> product && handleCart() }>añadir al carrito</button>
 					<button className="buy-now">comprar ahora</button>
 				</div>
 				<div className="payment-methods">
 					<p>Medios de pago:</p>
 					<div className="shop-product-payment-container">
-						{store.shop.payments && store.shop.payments.map((payment)=> <div>
+						{store.shop.payments && store.shop.payments.map((payment)=> <div key={payment.name}>
 							{payment.icon && <img src={payment.icon}/>}
 							{!payment.icon && <span>{payment.name}</span>}
 							</div>)}
@@ -98,6 +119,7 @@ export const ProductDetails = ()=> {
 			</p>
 		</div>
 	</div>
-	;
+	{cart && <Cart useCart={setCart}/>}
+	</>
 };
 

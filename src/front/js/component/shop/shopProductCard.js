@@ -12,6 +12,6 @@ export const ShopProductCard = (product) => {
 			<img src={product.prod.image} />
 		</div>
 		<div className="shop-product-card-name">{product.prod.name}</div>
-		<div className="shop-product-card-price"> $ {product.prod.unit_price}</div>
+		<div className="shop-product-card-price"> $ {parseFloat(product.prod.unit_price).toFixed(2)}</div>
     </div>
 };
