@@ -4,12 +4,14 @@ import { FaTrash } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { useRef } from 'react';
 import { NoItemFound } from "../../component/admin/props/noItemFound";
+import { useNavigate } from "react-router-dom";
 
 import "../../../styles/cart.css";
 
 
 export const Cart = (cart) => {
 	const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const background = useRef(null);
   const [ total, setTotal] = useState(0)
 
@@ -28,16 +30,16 @@ export const Cart = (cart) => {
 	}, [store.cart]);
 
   async function handleProduct(boolean, product){
-    let newCart = store.cart.filter((p) => p != product )
+    let newCart = store.cart
     if (boolean){
-      if(product.quantity < 5){
-        newCart.push({...product, "quantity": product.quantity+1})
+      if(product.quantity < 5){       
+        newCart[newCart.indexOf(product)] = {...product, "quantity": product.quantity+1}
         await actions.addToCart(newCart)
       }
     }
     else{
       if(product.quantity > 1){
-        newCart.push({...product, "quantity": product.quantity-1})
+        newCart[newCart.indexOf(product)] = {...product, "quantity": product.quantity-1}
         await actions.addToCart(newCart)
       }
     }
@@ -48,6 +50,11 @@ export const Cart = (cart) => {
       actions.addToCart(newCart)
   }
 
+   function handleCheckout(){
+    navigate("/checkout")
+    cart.useCart(false)
+  }
+
 	return (<>
       <div ref={background} className="background" onClick={()=>cart.useCart(false)}/> 
       <div className="popup-body">
@@ -55,7 +62,7 @@ export const Cart = (cart) => {
           <div className="cart-body-header">
           <h3>Carrito</h3>
 
-          <IoClose />
+          <IoClose onClick={()=>cart.useCart(false)}/>
           </div>
           <div className="cart-body-content">
             {store.cart.length == 0 && <NoItemFound message={"No hay nada en el carrito"}/> }
@@ -85,7 +92,7 @@ export const Cart = (cart) => {
               <div>Subtotal</div>
               <div><b>${parseFloat(total).toFixed(2)}</b></div>
             </div>
-            <button>Finalizar Compra</button>
+            <button onClick={()=> handleCheckout()}>Finalizar Compra</button>
           </div>
         </div>
       </div>

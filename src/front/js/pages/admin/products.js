@@ -44,7 +44,7 @@ export const Products = () => {
 
         <div className="products-header">
           <h2>Productos</h2>
-          <button onClick={()=>navigate("/admin/create-product")}>+ Crear producto</button>
+          <button onClick={()=> navigate("/admin/create-product")}>+ Crear producto</button>
         </div>
           <div className="products-filters">
             <div className="filter-box">

@@ -30,6 +30,7 @@ import { AdminNavbar } from "./component/navigation/adminNavbar";
 import { Register } from "./pages/shop/register";
 import { ForgotPassword } from "./pages/shop/forgotPassword";
 import { Account } from "./pages/shop/account";
+import { Checkout } from "./pages/shop/checkout";
 
 //create your first component
 const Layout = () => {
@@ -68,6 +69,7 @@ const Layout = () => {
                             <Route element={<Register />} path="/register"/>
                             <Route element={<Account />} path="/account" />
                             <Route element={<ForgotPassword />} path="/forgot-password"/>
+                            <Route element={<Checkout />} path="/checkout"/>
                             <Route element={<Home/>} path="/*" />
                             <Route element={<ProductDetails/>} path="/product/:id" />
                             <Route element={<Category/>} path="/category/:name" />

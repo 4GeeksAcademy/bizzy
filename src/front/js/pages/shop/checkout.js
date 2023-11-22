@@ -4,18 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "../../../styles/login&register.css";
 
 
-export const ForgotPassword = () => {
+export const Checkout = () => {
 	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
-	const [ user, setUser ] = useState(
-		{
-			"email":"",
-		}
-	);
 	useEffect(() => {
-		if(store.token) navigate("/")
 		actions.changeAdminNav(false)
 	}, []);
+	
 
 	return (
 		<div className="login-container">
@@ -33,7 +28,7 @@ export const ForgotPassword = () => {
 			<button className="login-button">Recuperar</button>
 
             <div style={{display: "flex", justifyContent: "center", fontWeight: 600}} 
-            onClick={()=> navigate("/login")} className="login-forgot-password">Cancelar</div>
+            onClick={()=> navigate("/checkout")} className="login-forgot-password">Cancelar</div>
 		</div>
 
 	);

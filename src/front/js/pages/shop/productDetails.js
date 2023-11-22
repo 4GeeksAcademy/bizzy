@@ -23,17 +23,31 @@ export const ProductDetails = ()=> {
 	const params = useParams();
 
 	function handleCart(){
-		let inCart = store.cart.filter((p) => p.product == product )
+		let inCart = store.cart.filter((p) => p.product.id == product.id )
 
 		if (inCart.length == 0){
 			actions.addToCart([...store.cart, {...item, "product": product}])
 		}
 		else{
-			let newCart = store.cart.filter((p) => p.product != product )
-			newCart.push({"product": product, "quantity": item.quantity})
+			let newCart = store.cart
+			newCart[newCart.indexOf(inCart[0])] = {"product": product, "quantity": item.quantity}
         	actions.addToCart(newCart)
 		}
 		setCart(true)
+	}
+
+	function handleOrder(){
+		let inCart = store.cart.filter((p) => p.product.id == product.id )
+
+		if (inCart.length == 0){
+			actions.addToCart([...store.cart, {...item, "product": product}])
+		}
+		else{
+			let newCart = store.cart
+			newCart[newCart.indexOf(inCart[0])] = {"product": product, "quantity": item.quantity}
+        	actions.addToCart(newCart)
+		}
+		navigate("/checkout")
 	}
 
 	useEffect(() => {
@@ -97,7 +111,7 @@ export const ProductDetails = ()=> {
 				</div>
 				<div style={{display:'flex', flexDirection: "column"}}>
 					<button className="add-to-cart" onClick={()=> product && handleCart() }>añadir al carrito</button>
-					<button className="buy-now">comprar ahora</button>
+					<button className="buy-now" onClick={()=> product && handleOrder()}>comprar ahora</button>
 				</div>
 				<div className="payment-methods">
 					<p>Medios de pago:</p>

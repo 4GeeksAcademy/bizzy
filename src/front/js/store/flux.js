@@ -367,6 +367,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			addToCart: (products) => {
 				setStore({cart: products})
+				localStorage.setItem("cart", JSON.stringify(products));
+			},
+			checkCart: () => {
+				let localCart = localStorage.getItem('cart')
+				if (localCart){
+					setStore({cart: JSON.parse(localCart)})
+				}
 			},
 			// USERS
 			getUserToken: async (user) => {
