@@ -1,0 +1,219 @@
+.checkout-container{
+    display: flex;
+    padding: 5% 10%;
+}
+
+.checkout-shipping-container{
+    border: 1px solid #F5D6FF;
+    border-radius: 10px;
+    padding: 3% 4%;
+    width: 60%;
+    margin-right: 5%;
+    height: fit-content;
+}
+
+.checkout-shipping-container h4{
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #121212;
+}
+
+.checkout-container h3{
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #121212;
+}
+
+.checkout-order-summarry{
+    border: 1px solid #F5D6FF;
+    border-radius: 10px;
+    padding: 3% 4%;
+    width: 40%;
+    height: fit-content;
+}
+
+.checkout-shipping-type{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.checkout-shipping-type button{
+    height: 60px;
+    width: 30%;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
+    background: white;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #979797;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.checkout-shipping-type svg{
+    font-size: 25px;
+}
+
+.active-shipping-type{
+    border: 2px solid #c5b0ff!important;
+    color: #3f3f3f!important;
+}
+
+.active-shipping-type svg{
+    color:  rgb(84, 14, 167)
+}
+
+.disabled-checkout-input input{
+    color: #757575;
+    pointer-events: none;
+    font-weight: 500;
+}
+
+.save-info-button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.save-info-button-container button{
+    background: #A25BF4;
+    border: none;
+    color: white;
+    width: 215px;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.pickup-location{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.pickup-location p{
+    font-size: 13px;
+    color: gray;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.pickup-location svg{
+    font-size: 16px;
+    margin: 5px;
+    margin-top: 0px;
+    color: #c94242;
+}
+
+.pickup-location .map-icon{
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    background: #27ae60;
+    margin: 0;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pickup-location .map-icon svg{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.pickup-location .map-icon a{
+    color: white;
+    text-decoration: none;
+}
+
+.checkout-order-bill .bill-row{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #A8A8A8;
+    font-weight: 500;
+}
+
+.bill-row .bill-right{
+    color:#414141;
+    font-weight: 600;
+}
+
+.checkout-bill-divisor{
+    height: 1px;
+    background-color: #E6E9EE;
+    width:100%;
+    margin: 10px 0;
+}
+
+.checkout-payment-methods-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.checkout-payment-methods-container div{
+    width: 110px;
+    height: 45px;
+    border-radius: 5px;
+    border: 2px solid #F1F3F4;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkout-payment-methods-container div img{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.checkout-payment-methods-container div span{
+    font-size: 17px;
+    font-weight: 600;
+    color: #979797;
+    text-align: center;
+    line-height: 13px;
+}
+
+.selected-checkout-payment{
+    border: 2px solid #c5b0ff!important;
+}
+
+.checkout-payment-title{
+    font-size: 17px;
+    font-weight: 600;
+    margin-left: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #121212
+}
+
+.checkout-final-button{
+    display: flex;
+    justify-content: center;
+}
+
+.checkout-final-button button{
+    background: #A25BF4;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    margin-top: 30px;
+}

@@ -153,3 +153,32 @@
     font-weight: 700;
     color: white;
 }
+
+.mini-navbar{
+    width: 100%;
+    background: white;
+    height: 50px;
+    padding-right: 125px;
+    padding-left: 125px;
+    display: flex;
+    align-items: center;
+    color: #A25BF4;
+    font-size: 12px;
+    font-weight: 700;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.mini-nav-category{
+    width: 90px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mini-nav-category img{
+    width: 25px;
+    height: 25px;
+}

@@ -330,7 +330,6 @@ def get_orders():
 @api.route('/order', methods=['POST'])
 @jwt_required()
 def post_order():
-    if not admin_required(): return {"message": "User is not an admin"}, 401
 
     body = request.get_json()
     name = body.get("name", None)
@@ -342,7 +341,7 @@ def post_order():
     notes =  body.get("notes", None)
     status =  body.get("status", None)
 
-    customer = Customer.query.filter_by(name=name).one_or_none()
+    customer = Customer.query.filter_by(email=email).one_or_none()
     if customer is None:          
         customer = Customer( name=name, email=email, phone=phone )
         db.session.add(customer)
@@ -356,6 +355,7 @@ def post_order():
         db.session.commit()
 
         for product in items:
+            print(product["id"])
             selected_product = Product.query.filter_by(id=product["id"]).one_or_none()
             selected_product.sold += product["quantity"]
             if selected_product.stock - selected_product.sold <= 0:

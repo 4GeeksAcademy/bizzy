@@ -119,7 +119,7 @@ tr:nth-child(even) {
 }
 
 .table-order-payment img{
-    padding: 3px;
+    padding: 6px;
     width: 100%;
     height: 100%;
     object-fit: contain;

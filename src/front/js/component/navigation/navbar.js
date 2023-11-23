@@ -21,6 +21,15 @@ export const Navbar = (navb) => {
 				<div onClick={()=> setCart(true)}>cart</div>
 			</div>
 		</nav>
+		<div className="mini-navbar">
+				{store.shop.categories && store.shop.categories.map( (category)=> (
+						<div key={category.name} className="mini-nav-category" onClick={()=> navigate(`/category/${category.name}`)}>
+							<img src={category.icon}/>
+							<span>{category.name}</span>
+						</div>
+					)
+				)}
+		</div>
 		{cart && <Cart useCart={setCart}/>}
 	</>
 };

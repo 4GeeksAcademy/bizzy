@@ -14,6 +14,7 @@ export const Cart = (cart) => {
   const navigate = useNavigate();
   const background = useRef(null);
   const [ total, setTotal] = useState(0)
+  const [ random, setRandom] = useState()
 
 
   useEffect(() => {
@@ -27,9 +28,10 @@ export const Cart = (cart) => {
     else{
       setTotal(0)
     }
-	}, [store.cart]);
+	}, [random]);
 
   async function handleProduct(boolean, product){
+    setRandom(Math.random())
     let newCart = store.cart
     if (boolean){
       if(product.quantity < 5){       
@@ -66,7 +68,7 @@ export const Cart = (cart) => {
           </div>
           <div className="cart-body-content">
             {store.cart.length == 0 && <NoItemFound message={"No hay nada en el carrito"}/> }
-            {store.cart.length > 0 && store.cart.map((prod)=><div className="cart-product-container">
+            {store.cart.length > 0 && store.cart.map((prod)=><div className="cart-product-container" key={prod.product.id}>
               <img src={prod.product.image} />
               <div className="cart-product-info">
                 <div className="name">{prod.product.name}</div>

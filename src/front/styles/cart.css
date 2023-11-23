@@ -184,3 +184,19 @@
     border-radius: 30px;
     margin-top: 20px;
 }
+
+.quantity-for-checkout{
+    margin-top: -24px;
+    display: flex;
+    width: 27px;
+    color: white;
+    height: 26px;
+    background: #1C6CD5;
+    font-size: 15px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 17px;
+    right: 33px;
+}

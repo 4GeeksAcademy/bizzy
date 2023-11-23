@@ -218,8 +218,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-
-			// SUBCATEGORIES
 			postOrder: async (order) => {
 				const token = localStorage.getItem('token');
 				try {

@@ -29,6 +29,13 @@ export const Category = () => {
 		}
 	}, [store.shop.categories]);
 
+
+	useEffect(() => {
+		if (store.shop.categories && store.shop.categories.length > 0){
+		setCategory(store.shop.categories.filter((category)=> category.name == params.name )[0] )
+		}
+	}, [params.name]);
+
 	useEffect(() => {
 		setSubcategory(params.subcategory)
 	}, [params.subcategory]);

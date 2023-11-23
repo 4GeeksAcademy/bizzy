@@ -40,13 +40,13 @@ export const Account = () => {
 		<div className="login-container">
 			<h4>ACCOUNT</h4>
 			<div className="login-input">
-				<input required maxlength="3200"
+				<input required maxLength="3200"
 				onChange={(e) => setUser({...user, "email":e.target.value})}/>
 				<label>Correo Electrónico</label>
 
 			</div>
 			<div className="login-input">
-				<input type="password" required maxlength="100"
+				<input type="password" required maxLength="100"
 				onChange={(e) => setUser({...user, "password":e.target.value})}/>
 				<label>Contraseña</label>
 			</div>
