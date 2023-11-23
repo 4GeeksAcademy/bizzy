@@ -65,6 +65,8 @@ export const Account = () => {
 
 	useEffect(() => {
 		actions.changeAdminNav(false)
+		actions.getShopInfo()
+		document.getElementById("content").scroll(0,0)
 	}, []);
 
 	useEffect(() => {

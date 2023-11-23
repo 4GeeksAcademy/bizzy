@@ -258,7 +258,7 @@
 }
 
 .shop-view-footer{
-    height: 200px;
+    height: 175px;
     width: 100%;
     background: #0e001a;
     display: flex;
@@ -267,7 +267,7 @@
     margin-top: 5%;
 }
 
-.shop-view-footer div{
+.shop-view-footer > div{
     width: 33%;
 }
 
@@ -299,4 +299,40 @@
     height: 22px;
     filter: brightness(50);
     margin-top: 3px;
+}
+
+.shop-footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.shop-footer-right img{
+    width: 20px;
+}
+
+.footer-tecnologies{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footer-made-with{
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.shop-footer-right button{
+    width: 175px;
+    border: none;
+    outline: none;
+    background: #6521b3;
+    color: white;
+    height: 35px;
+    font-weight: 600;
+    border-radius: 30px;
+    margin-top: 10px;
 }

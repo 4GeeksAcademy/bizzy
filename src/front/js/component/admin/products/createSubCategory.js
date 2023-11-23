@@ -35,7 +35,7 @@ export const CreateSubCategory = (create) => {
 				position: "bottom-center"})
             return false
         }
-        const imageRef = storageRef(storage, `category/${subcategory.category.name}-${subcategory.name}`);
+        const imageRef = storageRef(storage, `category/${subcategory.category}-${subcategory.name}`);
 
         try{
             const uploadResp = await uploadBytes(imageRef, tempImage)

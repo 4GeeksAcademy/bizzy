@@ -53,11 +53,21 @@ export const CreateCategory = (create) => {
 		}
 
 		// UPLOAD IMAGE
-		const icon = await uploadFile(tempImage);
-		if(icon == false) return false;
+		const icon = await uploadIcon();
+		if(icon == false){
+			toast.error("Añade las imagenes",{
+				position: "bottom-center"
+			})
+			return false;
+		}
 
-		const banner = await uploadFile(tempBanner);
-		if(banner == false) return false;
+		const banner = await uploadBanner();
+		if(banner == false) {
+			toast.error("Añade las imagenes",{
+				position: "bottom-center"
+			})
+			return false;
+		}
 
 
 		// POST CATEGORY
@@ -74,16 +84,26 @@ export const CreateCategory = (create) => {
 		}
 	}
 
-	const uploadFile = async (file) => {
-        if (!file) {
-            toast.error("Porfavor las imagenes",{
-				position: "bottom-center"})
-            return false
-        }
-        const imageRef = storageRef(storage, `category/${category.name}`);
+	const uploadIcon = async () => {
+        const imageRef = storageRef(storage, `category/${category.name}-icon`);
 
         try{
-            const uploadResp = await uploadBytes(imageRef, file)
+            const uploadResp = await uploadBytes(imageRef, tempImage)
+            const url =  await getDownloadURL(uploadResp.ref)
+            return url
+        }
+		catch(err){
+			toast.error("Ocurrio un error inesperado",{
+				position: "bottom-center"})
+			return false
+        }
+    };
+
+	const uploadBanner = async () => {
+        const imageRef = storageRef(storage, `category/${category.name}-banner`);
+
+        try{
+            const uploadResp = await uploadBytes(imageRef, tempBanner)
             const url =  await getDownloadURL(uploadResp.ref)
             return url
         }

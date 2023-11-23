@@ -38,6 +38,7 @@ export const Checkout = () => {
 
 	useEffect(() => {
 		actions.changeAdminNav(false)
+		document.getElementById("content").scroll(0,0)
 	}, []);
 
 	useEffect(() => {

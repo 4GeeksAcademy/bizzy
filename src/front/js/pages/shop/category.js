@@ -21,7 +21,13 @@ export const Category = () => {
 	let filteredPrice = priceRange? filtered.filter((item)=> item.unit_price >= priceRange[0] && item.unit_price <= priceRange[1]) : filteredSubcat
 	let sortedProducts = sortBy? sortBy == "-price"?  filteredPrice.sort((a,b)=> a.unit_price - b.unit_price) 
 	: filteredPrice.sort((a,b)=> a.unit_price - b.unit_price).reverse() : filteredPrice 
+	
 
+
+	useEffect(() => {
+		actions.changeAdminNav(false)
+		document.getElementById("content").scroll(0,0)
+	}, []);
 
 	useEffect(() => {
 		if (store.shop.categories && store.shop.categories.length > 0){
@@ -43,7 +49,7 @@ export const Category = () => {
 
 	return <div className="shop-view-category">
 		<div className="shop-view-category-banner">
-			<img src={category && category.banner}/>
+			<img src={category && category.banner} />
 		</div>
 
 		<div className="shop-view-category-header">
@@ -124,7 +130,7 @@ export const Category = () => {
 				</div>
 				<div className="shop-view-category-products-container">
 					{sortedProducts.map( (product)=> <ShopProductCard 
-					width={{width:"200px"}} prod={product} key={product.id}
+					width={{width:"198px"}} prod={product} key={product.id}
 					/>)}
 				</div>
 			</div>

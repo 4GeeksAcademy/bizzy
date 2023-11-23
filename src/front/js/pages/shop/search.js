@@ -21,6 +21,11 @@ export const Search = () => {
 	: filteredPrice.sort((a,b)=> a.unit_price - b.unit_price).reverse() : filteredPrice 
 	
 	useEffect(() => {
+		actions.changeAdminNav(false)
+		document.getElementById("content").scroll(0,0)
+	}, []);
+
+	useEffect(() => {
 		if (store.shop.products && store.shop.products.length > 0){
 			setSearch(params.name)
 		}
@@ -93,7 +98,7 @@ export const Search = () => {
 				</div>
 				<div className="shop-view-category-products-container">
 					{sortedProducts.length > 0 && sortedProducts.map( (product)=> <ShopProductCard 
-					width={{width:"200px"}} prod={product} key={product.id}
+					width={{width:"198px"}} prod={product} key={product.id}
 					/>)}
 					{sortedProducts.length == 0 && <NoItemFound message={"No existen productos para esta busqueda"}/> }
 				</div>

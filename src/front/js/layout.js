@@ -32,6 +32,7 @@ import { Account } from "./pages/shop/account";
 import { Checkout } from "./pages/shop/checkout";
 import { Search } from "./pages/shop/search";
 import { Footer } from "./component/navigation/footer";
+import { MadeWith } from "./pages/shop/madeWith";
 
 //create your first component
 const Layout = () => {
@@ -73,6 +74,7 @@ const Layout = () => {
                             <Route element={<Home/>} path="/*" />
                             <Route element={<ProductDetails/>} path="/product/:id" />
                             <Route element={<Search />} path="/search/:name" />
+                            <Route element={<MadeWith />} path="/made-with" />
                             <Route element={<Category/>} path="/category/:name" />
                             <Route element={<Category/>} path="/category/:name/:subcategory" />
                         </Routes>

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { LuDog } from "react-icons/lu";
 import { ShopProductCard } from "../../component/shop/shopProductCard";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
+import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 import "../../../styles/home.css";
 // Import Swiper styles
 import 'swiper/css';
@@ -46,6 +45,7 @@ export const Home = () => {
 	}
 	
 	useEffect(() => {
+		document.getElementById("content").scroll(0,0)
 		actions.changeTab("home")
 		actions.changeAdminNav(false)
 	  }, []);
@@ -82,8 +82,8 @@ export const Home = () => {
 				<div className="home-line-separator"/>
 
 				<div className="home-subcategory-cards-container">
-					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true}}
-					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
+					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
+					modules={[ FreeMode, Pagination]} breakpoints={homeBreakpoints}>
 						{ subcategoryList.length > 0 && subcategoryList.map( (subcategory)=> <SwiperSlide key={subcategory.name}>
 								<div className="home-subcategory-card" onClick={()=>navigate(`/category/${subcategory.category}/${subcategory.name}`)}>
 									<img src={subcategory.image}/>
@@ -97,7 +97,7 @@ export const Home = () => {
 				<span className="home-subtitle">Ofertas</span>
 				<div className="home-products-cards-container">
 					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
-					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
+					modules={[Autoplay, FreeMode, Pagination]} breakpoints={homeBreakpoints}  autoplay={{delay: 2500, disableOnInteraction: false }}>
 						{store.shop.products && store.shop.products.map( (product)=> <SwiperSlide key={product.name}>
 								<ShopProductCard prod={product} />
 							</SwiperSlide>
@@ -111,7 +111,7 @@ export const Home = () => {
 				<span className="home-subtitle">Esenciales</span>
 				<div className="home-products-cards-container">
 					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
-					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
+					modules={[Autoplay, FreeMode, Pagination]} breakpoints={homeBreakpoints} autoplay={{delay: 2500, disableOnInteraction: false }}>
 						{store.shop.products && store.shop.products.reverse().map( (product)=> <SwiperSlide key={product.name}>
 								<ShopProductCard prod={product} />
 							</SwiperSlide>

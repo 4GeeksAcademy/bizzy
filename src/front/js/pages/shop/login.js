@@ -18,6 +18,7 @@ export const Login = () => {
 	useEffect(() => {
 		if(store.token) navigate("/")
 		actions.changeAdminNav(false)
+		document.getElementById("content").scroll(0,0)
 	}, []);
 	
 

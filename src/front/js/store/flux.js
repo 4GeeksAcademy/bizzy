@@ -233,6 +233,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					const data = await resp.json()
 					if (resp.ok == true){
+						let num = Math.random()
+						setStore({random: num})
 						getActions().getOrders()
 						return true;
 					}
@@ -411,6 +413,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					const data = await resp.json()
 					if (resp.ok == true){
+						getActions().checkToken()
 						return true
 					}
 					else{
