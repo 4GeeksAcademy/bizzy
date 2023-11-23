@@ -36,10 +36,10 @@ db.init_app(app)
 CORS(app)
 
 # add the admin
-setup_admin(app)
+#setup_admin(app)
 
 # add the admin
-setup_commands(app)
+#setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
@@ -57,11 +57,11 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-@app.route('/')
-def sitemap():
-    if ENV == "development":
-        return generate_sitemap(app)
-    return send_from_directory(static_file_dir, 'index.html')
+#@app.route('/')
+#def sitemap():
+#    if ENV == "development":
+#        return generate_sitemap(app)
+#    return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
 @app.route('/<path:path>', methods=['GET'])
