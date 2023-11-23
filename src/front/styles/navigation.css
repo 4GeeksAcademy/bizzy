@@ -106,24 +106,38 @@
     padding-left: 125px;
 }
 
-.admin-navbar-main div{
+.admin-navbar-main button{
     font-size: 16px;
     font-weight: 700;
-    color: #2E2153;
+    background: #A25BF4;
+    border-radius: 5px;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 4px 10px;
     display: flex;
     align-items: center;
 }
 
+.admin-navbar-main svg{
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+
 .navbar-user{
     display:flex;
     align-items: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2E2153;
 }
 
 .navbar-user-icon{
     height: 35px;
     width: 35px;
     border-radius: 100%;
-    margin-right: 5px;
+    margin-right: 10px;
     margin-left: 80px
 }
 
@@ -143,15 +157,32 @@
 
 .navbar-right{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     width: 50%;
     align-items: center;
+    gap: 50px;
+    margin-right: 90px;
 }
 
 .navbar-right div{
     font-size: 16px;
     font-weight: 700;
     color: white;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right button{
+    font-size: 16px;
+    font-weight: 700;
+    background: white;
+    border-radius: 5px;
+    color: #A25BF4;
+    outline: none;
+    border: none;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
 }
 
 .mini-navbar{
@@ -191,7 +222,7 @@
     padding-right: 40px;
     width: 30%;
     font-size: 13px;
-    margin-left: 40px;
+    margin-left: 60px;
 }
 
 .nav-shop-search-icon{
@@ -202,4 +233,26 @@
     right: 6px;
     color: #A25BF4;
     margin-right: auto;
+}
+
+.navbar-right svg{
+    font-size: 26px;
+    margin-right: 5px;
+}
+
+.nav-cart-quantity{
+    margin-left: -20px;
+    display: flex;
+    width: 20px;
+    color: #222f3e;
+    height: 20px;
+    background: #feca57;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -12px;
+    right: -34px;
 }

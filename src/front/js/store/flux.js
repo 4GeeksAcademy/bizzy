@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			adminNav: false,
 			info:{ years:{}, categories:{}},
 			shop:{},
-			cart:[]
+			cart:[],
+			random: 0
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -364,6 +365,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({selectedProducts: products})
 			},
 			addToCart: (products) => {
+				let num = Math.random()
+				setStore({random: num})
 				setStore({cart: products})
 				localStorage.setItem("cart", JSON.stringify(products));
 			},

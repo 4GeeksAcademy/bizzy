@@ -14,7 +14,6 @@ export const Cart = (cart) => {
   const navigate = useNavigate();
   const background = useRef(null);
   const [ total, setTotal] = useState(0)
-  const [ random, setRandom] = useState()
 
 
   useEffect(() => {
@@ -28,10 +27,9 @@ export const Cart = (cart) => {
     else{
       setTotal(0)
     }
-	}, [random]);
+	}, [store.random]);
 
   async function handleProduct(boolean, product){
-    setRandom(Math.random())
     let newCart = store.cart
     if (boolean){
       if(product.quantity < 5){       

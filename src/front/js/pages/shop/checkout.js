@@ -41,8 +41,51 @@ export const Checkout = () => {
 	}, []);
 
 	useEffect(() => {
+		let tempTotal = 0
+			if (store.cart.length > 0){
+				for (let item of store.cart ){
+			tempTotal += item.quantity * item.product.unit_price
+		  }
+		  setTotal(tempTotal)
+			}
+		else{
+		  setTotal(0)
+		}
+
+		let tempTotalQ = 0
+		if (store.cart.length > 0){
+			for (let item of store.cart ){
+				tempTotalQ += item.quantity
+				}
+			setTotalQ(tempTotalQ)
+		}
+		}, [store.cart]);
+
+	useEffect(() => {
+		let tempTotal = 0
+			if (store.cart.length > 0){
+				for (let item of store.cart ){
+					tempTotal += item.quantity * item.product.unit_price
+					}
+				setTotal(tempTotal)
+			}
+
+		let tempTotalQ = 0
+		if (store.cart.length > 0){
+			for (let item of store.cart ){
+				tempTotalQ += item.quantity
+				}
+			setTotalQ(tempTotalQ)
+		}
+		}, [store.random]);
+
+	useEffect(() => {
 		if(!localStorage.getItem("token") && !store.user.id) navigate("/login")
 	}, [store.user])
+
+	useEffect(() => {
+		if(!localStorage.getItem("token") && !store.user.id) navigate("/login")
+	}, [store.cart])
 	
 	function handleAddress(shipType){
 		if (shipType == "delivery"){
@@ -109,6 +152,7 @@ export const Checkout = () => {
 			fixedCart[i].quantity = item.quantity
 			i+=1
 		}
+
 		let info = await actions.postOrder({"date":todayFormated, "email":store.user.email, "items":fixedCart, "name": store.user.name,
 		"notes": `${shipInfo.type}: ${shipInfo.country}, ${shipInfo.state}, ${shipInfo.city}, ${shipInfo.address}, ${shipInfo.building}`,
 		"phone":shipInfo.phone, "status": "Pendiente", "payment": paymentMethod })
@@ -276,7 +320,7 @@ export const Checkout = () => {
 
 						<div className="bill-row">
 							<div className="bill-left">Envio</div>
-							<div className="bill-right">${shipping == "delivery"? total < 35? parseFloat(3).toFixed(2) : parseFloat(0).toFixed(2) : parseFloat(0).toFixed(2) }</div>
+							<div className="bill-right">{shipping == "delivery"? total < 35? "$"+parseFloat(3).toFixed(2) : "GRATIS" : "GRATIS" }</div>
 						</div>
 							<div className="checkout-payment-title">Método de pago</div>
 						<div className="checkout-payment-methods-container">
