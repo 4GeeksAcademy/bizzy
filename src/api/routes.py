@@ -99,19 +99,20 @@ def put_user(user_id):
         old_password = body.get("password", None)
         password = body.get("new_password", None)
        
-        password_byte = bytes(old_password, 'utf-8')
-        if not bcrypt.checkpw(password_byte, user.password.encode('utf-8')):
-            return {"message": "Incorrect password"}, 401
-
-        if name: user.name = name
-        if email: user.email = email
         if password:
+            password_byte = bytes(old_password, 'utf-8')
+            if not bcrypt.checkpw(password_byte, user.password.encode('utf-8')):
+                return {"message": "Incorrect password"}, 401
+            
             bpassword = bytes(password, 'utf-8')
             salt = bcrypt.gensalt(14)
             hashed_password = bcrypt.hashpw(password=bpassword, salt=salt)
 
             user.password = hashed_password.decode('utf-8')
             user.salt = salt.decode('utf-8')
+
+        if name: user.name = name
+        if email: user.email = email
         
         db.session.commit()
         

@@ -55,13 +55,13 @@ const Layout = () => {
                     <div id="content" style={store.adminNav? {backgroundColor: "#F7F9F8"} : {}}>
                         <Routes>
                             {/* ADMIN VIEWS */}
-                            <Route element={<Dashboard />} path="/admin/*"/>
-                            <Route element={<Orders />} path="/admin/orders" />
-                            <Route element={<CreateOrder />} path="/admin/create-order" />
-                            <Route element={<Products />} path="/admin/products" />
-                            <Route element={<CreateProduct />} path="/admin/create-product" />
-                            <Route element={<Customers/>} path="/admin/customers" />
-                            <Route element={<Demo />} path="/admin/demo" />
+                            <Route element={<Dashboard />} path="/dashboard/*"/>
+                            <Route element={<Orders />} path="/dashboard/orders" />
+                            <Route element={<CreateOrder />} path="/dashboard/create-order" />
+                            <Route element={<Products />} path="/dashboard/products" />
+                            <Route element={<CreateProduct />} path="/dashboard/create-product" />
+                            <Route element={<Customers/>} path="/dashboard/customers" />
+                            <Route element={<Demo />} path="/dashboard/demo" />
 
                             {/* NORMAL VIEWS */}
                             <Route element={<Login/>} path="/login" />
