@@ -1,0 +1,229 @@
+.shop-account-container{
+    display:flex
+}
+
+.account-dashboard{
+    width: 50%;
+    padding: 75px 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account-dash-header{
+    margin-bottom: 50px;
+}
+
+.account-dash-header div{
+    font-size: 36px;
+    font-weight: 700;
+    color: #540EA7;
+    display: flex;
+    align-items: center;
+}
+
+.account-dash-header svg{
+    font-size: 40px;
+    color: #A25BF4;
+    margin-right: 10px;
+}
+
+.account-dash-header p{
+    font-size: 16px;
+    color: #121212;
+    font-weight: 600;
+    margin: 0;
+    margin-left: 50px;
+    margin-top: -8px;
+}
+
+.account-dash-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-dash-buttons button{
+    width: 320px;
+    height: 55px;
+    outline: none;
+    border: none;
+    background: #F8F2FF;
+    border-radius: 10px;
+    font-size: 17px;
+    color: #540EA7;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    margin-bottom: 15px;
+}
+
+.account-dash-buttons button div svg{
+    font-size: 25px;
+    color: #A25BF4;
+    margin-right: 12px;
+}
+
+.account-dash-logout{
+    font-weight: 600;
+    font-size: 14px;
+    color: #121212;
+    display: flex;
+    align-items: center;
+    margin-left: -17%;
+}
+
+.account-dash-logout svg{
+    margin-right: 5px;
+}
+
+.account-right-board{
+    width: 50%;
+    height: 90vh;
+    background: #EEEEEE;
+    margin-bottom: -5%;
+    padding: 45px;
+}
+
+.right-board-inside{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    padding: 7% 10%;
+    overflow-y: auto;
+}
+
+.right-board-fake-permalink{
+    font-size: 15px;
+    font-weight: 500;
+    color: #7F8FAD;
+}
+
+.right-board-fake-permalink span{
+    color: #A25BF4;
+    text-decoration: underline;
+}
+
+.right-board-inside h3{
+    font-size: 27px;
+    color: #540EA7;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.right-board-order-header{
+    display:flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 500;
+    color: #B1B1B1;
+}
+
+.right-board-order-header span{
+    color: #656565;
+}
+
+.right-board-order-product{
+    width: 70px;
+    height: 70px;
+    margin-right: 15px;
+}
+
+.right-board-order-product img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.right-board-order-product div{
+    width: 100%;
+    height: 100%;
+}
+
+.right-board-order-product span{
+    margin-bottom: -20px;
+    display: flex;
+    width: 20px;
+    color: white;
+    height: 20px;
+    background: #1C6CD5;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -6px;
+    right: -55px;
+}
+
+.right-board-order-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-board-left-footer{
+    display: flex;
+}
+
+.right-board-left-footer div {
+    font-size: 13px;
+    color: #656565;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.right-board-left-footer p {
+    font-weight: 500;
+    margin: 0
+}
+
+.right-board-right-footer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 13px;
+}
+
+.right-board-right-footer div{
+    color:#B1B1B1;
+    font-weight: 600;
+}
+
+.right-board-right-footer p{
+    color:#540EA7;
+    font-weight: 700;
+    margin: 0
+}
+
+.right-board-divisor{
+    height: 1px;
+    width: 100%;
+    background: #E9E9E9;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.right-board-informative-text{
+    font-size: 13px;
+    color: #B1B1B1;
+}
+
+.right-board-inside .login-button{
+    width: 200px;
+}
+
+.right-board-inside .login-input{
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.change-password-header{
+    font-size: 15px;
+    font-weight: 600;
+    color: #343434;
+    margin-bottom: 5px;
+}

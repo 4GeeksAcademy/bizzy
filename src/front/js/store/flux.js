@@ -394,6 +394,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+			putUser: async (user) => {
+				const token = localStorage.getItem('token');
+				try {
+					const resp = await fetch(process.env.BACKEND_URL + `/api/user/${user.id}`,
+					{
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + token
+						},
+						body: JSON.stringify(user)
+						})
+					const data = await resp.json()
+					if (resp.ok == true){
+						return true
+					}
+					else{
+						return false
+					}
+				} catch (error) {
+					return false
+				}
+			},
 			
 			checkToken: async () => {
 				// retrieve token form localStorage

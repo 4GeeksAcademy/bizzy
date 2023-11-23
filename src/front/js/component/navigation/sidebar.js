@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext";
-import { MdSpaceDashboard, MdShoppingBasket, MdReceiptLong, MdPeopleAlt, MdMiscellaneousServices, MdArrowForwardIos, MdStar, MdLogout } from "react-icons/md"
+import { MdSpaceDashboard, MdShoppingBasket, MdReceiptLong, MdPeopleAlt, MdStar, MdLogout } from "react-icons/md"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 

@@ -37,7 +37,7 @@ def create_token():
         return {"message": f"Couldn't find user"}, 401
     
     password_byte = bytes(password, 'utf-8')
-    # hash_password = bcrypt.hashpw(password_byte)
+    
     if bcrypt.checkpw(password_byte, user.password.encode('utf-8')):
         return {'token': create_access_token(identity = user.id), "user": user.serialize()},200
     
@@ -83,6 +83,42 @@ def post_user():
     
     except ValueError as err:
         return {"message": f"Failed to create subcategory, {err}"}, 500
+
+# [PUT] USER
+@api.route('/user/<user_id>', methods=['PUT'])
+@jwt_required()
+def put_user(user_id):
+    current_user_id = get_jwt_identity()
+    if not admin_required() and current_user_id != int(user_id): return {"message": "You're not allowed"}, 401
+    try:
+        user = User.query.get(user_id)
+
+        body = request.get_json()
+        name = body.get("name", None)
+        email = body.get("email", None)
+        old_password = body.get("password", None)
+        password = body.get("new_password", None)
+       
+        password_byte = bytes(old_password, 'utf-8')
+        if not bcrypt.checkpw(password_byte, user.password.encode('utf-8')):
+            return {"message": "Incorrect password"}, 401
+
+        if name: user.name = name
+        if email: user.email = email
+        if password:
+            bpassword = bytes(password, 'utf-8')
+            salt = bcrypt.gensalt(14)
+            hashed_password = bcrypt.hashpw(password=bpassword, salt=salt)
+
+            user.password = hashed_password.decode('utf-8')
+            user.salt = salt.decode('utf-8')
+        
+        db.session.commit()
+        
+        return user.serialize(), 200
+ 
+    except ValueError as err:
+        return {"message": f"Failed to edit user, {err}"}, 500
 
 # PRODUCTS
 
@@ -647,6 +683,9 @@ def get_shop():
         products_list = sorted(all_products, key=lambda product: -product.sold)
         products_list = [product.shop_serialize() for product in products_list]
 
+        all_orders = Order.query.all()
+        orders_list = [order.serialize() for order in all_orders]
+
         all_categories = Category.query.all()
         categories_list = [category.serialize() for category in all_categories]
         categories_list = sorted(categories_list, key=lambda category: -category["products_quantity"])
@@ -654,7 +693,7 @@ def get_shop():
         all_payments = Payment.query.all()
         payments_list = [payment.serialize() for payment in all_payments]
 
-        return {"products": products_list, "categories": categories_list, "payments": payments_list}
+        return {"products": products_list, "categories": categories_list, "payments": payments_list, "orders": orders_list}
             
     except ValueError as err:
         return {"message": f"Failed to retrieve payments, {err}"}, 500

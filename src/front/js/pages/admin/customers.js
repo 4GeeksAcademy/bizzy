@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 
+import moment from "moment";
 import { CreateCustomer } from "../../component/admin/customers/createCustomer";
 import { AiOutlineUserAdd } from "react-icons/ai"
 import { BsArrowLeftShort } from "react-icons/bs"
@@ -10,6 +11,7 @@ import { Spinner } from "../../component/admin/props/spinner";
 import { toast } from "react-toastify";
 import "../../../styles/createProduct.css";
 import "../../../styles/customers.css";
+import "../../../styles/account.css";
 
 export const Customers = (select) => {
     const { store, actions } = useContext(Context);
@@ -21,6 +23,7 @@ export const Customers = (select) => {
     const [ confirmDelete, setConfirmDelete] = useState(false)
     const [ create, setCreate] = useState(false)
 
+    let userOrders = store.orders && customer? store.orders.filter((order)=> order.customer.email == customer.email) : []
 
     let filteredByName = nameFilter? store.customers.filter((item)=> 
     item.name.toLowerCase().includes(nameFilter.toLowerCase()) 
@@ -30,6 +33,7 @@ export const Customers = (select) => {
 
     async function loadCustomers(){
         const load = await actions.getCustomers()
+        actions.getOrders()
         if (load){
             setLoading(false)
             setCustomer(store.customers[0])
@@ -124,21 +128,66 @@ export const Customers = (select) => {
                     className="customer-info-return" onClick={()=>setEditable(false)}/>
                 </div>}
 
+
+
                 {!editable && customer && <>
-                <div className="customer-info-id"><label>ID:</label>{customer.id}</div>
+                <div className="customer-info-id">
+                    <label>ID:</label>{customer.id}
+                </div>
                 <div className="customer-info-name">{customer.name}</div>
-                <label>Email</label>
-                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.email || "N/A"}</div>
-                <label>Telefono</label>
-                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.phone || "N/A"}</div>
-                {customer.info.orders != 0 && <>
-                <label>Ordenes</label>
-                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.info.orders}</div>
-                <label>Productos comprados</label>
-                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.info.quantity}</div>
-                <label>Total gastado</label>
-                <div style={{fontSize: "14px", marginBottom: "12px"}}>${customer.info.spent}</div>
-                </>}
+                <div style={{display:"flex", justifyContent: "space-between"}}>
+                    <div>
+                        <label>Email</label>
+                        <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.email || "N/A"}</div>
+                    </div>
+                    <div>
+                        <label>Telefono</label>
+                        <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.phone || "N/A"}</div>
+                    </div>
+                </div>
+                {customer.info.orders != 0 && <div style={{display:"flex", justifyContent: "space-between"}}>
+                    <div>
+                        <label>Productos comprados</label>
+                        <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.info.quantity}</div>
+                    </div>
+                    <div>
+                        <label>Total gastado</label>
+                        <div className="customer-info-total-price">${parseFloat(customer.info.spent).toFixed(2)}</div>
+                    </div>
+                </div>}
+                <div className="customer-info-orders">Ordenes</div>
+                {userOrders.length == 0 && <NoItemFound message={"Aun no tienes ordenes"}/>}
+                {userOrders.length > 0 &&  userOrders.reverse().map((order)=><div className="account-order-container" key={order.id}>
+                    <div className="right-board-order-header">
+                        <div>Fecha del pedido <span>{moment(order.date, "YYYYMMDDhh:mm").format('ll')}</span></div>
+                        <div>N.° de pedido <span>{order.id.toString().padStart(4, "0")}</span></div>
+                    </div>
+                    <div style={{display: "flex", margin: "10px 0"}}>
+                        {order.items.slice(0,5).map((item)=><div key={item.id} className="right-board-order-product">
+                        <span>{item.quantity}</span>
+                        <img src={item.product.image}/>
+                        </div>)}
+                    </div>
+                    <div className="right-board-order-footer">
+                        <div className="right-board-left-footer">
+                            <div>
+                                <div>Productos</div>
+                                <p>{order.total_quantity}</p>
+                            </div>
+                            <div>
+                                <div>Método de Pago</div>
+                                <p>{order.payment.name}</p>
+                            </div>
+                        </div>
+                        <div className="right-board-right-footer">
+                            <div>Total del Pedido</div>
+                            <p>${parseFloat(order.total_price).toFixed(2)}</p>
+                        </div>
+                    </div>
+
+                    <div className="right-board-divisor"/>
+
+                    </div>)}
                 </>
                 }
 

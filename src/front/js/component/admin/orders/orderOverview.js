@@ -56,7 +56,7 @@ export const OrderOverview = (order) => {
             <label className="order-overview-date">FECHA:&nbsp;{moment(order.ord.date, "YYYYMMDDhh:mm").format('ll').toUpperCase()}</label>
             <div style={{display:"flex", justifyContent: "space-between", margin:"10px 0", alignItems: "flex-end"}}>
               <div className="order-overview-id">
-                <label style={{margin: 0}}>ORDEN N°:</label> {order.ord.id}
+                <label style={{margin: 0}}>ORDEN N°:</label> {order.ord.id.toString().padStart(4, "0")}
               </div>
               <div className={order.ord.status=="Completada"? "overview-status-green" : order.ord.status=="Pendiente"? "overview-status-gray" : "overview-status-red"}>{order.ord.status}</div>
             </div>
