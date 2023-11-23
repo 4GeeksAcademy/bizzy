@@ -18,54 +18,12 @@ export const Account = () => {
 	useEffect(() => {
 		actions.changeAdminNav(false)
 	}, []);
-	
-
-	async function userLogin(){
-		if (!user.email || !user.password){
-			toast.error("Rellena todos los campos",{
-			position: "bottom-center"})
-		}
-		else{
-			let create = await actions.getUserToken(user)
-			if (create) navigate("/")
-			else{
-				toast.error("Usuario inexistente o contraseña incorrecta",{
-					position: "bottom-center"
-				})
-            }
-		}
-	}
 
 	return (
 		<div className="login-container">
-			<h4>ACCOUNT</h4>
-			<div className="login-input">
-				<input required maxLength="3200"
-				onChange={(e) => setUser({...user, "email":e.target.value})}/>
-				<label>Correo Electrónico</label>
-
-			</div>
-			<div className="login-input">
-				<input type="password" required maxLength="100"
-				onChange={(e) => setUser({...user, "password":e.target.value})}/>
-				<label>Contraseña</label>
-			</div>
-			<div className="login-subline">
-				<div className="login-keep-logged">
-					<input type="checkbox"/>
-					<span>No cerrar sesión</span>
-				</div>
-				<div className="login-forgot-password" onClick={()=>navigate("/forgot-password")}>¿Olvidaste tu contraseña?</div>
-			</div>
-
-			<button className="login-button" onClick={()=> userLogin() }>Iniciar Sesión</button>
-
-			<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-				<div className="login-divisor"/>
-				<div className="login-new">¿Nuevo en Petzzy?</div>
-			</div>
-
-			<button className="register-button" onClick={()=>navigate("/register")}>Crea una cuenta</button>
+			<h4>Cuenta</h4>
+			<div>Bienvenido! {store.user.name}</div>
+			<div>Dirección de correo: {store.user.email}</div>
 		</div>
 
 	);

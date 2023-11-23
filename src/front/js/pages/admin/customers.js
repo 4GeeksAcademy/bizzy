@@ -93,7 +93,7 @@ export const Customers = (select) => {
           </span>
         </div>
 
-        <div style={{display:"flex"}}>
+        <div className="customers-full-container">
             <div className="customers-list-container">
                 <div className="customers-filters">
                     <div className="filter-box">
@@ -128,16 +128,16 @@ export const Customers = (select) => {
                 <div className="customer-info-id"><label>ID:</label>{customer.id}</div>
                 <div className="customer-info-name">{customer.name}</div>
                 <label>Email</label>
-                <div style={{fontSize: "14px"}}>{customer.email || "N/A"}</div>
+                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.email || "N/A"}</div>
                 <label>Telefono</label>
-                <div style={{fontSize: "14px"}}>{customer.phone || "N/A"}</div>
+                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.phone || "N/A"}</div>
                 {customer.info.orders != 0 && <>
                 <label>Ordenes</label>
-                <div style={{fontSize: "14px"}}>{customer.info.orders}</div>
+                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.info.orders}</div>
                 <label>Productos comprados</label>
-                <div style={{fontSize: "14px"}}>{customer.info.quantity}</div>
+                <div style={{fontSize: "14px", marginBottom: "12px"}}>{customer.info.quantity}</div>
                 <label>Total gastado</label>
-                <div style={{fontSize: "14px"}}>${customer.info.spent}</div>
+                <div style={{fontSize: "14px", marginBottom: "12px"}}>${customer.info.spent}</div>
                 </>}
                 </>
                 }

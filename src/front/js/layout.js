@@ -19,7 +19,6 @@ import { Orders } from "./pages/admin/orders";
 import { CreateProduct } from "./pages/admin/createProduct";
 import { CreateOrder } from "./pages/admin/createOrder";
 import { Customers } from "./pages/admin/customers";
-import { Misc } from "./pages/admin/misc";
 
 import { Login } from "./pages/shop/login";
 import { Home } from "./pages/shop/home";
@@ -31,6 +30,7 @@ import { Register } from "./pages/shop/register";
 import { ForgotPassword } from "./pages/shop/forgotPassword";
 import { Account } from "./pages/shop/account";
 import { Checkout } from "./pages/shop/checkout";
+import { Search } from "./pages/shop/search";
 
 //create your first component
 const Layout = () => {
@@ -61,7 +61,6 @@ const Layout = () => {
                             <Route element={<Products />} path="/admin/products" />
                             <Route element={<CreateProduct />} path="/admin/create-product" />
                             <Route element={<Customers/>} path="/admin/customers" />
-                            <Route element={<Misc/>} path="/admin/misc" />
                             <Route element={<Demo />} path="/admin/demo" />
 
                             {/* NORMAL VIEWS */}
@@ -72,6 +71,7 @@ const Layout = () => {
                             <Route element={<Checkout />} path="/checkout"/>
                             <Route element={<Home/>} path="/*" />
                             <Route element={<ProductDetails/>} path="/product/:id" />
+                            <Route element={<Search />} path="/search/:name" />
                             <Route element={<Category/>} path="/category/:name" />
                             <Route element={<Category/>} path="/category/:name/:subcategory" />
                         </Routes>

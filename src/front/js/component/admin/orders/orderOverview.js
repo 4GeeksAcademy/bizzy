@@ -64,13 +64,6 @@ export const OrderOverview = (order) => {
             <div className="order-overview-name">{order.ord.customer.name}</div>
             <div className="order-overview-phone">TLF:&nbsp;{order.ord.customer.phone || "-"}</div>
 
-            <div>
-              <label>MÉTODO DE PAGO:</label>
-              <div className="order-overview-payment">
-                {order.ord.payment.icon && <img src={order.ord.payment.icon}/>}
-                {!order.ord.payment.icon && <span>{order.ord.payment.name}</span>}
-              </div>
-            </div>
 
             <label>ORDEN:</label>
 
@@ -91,6 +84,15 @@ export const OrderOverview = (order) => {
                 </div>
                 ))}
             </div>
+            
+            <div>
+              <label>MÉTODO DE PAGO:</label>
+              <div className="order-overview-payment">
+                {order.ord.payment.icon && <img src={order.ord.payment.icon}/>}
+                {!order.ord.payment.icon && <span>{order.ord.payment.name}</span>}
+              </div>
+            </div>
+
             <div className="order-overview-total">TOTAL:&nbsp;<span>${parseFloat(order.ord.total_price).toFixed(2)}</span></div>
 
 

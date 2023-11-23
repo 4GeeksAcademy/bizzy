@@ -284,6 +284,7 @@ export const Checkout = () => {
 							className={paymentMethod == payment.name? "selected-checkout-payment" : ""}>
 								{payment.icon && <img src={payment.icon}/>}
 								{!payment.icon && <span>{payment.name}</span>}
+								{paymentMethod == payment.name && <div className=""/>}
 							</div>)}
 						</div>
 						<div className="checkout-final-button">

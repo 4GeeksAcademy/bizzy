@@ -8,9 +8,20 @@
     margin-bottom: 20px;
 }
 
+.customers-full-container{
+    display: flex;
+    background: white;
+    padding: 30px;
+    height: 73vh;
+    border-radius: 20px;
+    overflow-y: hidden;
+}
+
 .customers-list-container{
-    width:50%;
+    width: 50%;
     padding-right: 5%;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .customers-filters{
@@ -18,7 +29,7 @@
 }
 
 .customers-filters .filter-box input{
-    background-color:#ffffff;
+    background-color:#f8f8f8;
     height: 40px;
     border-radius: 5px;
     border: none;
@@ -49,7 +60,7 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 23px;
-    margin-bottom: 5px;
+    margin-bottom: 16px;
 }
 
 .customer-info-id{
@@ -179,9 +190,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F1F3F4;
+    background: white;
+    margin-left: 20px;
     border-radius: 5px;
-    font-size:20px
+    font-size: 20px;
 }
 
 .create-customer:hover{

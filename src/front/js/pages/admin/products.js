@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 
 import { toast } from "react-toastify";
 import { NoItemFound } from "../../component/admin/props/noItemFound";
@@ -49,6 +50,7 @@ export const Products = () => {
           <div className="products-filters">
             <div className="filter-box">
               <input placeholder="Buscar producto por nombre o SKU" onChange={(e)=>setNameFilter(e.target.value)}/>
+              <HiMiniMagnifyingGlass className="products-filter-icon"/>
             </div>
 
             <div className="filter-box">

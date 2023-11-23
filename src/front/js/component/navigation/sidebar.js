@@ -47,11 +47,6 @@ export const Sidebar = () => {
                     <MdPeopleAlt className="menu-icon"/>Clientes
                 </div>
             </Link>
-            <Link to={"/admin/misc"}>
-                <div className={store.active == "admin/misc"? "menu-item menu-item-active": "menu-item"}>
-                    <MdMiscellaneousServices className="menu-icon"/>Misc.
-                </div>
-            </Link>
             <div className="menu-logout" onClick={()=> actions.logout()}><MdLogout className="logout-icon"/>Cerrar sesión</div>
         </div>
     </>

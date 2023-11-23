@@ -65,7 +65,7 @@ export const Home = () => {
 
 	return (<>
 			<div className="home-container">
-				<img className="home-top-banner" src="https://img.freepik.com/premium-photo/banner-large-group-dogs-together-row-orange-background_191971-28737.jpg?w=2000"/>
+				<img className="home-top-banner" src="https://cdn.discordapp.com/attachments/922352758512824351/1177042835363614781/Banner-Consiente.png?ex=65711190&is=655e9c90&hm=57f09bb4eef430b01844255124d65afa6ba74e6e973c4580ef5088ee2ea9b711&"/>
 				<div className="home-categories-title">Compra por <span className="title-effect"><span>Especie</span></span></div>
 
 				<div className="home-categories">
@@ -106,7 +106,7 @@ export const Home = () => {
 				</div>
 
 				<img className="home-mid-banner" style={{borderRadius: "10px", marginBottom: "65px"}}
-				src="https://img.freepik.com/premium-photo/banner-large-group-dogs-together-row-orange-background_191971-28737.jpg?w=2000"/>
+				src="https://cdn.discordapp.com/attachments/922352758512824351/1177042835741085766/Banner-Ropa.png?ex=65711190&is=655e9c90&hm=5606e7a292246cec7ade7d8ffbe5417f8f87dedd6dbd1aeed04083234d943d0e&"/>
 
 				<span className="home-subtitle">Esenciales</span>
 				<div className="home-products-cards-container">
