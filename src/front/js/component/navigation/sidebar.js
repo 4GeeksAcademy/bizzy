@@ -22,7 +22,7 @@ export const Sidebar = () => {
 
 	return <>
 		<div id="sidebar">
-            <img src="https://www.nic.do/wp-content/uploads/2016/10/logo-placeholder-3.jpg" className="sidebar-logo"/>
+            <img src="https://firebasestorage.googleapis.com/v0/b/bizzy-da700.appspot.com/o/image_2023-11-23_025002027.png?alt=media&token=6a38e66f-47ef-4ce4-b1b7-d161d98bb43c" className="sidebar-logo"/>
             <button className="shrt-order-btn" onClick={()=> navigate("/admin/create-order")}>
                 <MdStar className="order-heart"/>Nuevo pedido
             </button>
