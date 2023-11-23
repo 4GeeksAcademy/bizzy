@@ -197,6 +197,9 @@ def put_product(product_id):
             subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
             if subcategory.category != category: subcategory = None
             product.subcategory = subcategory
+
+        if not subcategory:
+            product.subcategory = None
             
         if name: product.name = name
         if unit_price or unit_price == 0: product.unit_price = unit_price

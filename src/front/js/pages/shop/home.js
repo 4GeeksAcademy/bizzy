@@ -112,7 +112,7 @@ export const Home = () => {
 				<div className="home-products-cards-container">
 					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
 					modules={[FreeMode, Pagination]} breakpoints={homeBreakpoints}>
-						{store.shop.products && store.shop.products.map( (product)=> <SwiperSlide key={product.name}>
+						{store.shop.products && store.shop.products.reverse().map( (product)=> <SwiperSlide key={product.name}>
 								<ShopProductCard prod={product} />
 							</SwiperSlide>
 						)}

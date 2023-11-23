@@ -53,14 +53,14 @@ export const EditProduct = (edit) => {
 			return
 		}
 		// MAKE NULL 
-		if (product.subcategory == "No aplica") setProduct({...product, "subcategory":null })
+		if (product.subcategory == "No aplica") setProduct({...product, "subcategory": null })
 
 
 		// SEARCH FOR CHANGES
 		let changes = 0
 		for (let key in product){
 			if (product[key] == edit.prod[`${key}`]){
-				if(key != "id" && key != "image"){
+				if(key != "id" && key != "image" && key != "category"){
 					delete product[key]
 				}
 			}

@@ -31,6 +31,7 @@ import { ForgotPassword } from "./pages/shop/forgotPassword";
 import { Account } from "./pages/shop/account";
 import { Checkout } from "./pages/shop/checkout";
 import { Search } from "./pages/shop/search";
+import { Footer } from "./component/navigation/footer";
 
 //create your first component
 const Layout = () => {
@@ -52,7 +53,7 @@ const Layout = () => {
                 <div style={{width: "100%"}}>
                     {store.adminNav? <AdminNavbar/> : <Navbar/>}
                     
-                    <div id="content" style={store.adminNav? {backgroundColor: "#F7F9F8"} : {}}>
+                    <div id="content" style={store.adminNav? {backgroundColor: "#F7F9F8", paddingBottom: "10%"} : {}}>
                         <Routes>
                             {/* ADMIN VIEWS */}
                             <Route element={<Dashboard />} path="/dashboard/*"/>
@@ -75,6 +76,7 @@ const Layout = () => {
                             <Route element={<Category/>} path="/category/:name" />
                             <Route element={<Category/>} path="/category/:name/:subcategory" />
                         </Routes>
+                        {!store.adminNav &&  <Footer />}
                     </div>
                 </div>
             </div>
