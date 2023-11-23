@@ -103,7 +103,7 @@ class Subcategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     category = db.relationship("Category", backref="subcategories")
-    name = db.Column(db.String(40), unique=True, nullable=False)
+    name = db.Column(db.String(40), nullable=False)
     image = db.Column(db.String(400), nullable=False)
 
     def __init__(self, name, category, image):

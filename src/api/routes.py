@@ -159,7 +159,7 @@ def post_product():
             if key == None: return {"message": "Some field is missing in request body"}, 400
 
         category = Category.query.filter_by(name=category).one_or_none()
-        subcategory = Subcategory.query.filter_by(name=subcategory).one_or_none()
+        subcategory = Subcategory.query.filter_by(name=subcategory, category=category).one_or_none()
         
         new_product = Product( name=name, category=category, subcategory=subcategory, unit_price=unit_price, stock=stock, 
                                 sold=0, sku=sku, image=image, description=description, for_sale=True)

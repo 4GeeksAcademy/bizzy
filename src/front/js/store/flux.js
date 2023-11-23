@@ -236,7 +236,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						let num = Math.random()
 						setStore({random: num})
 						getActions().getOrders()
-						return true;
+						return data;
 					}
 					else{
 						return false;

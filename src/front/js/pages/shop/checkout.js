@@ -60,6 +60,9 @@ export const Checkout = () => {
 				}
 			setTotalQ(tempTotalQ)
 		}
+		else{
+			setTotalQ(0)
+		  }
 		}, [store.cart]);
 
 	useEffect(() => {
@@ -161,9 +164,13 @@ export const Checkout = () => {
 		if (info){
 			let writtenCart = ""
 			for (let product of fixedCart){
-				writtenCart += `(${product.quantity})%20${product.name}%0A` 
+				writtenCart += `(${product.quantity})%20x%20${product.name}%0A` 
 			}
-			window.open(`https://wa.me/584129709870?text=---%28${shipInfo.type}%29---%0A${store.user.name}%20%7C%20${store.user.email}%0A${writtenCart}%0A`)
+			window.open(`https://wa.me/584129709870?text=Hola%2C%20Petzzy%21%0AEscribo%20para%20concretar%20mi%20compra%20en%20su%20web
+			%0A%0A------%20------%0ANombre%3A%20${store.user.name}%0AM%C3%A9todo%20de%20Entrega%3A%20${shipInfo.type}%0ACorreo%3A%20
+			${store.user.email}%0AN%C3%BAmero%3A%20${shipInfo.phone}%0A%0A------%20Pedido%3A%20%23${info.id}%20------%0A${writtenCart}
+			%0A---Total%3A%20%24${info.total_price}`)
+			
 			actions.addToCart([])
 			toast.success("Orden realizada con éxito!", {autoClose: false})
 			navigate("/")

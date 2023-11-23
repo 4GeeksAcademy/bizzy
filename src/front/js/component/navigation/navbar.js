@@ -24,6 +24,9 @@ export const Navbar = (navb) => {
 				}
 			setInCartProducts(tempTotalQ)
 		}
+		else{
+			setInCartProducts(0)
+		}
 	}, [store.cart]);
 
 	useEffect(() => {

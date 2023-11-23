@@ -45,6 +45,7 @@ export const Home = () => {
 	}
 	
 	useEffect(() => {
+		actions.getShopInfo()
 		document.getElementById("content").scroll(0,0)
 		actions.changeTab("home")
 		actions.changeAdminNav(false)
@@ -94,7 +95,7 @@ export const Home = () => {
 					</Swiper>
 				</div>
 
-				<span className="home-subtitle">Ofertas</span>
+				<span className="home-subtitle">Nuevos</span>
 				<div className="home-products-cards-container">
 					<Swiper slidesPerView={1} spaceBetween={15} freeMode={true} pagination={{dynamicBullets: true,}}
 					modules={[Autoplay, FreeMode, Pagination]} breakpoints={homeBreakpoints}  autoplay={{delay: 2500, disableOnInteraction: false }}>

@@ -51,6 +51,11 @@ export const ProductDetails = ()=> {
 	}
 
 	useEffect(() => {
+		actions.changeAdminNav(false)
+		document.getElementById("content").scroll(0,0)
+	}, []);
+
+	useEffect(() => {
 		if (store.shop.products && store.shop.products.length > 0){
 			setProduct(store.shop.products.filter((product)=> product.id == params.id )[0] )
 		}
