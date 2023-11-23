@@ -102,7 +102,7 @@ export const CreateOrder = () => {
 		if(info){
 			toast.success("Orden creada con exito!")
 			actions.addSelectedProducts([])
-			navigate("/admin/orders")
+			navigate("/bizzy-admin/orders")
 			return
 		}
 		else{
@@ -115,7 +115,7 @@ export const CreateOrder = () => {
 	return (<>
 		<div className="create-views-container">
 			<div className="create-order-top">
-				<button className="button-back" onClick={()=>navigate("/admin/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
+				<button className="button-back" onClick={()=>navigate("/bizzy-admin/orders")}><span><BsChevronLeft/></span>Volver a Ordenes</button>
 				<div className="time-input-holder">
 					<input type="datetime-local" defaultValue={todayFormated}
 					onChange={(e)=> setOrder({...order, "date": e.target.value })}/>

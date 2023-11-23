@@ -23,26 +23,26 @@ export const Sidebar = () => {
 	return <>
 		<div id="sidebar">
             <img src="https://www.nic.do/wp-content/uploads/2016/10/logo-placeholder-3.jpg" className="sidebar-logo"/>
-            <button className="shrt-order-btn" onClick={()=> navigate("/admin/create-order")}>
+            <button className="shrt-order-btn" onClick={()=> navigate("/bizzy-admin/create-order")}>
                 <MdStar className="order-heart"/>Nuevo pedido
             </button>
             <div className="menu-title">TIENDA</div>
-            <Link to={"/admin"}>
+            <Link to={"/bizzy-admin"}>
                 <div className={store.active == "admin"? "menu-item menu-item-active": "menu-item"}>
                     <MdSpaceDashboard className="menu-icon"/>Dashboard
                 </div>
             </Link> 
-            <Link to={"/admin/orders"}>
+            <Link to={"/bizzy-admin/orders"}>
                 <div className={store.active == "admin/orders"? "menu-item menu-item-active": "menu-item"}>
                     <MdShoppingBasket className="menu-icon"/>Pedidos
                 </div>
             </Link>
-            <Link to={"/admin/products"}>
+            <Link to={"/bizzy-admin/products"}>
                 <div className={store.active == "admin/products"? "menu-item menu-item-active": "menu-item"}>
                     <MdReceiptLong className="menu-icon"/>Productos
                 </div>
             </Link>
-            <Link to={"/admin/customers"}>
+            <Link to={"/bizzy-admin/customers"}>
                 <div className={store.active == "admin/customers"? "menu-item menu-item-active": "menu-item"}>
                     <MdPeopleAlt className="menu-icon"/>Clientes
                 </div>

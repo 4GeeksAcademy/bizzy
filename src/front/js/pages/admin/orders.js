@@ -38,7 +38,7 @@ export const Orders = () => {
       <div style={{margin: "50px 6vw"}}>
         <div className="table-header">
           <h2>Pedidos</h2>
-          <button onClick={()=>navigate("/admin/create-order")}>+ Crear orden</button>
+          <button onClick={()=>navigate("/bizzy-admin/create-order")}>+ Crear orden</button>
         </div>
         <table>
           <thead>

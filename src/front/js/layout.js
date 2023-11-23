@@ -6,7 +6,6 @@ import moment from "moment";
 import { BackendURL } from "./component/backendURL";
 
 import "../styles/layout.css";
-import { Demo } from "./pages/admin/demo";
 import injectContext from "./store/appContext";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -55,13 +54,12 @@ const Layout = () => {
                     <div id="content" style={store.adminNav? {backgroundColor: "#F7F9F8"} : {}}>
                         <Routes>
                             {/* ADMIN VIEWS */}
-                            <Route element={<Dashboard />} path="/admin/*"/>
-                            <Route element={<Orders />} path="/admin/orders" />
-                            <Route element={<CreateOrder />} path="/admin/create-order" />
-                            <Route element={<Products />} path="/admin/products" />
-                            <Route element={<CreateProduct />} path="/admin/create-product" />
-                            <Route element={<Customers/>} path="/admin/customers" />
-                            <Route element={<Demo />} path="/admin/demo" />
+                            <Route element={<Dashboard />} path="/bizzy-admin/*"/>
+                            <Route element={<Orders />} path="/bizzy-admin/orders" />
+                            <Route element={<CreateOrder />} path="/bizzy-admin/create-order" />
+                            <Route element={<Products />} path="/bizzy-admin/products" />
+                            <Route element={<CreateProduct />} path="/bizzy-admin/create-product" />
+                            <Route element={<Customers/>} path="/bizzy-admin/customers" />
 
                             {/* NORMAL VIEWS */}
                             <Route element={<Login/>} path="/login" />

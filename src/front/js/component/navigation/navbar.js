@@ -19,7 +19,7 @@ export const Navbar = (navb) => {
 			onKeyDown={(e)=> e.key === "Enter"? navigate(`/search/${e.target.value}`) : ""}/>
 			<HiMiniMagnifyingGlass  className="nav-shop-search-icon"/>
 			<div className="navbar-right">
-				{store.user && store.user.admin && !store.adminNav && <div onClick={()=>navigate("/admin")}>admin</div>}
+				{store.user && store.user.admin && !store.adminNav && <div onClick={()=>navigate("/bizzy-admin")}>admin</div>}
 				<div>24/7 help</div>
 				{store.user && <div onClick={()=>navigate("/account")}>account</div>}
 				{!store.user && <div onClick={()=>navigate("/login")}>login</div>}

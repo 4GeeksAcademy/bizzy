@@ -21,7 +21,6 @@ export const Dashboard = () => {
 	const { store, actions } = useContext(Context);
 	const [ overviewed, setOverviewed ] = useState()
 	const [ loading, setLoading ] = useState(true);
-	const navigate = useNavigate();
 	const [ chartYear, setChartYear] = useState()
 	const [ productHistory, setProductHistory ] = useState([])
 

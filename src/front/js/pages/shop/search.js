@@ -10,8 +10,6 @@ import "../../../styles/category.css";
 
 export const Search = () => {
 	const { store, actions } = useContext(Context);
-	const navigate = useNavigate();
-	const [ category, setCategory ] = useState()
 	const [ search, setSearch ] = useState() 
 	const [ priceRange, setPriceRange ] = useState()
 	const [ sortBy, setSortBy ] = useState()
